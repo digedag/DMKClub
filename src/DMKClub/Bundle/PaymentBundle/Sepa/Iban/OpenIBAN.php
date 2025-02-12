@@ -30,7 +30,7 @@ class OpenIBAN
         }
 
         $baseUri = $this->config->get('dmk_club_payment.openiban_baseuri');
-        $uri = sprintf('%s/validate/%s?getBIC=true&validateBankCode=true', $baseUri, $iban);
+        $uri = sprintf('%s/validate/%s?getBIC=true&validateBankCode=true', $baseUri, str_replace(' ', '', $iban));
         $result = file_get_contents($uri);
 
         if (! $result) {
@@ -40,6 +40,7 @@ class OpenIBAN
         $result = json_decode($result);
 
         if (! $result->valid) {
+            $result->messages[] = $uri;
             throw new OpenIBANException('IBAN not valid ' . $iban . ' ' . implode(',', $result->messages));
         }
 
