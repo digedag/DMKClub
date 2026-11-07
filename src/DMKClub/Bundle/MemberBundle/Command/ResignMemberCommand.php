@@ -1,26 +1,29 @@
 <?php
 namespace DMKClub\Bundle\MemberBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-use Oro\Bundle\ConfigBundle\Config\ConfigManager;
-use Oro\Bundle\CronBundle\Command\CronCommandInterface;
+use Oro\Bundle\CronBundle\Command\CronCommandActivationInterface;
+use Oro\Bundle\CronBundle\Command\CronCommandScheduleDefinitionInterface;
 
 use DMKClub\Bundle\MemberBundle\Entity\Manager\MemberManager;
 
 /**
- * Send membership fees to member by email.
+ * Update member status if resignation date is reached.
  */
-class ResignMemberCommand extends Command implements CronCommandInterface
+#[AsCommand(
+    name: self::NAME,
+    description: 'Command to update member status if resignation date is reached.'
+)]
+class ResignMemberCommand extends Command implements
+    CronCommandScheduleDefinitionInterface,
+    CronCommandActivationInterface
 {
 
     const NAME = 'oro:cron:dmkclub:member:resign';
-
-
-    protected $output;
 
     /**
      *
@@ -34,17 +37,6 @@ class ResignMemberCommand extends Command implements CronCommandInterface
         $this->mbrMgr = $mbrMgr;
     }
 
-    /**
-     *
-     * @return ConfigManager
-     */
-    protected function configure()
-    {
-        $this->setName(self::NAME)
-            ->setDescription('Command to update member status if resignation date is reached.');
-    }
-
-
     public function isActive()
     {
         return true;
@@ -55,8 +47,10 @@ class ResignMemberCommand extends Command implements CronCommandInterface
         return '10 0 * * *';
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln(sprintf('<info>Resigned %d members.</info>', $this->mbrMgr->checkResignedMembers()));
+
+        return Command::SUCCESS;
     }
 }

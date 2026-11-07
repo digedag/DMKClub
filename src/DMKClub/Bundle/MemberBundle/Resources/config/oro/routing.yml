@@ -12,7 +12,7 @@ dmkclub_member_bundle:
 
 dmkclub_member_bundle_api:
     resource: "@DMKClubMemberBundle/Resources/config/oro/routing_api.yml"
-    type: rest
+    type: yaml
     prefix:       api/rest/{version}
     requirements:
         version:  latest|v1

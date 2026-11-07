@@ -5,13 +5,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 
 use DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor;
-use Oro\Bundle\FormBundle\Model\UpdateHandler;
+use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
 use DMKClub\Bundle\PaymentBundle\Form\Handler\SepaCreditorHandler;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -22,21 +23,21 @@ class SepaCreditorController extends AbstractController
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
             TranslatorInterface::class,
             SepaCreditorHandler::class,
             'dmkclub_payment.sepacreditor.form' => Form::class,
-            UpdateHandler::class,
+            UpdateHandlerFacade::class,
         ]);
     }
 
     /**
      * @Route("/", name="dmkclub_sepacreditor_index")
-     * @AclAncestor("dmkclub_sepacreditor_view")
      * @Template
      */
+    #[AclAncestor('dmkclub_sepacreditor_view')]
     public function indexAction()
     {
         return [
@@ -48,16 +49,11 @@ class SepaCreditorController extends AbstractController
      * Create sepacreditor form
      * @Route("/create", name="dmkclub_sepacreditor_create")
      * @Template("DMKClubPaymentBundle:SepaCreditor:update.html.twig")
-     * @Acl(
-     *   id="dmkclub_sepacreditor_create",
-     *   type="entity",
-     *   permission="CREATE",
-     *   class="DMKClubPaymentBundle:SepaCreditor"
-     * )
      */
-    public function createAction()
+    #[Acl(id: 'dmkclub_sepacreditor_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor::class)]
+    public function createAction(Request $request)
     {
-        return $this->update(new SepaCreditor());
+        return $this->update(new SepaCreditor(), $request);
     }
 
     /**
@@ -65,16 +61,11 @@ class SepaCreditorController extends AbstractController
      * @Route("/update/{id}", name="dmkclub_sepacreditor_update", requirements={"id"="\d+"}, defaults={"id"=0})
      *
      * @Template
-     * @Acl(
-     *   id="dmkclub_sepacreditor_update",
-     *   type="entity",
-     *   permission="EDIT",
-     *   class="DMKClubPaymentBundle:SepaCreditor"
-     * )
      */
-    public function updateAction(SepaCreditor $entity)
+    #[Acl(id: 'dmkclub_sepacreditor_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor::class)]
+    public function updateAction(SepaCreditor $entity, Request $request)
     {
-        return $this->update($entity);
+        return $this->update($entity, $request);
     }
 
     /**
@@ -83,41 +74,22 @@ class SepaCreditorController extends AbstractController
      *
      * @return array
      */
-    protected function update(SepaCreditor $entity)
+    protected function update(SepaCreditor $entity, Request $request)
     {
-        return $this->get(UpdateHandler::class)->handleUpdate(
+        return $this->container->get(UpdateHandlerFacade::class)->update(
             $entity,
-            $this->get('dmkclub_payment.sepacreditor.form'),
-            function (SepaCreditor $entity) {
-                return [
-                    'route' => 'dmkclub_sepacreditor_update',
-                    'parameters' => [
-                        'id' => $entity->getId()
-                    ]
-                ];
-            }, function (SepaCreditor $entity) {
-                return [
-                    'route' => 'dmkclub_sepacreditor_view',
-                    'parameters' => [
-                        'id' => $entity->getId()
-                    ]
-                ];
-            },
-            $this->get(TranslatorInterface::class)->trans('dmkclub.payment.sepacreditor.saved.message'),
-            $this->get(SepaCreditorHandler::class)
+            $this->container->get('dmkclub_payment.sepacreditor.form'),
+            $this->container->get(TranslatorInterface::class)->trans('dmkclub.payment.sepacreditor.saved.message'),
+            $request,
+            $this->container->get(SepaCreditorHandler::class)
         );
     }
 
     /**
      * @Route("/view/{id}", name="dmkclub_sepacreditor_view", requirements={"id"="\d+"}))
-     * @Acl(
-     * id="dmkclub_sepacreditor_view",
-     * type="entity",
-     * permission="VIEW",
-     * class="DMKClubPaymentBundle:SepaCreditor"
-     * )
      * @Template
      */
+    #[Acl(id: 'dmkclub_sepacreditor_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor::class)]
     public function viewAction(SepaCreditor $entity)
     {
         return [
@@ -127,9 +99,9 @@ class SepaCreditorController extends AbstractController
 
     /**
      * @Route("/widget/info/{id}", name="dmkclub_sepacreditor_widget_info", requirements={"id"="\d+"})
-     * @AclAncestor("dmkclub_sepacreditor_view")
      * @Template
      */
+    #[AclAncestor('dmkclub_sepacreditor_view')]
     public function infoAction(SepaCreditor $entity)
     {
         return [

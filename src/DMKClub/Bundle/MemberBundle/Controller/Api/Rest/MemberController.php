@@ -4,23 +4,30 @@ namespace DMKClub\Bundle\MemberBundle\Controller\Api\Rest;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use FOS\RestBundle\Controller\Annotations\NamePrefix;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
+use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use Symfony\Component\HttpFoundation\Response;
 use DMKClub\Bundle\MemberBundle\Entity\Manager\MemberManager;
 
 /**
- * @NamePrefix("dmkclub_api_")
  */
-class MemberController extends RestController implements ClassResourceInterface
+class MemberController extends RestController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            'dmkclub_member.member.manager.api' => ApiEntityManager::class,
+        ]);
+    }
     /**
      * REST DELETE
      *
@@ -30,14 +37,9 @@ class MemberController extends RestController implements ClassResourceInterface
      *      description="Delete Member",
      *      resource=true
      * )
-     * @Acl(
-     *      id="dmkclub_member_delete",
-     *      type="entity",
-     *      permission="DELETE",
-     *      class="DMKClubMemberBundle:Member"
-     * )
      * @return Response
      */
+    #[Acl(id: 'dmkclub_member_delete', type: 'entity', permission: 'DELETE', class: \DMKClub\Bundle\MemberBundle\Entity\Member::class)]
     public function deleteAction($id)
     {
         return $this->handleDeleteRequest($id);
@@ -51,7 +53,7 @@ class MemberController extends RestController implements ClassResourceInterface
     public function getManager()
     {
     	// FIXME: missing
-    	return $this->get('dmkclub_member.member.manager.api');
+    	return $this->container->get('dmkclub_member.member.manager.api');
     }
 
     /**

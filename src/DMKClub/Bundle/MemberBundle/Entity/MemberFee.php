@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 
 use DMKClub\Bundle\BasicsBundle\PDF\PdfAwareInterface;
 use DMKClub\Bundle\BasicsBundle\Utility\Strings;
@@ -21,34 +21,34 @@ use DMKClub\Bundle\PaymentBundle\Model\PaymentOption;
  * @ORM\Entity(repositoryClass="DMKClub\Bundle\MemberBundle\Entity\Repository\MemberFeeRepository")
  * @ORM\Table(name="dmkclub_member_fee")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *   routeName="dmkclub_memberfee_index",
- *   routeView="dmkclub_memberfee_view",
- *   defaultValues={
- *     "entity"={
- *       "icon"="fa-money"
- *     },
- *     "ownership"={
- *       "owner_type"="USER",
- *       "owner_field_name"="owner",
- *       "owner_column_name"="user_owner_id",
- *       "organization_field_name"="organization",
- *       "organization_column_name"="organization_id"
- *     },
- *     "security"={
- *       "type"="ACL",
- *       "group_name"="",
- *       "category"="dmkclub_data"
- *     },
- *     "tag"={
- *       "enabled"=true
- *     },
- *     "dataaudit"={
- *       "auditable"=true
- *     }
- *   }
- * )
  */
+#[Config(
+    routeName: 'dmkclub_memberfee_index',
+    routeView: 'dmkclub_memberfee_view',
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-money',
+        ],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'user_owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id',
+        ],
+        'security' => [
+            'type' => 'ACL',
+            'group_name' => '',
+            'category' => 'dmkclub_data',
+        ],
+        'tag' => [
+            'enabled' => true,
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirectDebitAwareInterface
 {
 
@@ -64,110 +64,138 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ConfigField(
-     *   defaultValues={
-     *     "importexport"={
-     *       "order"=10
-     *     }
-     *   }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'order' => 10,
+            ],
+        ],
+    )]
     protected $id;
 
     /**
      *
      * @var \DateTime
      * @ORM\Column(name="start_date", type="date", nullable=true)
-     * @ConfigField(
-     * defaultValues={
-     *   "dataaudit"={"auditable"=true},
-     *   "importexport"={
-     *     "order"=75
-     *   }
-     * }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 75,
+            ],
+        ],
+    )]
     protected $startDate;
 
     /**
      *
      * @var \DateTime
      * @ORM\Column(name="end_date", type="date", nullable=true)
-     * @ConfigField(
-     * defaultValues={
-     *   "dataaudit"={"auditable"=true},
-     *   "importexport"={
-     *     "order"=80
-     *   }
-     * }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 80,
+            ],
+        ],
+    )]
     protected $endDate;
 
     /**
      *
      * @var \DateTime
      * @ORM\Column(name="bill_date", type="date", nullable=true)
-     * @ConfigField(
-     * defaultValues={
-     *   "dataaudit"={"auditable"=true},
-     *   "importexport"={
-     *     "order"=85
-     *   }
-     * }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 85,
+            ],
+        ],
+    )]
     protected $billDate;
 
     /**
      *
      * @var \DateTime
      * @ORM\Column(name="due_date", type="date", nullable=true)
-     * @ConfigField(
-     * defaultValues={
-     *   "dataaudit"={"auditable"=true},
-     *   "importexport"={
-     *     "order"=87
-     *   }
-     * }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 87,
+            ],
+        ],
+    )]
     protected $dueDate;
 
     /**
      *
      * @var string
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @ConfigField(
-     * defaultValues={
-     *   "dataaudit"={"auditable"=true},
-     *   "importexport"={
-     *     "identity"=true,
-     *     "order"=30
-     *   }
-     * }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'identity' => true,
+                'order' => 30,
+            ],
+        ],
+    )]
     protected $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberBilling", inversedBy="memberFees")
      * @ORM\JoinColumn(name="billing", referencedColumnName="id", onDelete="CASCADE")
-     * @ConfigField(defaultValues={"dataaudit"={"auditable"=false}})
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => false,
+            ],
+        ],
+    )]
     protected $billing;
 
     /**
      * @ORM\ManyToOne(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\Member", inversedBy="memberFees")
      * @ORM\JoinColumn(name="member", referencedColumnName="id", onDelete="CASCADE")
-     * @ConfigField(defaultValues={"dataaudit"={"auditable"=false}})
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => false,
+            ],
+        ],
+    )]
     protected $member;
 
     /**
      * @ORM\OneToMany(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberFeePosition", mappedBy="memberFee", cascade={"all"}, orphanRemoval=true)
-     * @ConfigField(defaultValues={"dataaudit"={"auditable"=true}})
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     protected $positions;
 
     /**
@@ -181,16 +209,28 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
      *
      * @var integer
      * @ORM\Column(name="payed_total", type="integer", nullable=true)
-     * @ConfigField(defaultValues={"dataaudit"={"auditable"=true}})
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     private $payedTotal = 0;
 
     /**
      *
      * @var integer
      * @ORM\Column(name="correction_status", type="integer", nullable=true)
-     * @ConfigField(defaultValues={"dataaudit"={"auditable"=true}})
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     private $correctionStatus;
 
     /**
@@ -198,14 +238,14 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
      *
      * @var string
      * @ORM\Column(name="direct_debit_mandate_id", type="string", length=50, nullable=true)
-     * @ConfigField(
-     *    defaultValues={
-     *      "dataaudit"={
-     *        "auditable"=true
-     *      }
-     *    }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     private $directDebitMandateId;
 
     /**
@@ -213,40 +253,48 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
      *
      * @var string
      * @ORM\Column(name="remittance_information", type="string", length=120, nullable=true)
-     * @ConfigField(
-     *    defaultValues={
-     *      "dataaudit"={
-     *        "auditable"=true
-     *      }
-     *    }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     private $remittanceInformation;
 
     /**
      *
      * @var \DateTime $createdAt
      * @ORM\Column(type="datetime", name="created_at")
-     * @ConfigField(
-     *   defaultValues={
-     *     "entity"={"label"="oro.ui.created_at"},
-     *     "importexport"={"excluded"=true}
-     *   }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'entity' => [
+                'label' => 'oro.ui.created_at',
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     protected $createdAt;
 
     /**
      *
      * @var \DateTime $updatedAt
      * @ORM\Column(type="datetime", name="updated_at")
-     * @ConfigField(
-     *   defaultValues={
-     *     "entity"={"label"="oro.ui.updated_at"},
-     *     "importexport"={"excluded"=true}
-     *   }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'entity' => [
+                'label' => 'oro.ui.updated_at',
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     protected $updatedAt;
 
     /**

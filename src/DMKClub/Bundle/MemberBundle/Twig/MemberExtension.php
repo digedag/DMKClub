@@ -7,7 +7,7 @@ use DMKClub\Bundle\MemberBundle\Entity\Manager\MemberManager;
 use DMKClub\Bundle\MemberBundle\Entity\Member;
 use Oro\Bundle\ContactBundle\Entity\Contact;
 
-class MemberExtension extends \Twig_Extension
+class MemberExtension extends \Twig\Extension\AbstractExtension
 {
     /**
      * @var MemberStatusProvider

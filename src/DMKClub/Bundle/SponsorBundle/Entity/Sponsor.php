@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 
 use DMKClub\Bundle\BasicsBundle\Model\LifecycleTrait;
 use DMKClub\Bundle\SponsorBundle\Model\ExtendSponsor;
@@ -25,38 +25,38 @@ use Oro\Bundle\AccountBundle\Entity\Account;
  * @ORM\Entity(repositoryClass="DMKClub\Bundle\SponsorBundle\Entity\Repository\SponsorRepository")
  * @ORM\Table(name="dmkclub_sponsor")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *      routeName="dmkclub_sponsor_index",
- *      routeView="dmkclub_sponsor_view",
- *      defaultValues={
- *          "entity"={
- *              "icon"="fa-registered"
- *          },
- *          "ownership"={
- *              "owner_type"="USER",
- *              "owner_field_name"="owner",
- *              "owner_column_name"="user_owner_id",
- *              "organization_field_name"="organization",
- *              "organization_column_name"="organization_id"
- *          },
- *          "security"={
- *              "type"="ACL",
- *              "group_name"="",
- *              "category"="dmkclub_data"
- *          },
- *          "form"={
- *              "grid_name"="dmkclub-sponsors-grid",
- *              "form_type"="dmkclub_sponsor_select"
- *          },
- *          "tag"={
- *              "enabled"=true
- *          },
- *          "dataaudit"={
- *              "auditable"=true
- *          }
- *      }
- * )
  */
+#[Config(
+    routeName: 'dmkclub_sponsor_index',
+    routeView: 'dmkclub_sponsor_view',
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-registered',
+        ],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'user_owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id',
+        ],
+        'security' => [
+            'type' => 'ACL',
+            'group_name' => '',
+            'category' => 'dmkclub_data',
+        ],
+        'form' => [
+            'grid_name' => 'dmkclub-sponsors-grid',
+            'form_type' => 'dmkclub_sponsor_select',
+        ],
+        'tag' => [
+            'enabled' => true,
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class Sponsor extends ExtendSponsor implements ChannelAwareInterface
 {
     use ChannelEntityTrait, LifecycleTrait;
@@ -69,66 +69,66 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
 	 * @ORM\Id
 	 * @ORM\Column(type="integer", name="id")
 	 * @ORM\GeneratedValue(strategy="AUTO")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "importexport"={
-	 *              "order"=10
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'importexport' => [
+	            'order' => 10,
+	        ],
+	    ],
+	)]
 	protected $id;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="start_date", type="date", nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "order"=75
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 75,
+            ],
+        ],
+    )]
     protected $startDate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="end_date", type="date", nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "order"=80
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 80,
+            ],
+        ],
+    )]
     protected $endDate;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "identity"=true,
-     *              "order"=30
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'identity' => true,
+                'order' => 30,
+            ],
+        ],
+    )]
     protected $name;
 
     /**
@@ -159,18 +159,18 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
      *
      * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\SponsorBundle\Entity\Category")
      * @ORM\JoinColumn(name="category", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "order"=230,
-     *              "short"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 230,
+                'short' => true,
+            ],
+        ],
+    )]
     protected $category;
 
     /**
@@ -178,18 +178,18 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\AddressBundle\Entity\Address", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "full"=true,
-     *              "order"=30
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'full' => true,
+                'order' => 30,
+            ],
+        ],
+    )]
     protected $billingAddress;
 
     /**
@@ -197,15 +197,15 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\AddressBundle\Entity\Address", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="postal_address_id", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "importexport"={
-     *              "full"=true,
-     *              "order"=20
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'full' => true,
+                'order' => 20,
+            ],
+        ],
+    )]
     protected $postalAddress;
 
     /**

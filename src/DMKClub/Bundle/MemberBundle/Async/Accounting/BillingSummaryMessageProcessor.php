@@ -10,6 +10,7 @@ use DMKClub\Bundle\MemberBundle\Entity\MemberFee;
 use DMKClub\Bundle\MemberBundle\Entity\Manager\MemberBillingManager;
 use Doctrine\ORM\EntityManager;
 use Oro\Component\MessageQueue\Util\JSON;
+use DMKClub\Bundle\MemberBundle\Entity\MemberBilling;
 
 /**
  * Calculate summary for member billing
@@ -91,6 +92,6 @@ class BillingSummaryMessageProcessor implements MessageProcessorInterface, Topic
      */
     protected function getMemberBillingRepository()
     {
-        return $this->em->getRepository('DMKClubMemberBundle:MemberBilling');
+        return $this->em->getRepository(MemberBilling::class);
     }
 }

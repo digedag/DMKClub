@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 
 use DMKClub\Bundle\SponsorBundle\Model\ExtendCategory;
 use DMKClub\Bundle\BasicsBundle\Model\LifecycleTrait;
@@ -20,36 +20,36 @@ use DMKClub\Bundle\BasicsBundle\Model\LifecycleTrait;
  * @ORM\Entity(repositoryClass="DMKClub\Bundle\SponsorBundle\Entity\Repository\CategoryRepository")
  * @ORM\Table(name="dmkclub_sponsorcategory")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *      routeName="dmkclub_sponsorcategory_index",
- *      routeView="dmkclub_sponsorcategory_view",
- *      defaultValues={
- *          "entity"={
- *              "icon"="fa-gear"
- *          },
- *          "ownership"={
- *              "owner_type"="USER",
- *              "owner_field_name"="owner",
- *              "owner_column_name"="user_owner_id",
- *              "organization_field_name"="organization",
- *              "organization_column_name"="organization_id"
- *          },
- *          "security"={
- *              "type"="ACL",
- *              "group_name"="",
- *              "category"="dmkclub_data"
- *          },
- *          "form"={
- *              "form_type"="dmkclub_sponsorcategory_select",
- *              "grid_name"="dmkclub-sponsorcategories-select-grid"
- *          },
- *          "dataaudit"={
- *              "auditable"=true
- *          }
- *      }
- * )
  * Die Angaben in "form" dienen dem create_select_form_inline
  */
+#[Config(
+    routeName: 'dmkclub_sponsorcategory_index',
+    routeView: 'dmkclub_sponsorcategory_view',
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-gear',
+        ],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'user_owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id',
+        ],
+        'security' => [
+            'type' => 'ACL',
+            'group_name' => '',
+            'category' => 'dmkclub_data',
+        ],
+        'form' => [
+            'form_type' => 'dmkclub_sponsorcategory_select',
+            'grid_name' => 'dmkclub-sponsorcategories-select-grid',
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class Category extends ExtendCategory
 {
     use LifecycleTrait;
@@ -63,14 +63,14 @@ class Category extends ExtendCategory
 	 * @ORM\Id
 	 * @ORM\Column(type="integer", name="id")
 	 * @ORM\GeneratedValue(strategy="AUTO")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "importexport"={
-	 *              "order"=10
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'importexport' => [
+	            'order' => 10,
+	        ],
+	    ],
+	)]
 	protected $id;
 
 
@@ -78,18 +78,18 @@ class Category extends ExtendCategory
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          },
-	 *          "importexport"={
-	 *              "identity"=true,
-	 *              "order"=30
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'identity' => true,
+	            'order' => 30,
+	        ],
+	    ],
+	)]
 	protected $name;
 
 	/**

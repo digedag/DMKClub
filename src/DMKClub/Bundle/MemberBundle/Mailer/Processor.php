@@ -8,6 +8,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Oro\Bundle\ConfigBundle\Config\ConfigManager;
 use Oro\Bundle\EmailBundle\Provider\EmailRenderer;
 use Oro\Bundle\EmailBundle\Tools\EmailHolderHelper;
+use Oro\Bundle\EmailBundle\Sender\EmailModelSender;
 
 use DMKClub\Bundle\BasicsBundle\Model\Attachment;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFee;
@@ -26,7 +27,7 @@ class Processor extends BaseProcessor
         ConfigManager $configManager,
         EmailRenderer $renderer,
         EmailHolderHelper $emailHolderHelper,
-        \Oro\Bundle\EmailBundle\Mailer\Processor $mailer,
+        EmailModelSender $mailer,
         Manager $pdfManager)
     {
         parent::__construct($eventDispatcher, $objectManager, $configManager, $renderer, $emailHolderHelper, $mailer);
@@ -43,7 +44,7 @@ class Processor extends BaseProcessor
         // Create PDF
         $file = $this->buildFeePdf($fee);
         $event = new CreatePdf4EmailEvent($file);
-        $this->eventDispatcher->dispatch(CreatePdf4EmailEvent::EVENT_NAME, $event);
+        $this->eventDispatcher->dispatch($event, CreatePdf4EmailEvent::EVENT_NAME);
         $file = $event->getPdfFile();
 
         $attachment = new Attachment($file);

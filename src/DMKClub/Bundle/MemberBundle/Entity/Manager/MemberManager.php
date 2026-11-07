@@ -1,9 +1,7 @@
 <?php
 namespace DMKClub\Bundle\MemberBundle\Entity\Manager;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use DMKClub\Bundle\MemberBundle\Entity\Member;
 use DMKClub\Bundle\MemberBundle\Entity\MemberProposal;
 use Oro\Bundle\ContactBundle\Entity\Contact;
@@ -15,25 +13,18 @@ use DMKClub\Bundle\MemberBundle\Model\MemberStatus;
 use DMKClub\Bundle\MemberBundle\Entity\Repository\MemberRepository;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFeeDiscount;
 
-class MemberManager implements ContainerAwareInterface
+class MemberManager
 {
 
     /**
      *
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
-    /**
-     *
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    public function __construct(EntityManager $em, ContainerInterface $container)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->setContainer($container);
     }
 
     /**
@@ -191,19 +182,7 @@ class MemberManager implements ContainerAwareInterface
      */
     public function getMemberRepository()
     {
-        return $this->em->getRepository('DMKClubMemberBundle:Member');
+        return $this->em->getRepository(Member::class);
     }
 
-    /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface|null $container
-     *            A ContainerInterface instance or null
-     *
-     *            @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
 }

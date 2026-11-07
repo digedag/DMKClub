@@ -2,8 +2,8 @@
 namespace DMKClub\Bundle\PaymentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 
@@ -16,33 +16,33 @@ use DMKClub\Bundle\PaymentBundle\Model\ExtendSepaCreditor;
  * @ORM\Entity(repositoryClass="DMKClub\Bundle\PaymentBundle\Entity\Repository\SepaCreditorRepository")
  * @ORM\Table(name="dmkclub_sepacreditor")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *      defaultValues={
- *          "entity"={
- *              "icon"="fa-suitcase"
- *          },
- *          "ownership"={
- *              "owner_type"="USER",
- *              "owner_field_name"="owner",
- *              "owner_column_name"="user_owner_id",
- *              "organization_field_name"="organization",
- *              "organization_column_name"="organization_id"
- *          },
- *          "security"={
- *              "type"="ACL",
- *              "group_name"="",
- *              "category"="dmkclub_data"
- *          },
- *          "form"={
- *              "grid_name"="dmkclub-sepacreditor-grid",
- *              "form_type"="dmkclub_sepacreditor_select"
- *          },
- *          "dataaudit"={
- *              "auditable"=true
- *          }
- *      }
- * )
  */
+#[Config(
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-suitcase',
+        ],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'user_owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id',
+        ],
+        'security' => [
+            'type' => 'ACL',
+            'group_name' => '',
+            'category' => 'dmkclub_data',
+        ],
+        'form' => [
+            'grid_name' => 'dmkclub-sepacreditor-grid',
+            'form_type' => 'dmkclub_sepacreditor_select',
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class SepaCreditor extends ExtendSepaCreditor
 {
 
@@ -52,86 +52,86 @@ class SepaCreditor extends ExtendSepaCreditor
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ConfigField(
-     *    defaultValues={
-     *      "importexport"={
-     *        "excluded"=true
-     *      }
-     *    }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     protected $id;
 
     /**
      *
      * @var string
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @ConfigField(
-     *    defaultValues={
-     *      "importexport"={
-     *        "order"=10
-     *      }
-     *    }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'order' => 10,
+            ],
+        ],
+    )]
     protected $name;
 
     /**
      *
      * @var string @ORM\Column(name="iban", type="string", length=255, nullable=true)
-     *      @ConfigField(
-     *      defaultValues={
-     *      "importexport"={
-     *      "order"=20
-     *      }
-     *      }
-     *      )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'order' => 20,
+            ],
+        ],
+    )]
     protected $iban;
 
     /**
      *
      * @var string
      * @ORM\Column(name="bic", type="string", length=255, nullable=true)
-     * @ConfigField(
-     *    defaultValues={
-     *      "importexport"={
-     *        "order"=30
-     *      }
-     *    }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'order' => 30,
+            ],
+        ],
+    )]
     protected $bic;
 
     /**
      *
      * @var string
      * @ORM\Column(name="creditor_id", type="string", length=255, nullable=true)
-     * @ConfigField(
-     *    defaultValues={
-     *      "importexport"={
-     *        "order"=40
-     *      }
-     *    }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'order' => 40,
+            ],
+        ],
+    )]
     protected $creditorId;
 
     /**
      *
      * @var \DateTime $created
      * @ORM\Column(type="datetime")
-     * @ConfigField(
-     *    defaultValues={
-     *      "entity"={
-     *        "label"="oro.ui.created_at"
-     *      },
-     *      "importexport"={
-     *        "excluded"=true
-     *      }
-     *    }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'entity' => [
+                'label' => 'oro.ui.created_at',
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     protected $created;
 
     /**
@@ -147,32 +147,32 @@ class SepaCreditor extends ExtendSepaCreditor
      * @var Organization
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
      * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *    defaultValues={
-     *      "importexport"={
-     *        "full"=false,
-     *        "order"=460
-     *      }
-     *    }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'full' => false,
+                'order' => 460,
+            ],
+        ],
+    )]
     protected $organization;
 
     /**
      *
      * @var \DateTime $updated
      * @ORM\Column(type="datetime")
-     * @ConfigField(
-     *    defaultValues={
-     *      "entity"={
-     *        "label"="oro.ui.updated_at"
-     *      },
-     *      "importexport"={
-     *        "excluded"=true
-     *      }
-     *    }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'entity' => [
+                'label' => 'oro.ui.updated_at',
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     protected $updated;
 
     /**

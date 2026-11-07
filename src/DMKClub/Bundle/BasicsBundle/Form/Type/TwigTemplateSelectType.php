@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Oro\Bundle\FormBundle\Form\Type\Select2EntityType;
+use DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate;
 
 class TwigTemplateSelectType extends AbstractType
 {
@@ -16,7 +17,7 @@ class TwigTemplateSelectType extends AbstractType
         $resolver->setDefaults(
             [
                 'autocomplete_alias' => 'dmkclub_twigtemplates',
-                'class' => 'DMKClubBasicsBundle:TwigTemplate',
+                'class' => TwigTemplate::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('t')
                         ->orderBy('t.name', 'ASC');

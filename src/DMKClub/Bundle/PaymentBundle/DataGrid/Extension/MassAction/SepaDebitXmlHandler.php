@@ -284,7 +284,7 @@ class SepaDebitXmlHandler implements MassActionHandlerInterface
             'url' => $url
         ];
 
-        return new MassActionResponse($successful, $this->translator->transChoice($responseMessage, $entitiesCount, [
+        return new MassActionResponse($successful, $this->translator->trans($responseMessage, [
             '%count%' => $entitiesCount
         ]), $responseData);
     }

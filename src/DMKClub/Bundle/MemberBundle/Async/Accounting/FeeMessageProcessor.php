@@ -12,6 +12,7 @@ use DMKClub\Bundle\MemberBundle\Entity\Manager\MemberBillingManager;
 use Doctrine\ORM\EntityManager;
 use Oro\Component\MessageQueue\Util\JSON;
 use Oro\Component\MessageQueue\Job\JobRunner;
+use DMKClub\Bundle\MemberBundle\Entity\MemberBilling;
 
 /**
  * Die Klasse erzeugt die MemberFees
@@ -140,6 +141,6 @@ class FeeMessageProcessor implements MessageProcessorInterface, TopicSubscriberI
      */
     protected function getMemberBillingRepository()
     {
-        return $this->em->getRepository('DMKClubMemberBundle:MemberBilling');
+        return $this->em->getRepository(MemberBilling::class);
     }
 }

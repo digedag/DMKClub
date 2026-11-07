@@ -2,9 +2,7 @@
 namespace DMKClub\Bundle\MemberBundle\Entity\Manager;
 
 use DateTime;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 use Oro\Component\MessageQueue\Client\MessageProducerInterface;
 use Oro\Bundle\SegmentBundle\Entity\Manager\SegmentManager;
@@ -18,20 +16,14 @@ use DMKClub\Bundle\MemberBundle\Entity\MemberFee;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFeePosition;
 use DMKClub\Bundle\MemberBundle\Async\Accounting\FeesMessageProcessor;
 
-class MemberBillingManager implements ContainerAwareInterface
+class MemberBillingManager
 {
 
     /**
      *
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
-
-    /**
-     *
-     * @var ContainerInterface
-     */
-    protected $container;
 
     protected $processionProvider;
 
@@ -42,14 +34,12 @@ class MemberBillingManager implements ContainerAwareInterface
     protected $messageProducer;
 
     public function __construct(
-        EntityManager $em,
-        ContainerInterface $container,
+        EntityManagerInterface $em,
         ProcessorProvider $processorProvider,
         SegmentManager $segmentManager,
         MessageProducerInterface $messageProducer)
     {
         $this->em = $em;
-        $this->setContainer($container);
         $this->processionProvider = $processorProvider;
         $this->segmentManager = $segmentManager;
         $this->messageProducer = $messageProducer;
@@ -371,25 +361,12 @@ class MemberBillingManager implements ContainerAwareInterface
     }
 
     /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface|null $container
-     *            A ContainerInterface instance or null
-     *
-     *            @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
-    /**
      *
      * @return \DMKClub\Bundle\MemberBundle\Entity\Repository\MemberRepository
      */
     public function getMemberRepository()
     {
-        return $this->em->getRepository('DMKClubMemberBundle:Member');
+        return $this->em->getRepository(Member::class);
     }
 
     /**
@@ -398,6 +375,6 @@ class MemberBillingManager implements ContainerAwareInterface
      */
     public function getMemberFeeRepository()
     {
-        return $this->em->getRepository('DMKClubMemberBundle:MemberFee');
+        return $this->em->getRepository(MemberFee::class);
     }
 }

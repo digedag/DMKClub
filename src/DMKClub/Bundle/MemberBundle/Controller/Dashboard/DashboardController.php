@@ -1,12 +1,14 @@
 <?php
 namespace DMKClub\Bundle\MemberBundle\Controller\Dashboard;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use DMKClub\Bundle\MemberBundle\Entity\Member;
 use DMKClub\Bundle\MemberBundle\Entity\Repository\MemberRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Oro\Bundle\DashboardBundle\Model\WidgetConfigs;
@@ -18,9 +20,10 @@ class DashboardController extends AbstractController
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
+            'doctrine' => ManagerRegistry::class,
             WidgetConfigs::class,
             TranslatorInterface::class,
             ChartViewBuilder::class
@@ -41,7 +44,7 @@ class DashboardController extends AbstractController
     public function membersActivePassiveAction(Request $request, $widget)
     {
         /** @var TranslatorInterface $translator */
-        $translator = $this->get(TranslatorInterface::class);
+        $translator = $this->container->get(TranslatorInterface::class);
 
         $data = $this->getMemberRepository()->getMembersActivePassive();
 
@@ -56,8 +59,8 @@ class DashboardController extends AbstractController
             ]
         ];
 
-        $widgetAttr = $this->get(WidgetConfigs::class)->getWidgetAttributesForTwig($widget);
-        $widgetAttr['chartView'] = $this->get(ChartViewBuilder::class)
+        $widgetAttr = $this->container->get(WidgetConfigs::class)->getWidgetAttributesForTwig($widget);
+        $widgetAttr['chartView'] = $this->container->get(ChartViewBuilder::class)
             ->setArrayData($chartData)
             ->setOptions([
             'name' => 'pie_chart',
@@ -89,10 +92,10 @@ class DashboardController extends AbstractController
     public function membersByGenderAction(Request $request, $widget)
     {
         /** @var TranslatorInterface $translator */
-        $translator = $this->get(TranslatorInterface::class);
+        $translator = $this->container->get(TranslatorInterface::class);
 
         $chartData = [];
-        $data = $this->getMemberRepository()->getMembersGender($this->get(WidgetConfigs::class)
+        $data = $this->getMemberRepository()->getMembersGender($this->container->get(WidgetConfigs::class)
             ->getWidgetOptions($request->query->get('_widgetId', null))
             ->get('memberType'));
         foreach ($data as $key => $value) {
@@ -102,8 +105,8 @@ class DashboardController extends AbstractController
             ];
         }
 
-        $widgetAttr = $this->get(WidgetConfigs::class)->getWidgetAttributesForTwig($widget);
-        $widgetAttr['chartView'] = $this->get(ChartViewBuilder::class)
+        $widgetAttr = $this->container->get(WidgetConfigs::class)->getWidgetAttributesForTwig($widget);
+        $widgetAttr['chartView'] = $this->container->get(ChartViewBuilder::class)
             ->setArrayData($chartData)
             ->setOptions([
             'name' => 'pie_chart',
@@ -134,12 +137,12 @@ class DashboardController extends AbstractController
      */
     public function membersNewByYearAction(Request $request, $widget)
     {
-        $chartData = $this->getMemberRepository()->getNewMembersByYear($this->get(WidgetConfigs::class)
+        $chartData = $this->getMemberRepository()->getNewMembersByYear($this->container->get(WidgetConfigs::class)
             ->getWidgetOptions($request->query->get('_widgetId', null))
             ->get('memberType'));
 
-        $widgetAttr = $this->get(WidgetConfigs::class)->getWidgetAttributesForTwig($widget);
-        $widgetAttr['chartView'] = $this->get(ChartViewBuilder::class)
+        $widgetAttr = $this->container->get(WidgetConfigs::class)->getWidgetAttributesForTwig($widget);
+        $widgetAttr['chartView'] = $this->container->get(ChartViewBuilder::class)
             ->setArrayData($chartData)
             ->setOptions([
                 'name' => 'bar_chart',
@@ -167,12 +170,12 @@ class DashboardController extends AbstractController
      */
     public function memberByAge(Request $request, $widget)
     {
-        $chartData = $this->getMemberRepository()->getMemberByAge($this->get(WidgetConfigs::class)
+        $chartData = $this->getMemberRepository()->getMemberByAge($this->container->get(WidgetConfigs::class)
             ->getWidgetOptions($request->query->get('_widgetId', null))
             ->get('memberType'));
 
-        $widgetAttr = $this->get(WidgetConfigs::class)->getWidgetAttributesForTwig($widget);
-        $widgetAttr['chartView'] = $this->get(ChartViewBuilder::class)
+        $widgetAttr = $this->container->get(WidgetConfigs::class)->getWidgetAttributesForTwig($widget);
+        $widgetAttr['chartView'] = $this->container->get(ChartViewBuilder::class)
             ->setArrayData($chartData)
             ->setOptions([
             'name' => 'pie_chart',
@@ -201,6 +204,6 @@ class DashboardController extends AbstractController
      */
     protected function getMemberRepository()
     {
-        return $this->getDoctrine()->getRepository('DMKClubMemberBundle:Member');
+        return $this->container->get('doctrine')->getRepository(Member::class);
     }
 }

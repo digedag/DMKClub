@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        public: true
+
+    DMKClub\Bundle\PublicRelationBundle\Controller\PRContactController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    DMKClub\Bundle\PublicRelationBundle\Controller\Api\Rest\PRContactController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }

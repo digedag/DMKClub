@@ -5,8 +5,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 use Oro\Bundle\SegmentBundle\Entity\Segment;
 use DMKClub\Bundle\MemberBundle\Model\ExtendMemberBilling;
 use DMKClub\Bundle\PaymentBundle\Sepa\SepaPaymentAwareInterface;
@@ -19,34 +19,34 @@ use DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor;
  * @ORM\Entity(repositoryClass="DMKClub\Bundle\MemberBundle\Entity\Repository\MemberBillingRepository")
  * @ORM\Table(name="dmkclub_member_billing")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *      routeName="dmkclub_memberbilling_index",
- *      routeView="dmkclub_memberbilling_view",
- *      defaultValues={
- *          "entity"={
- *              "icon"="fa-briefcase"
- *          },
- *          "ownership"={
- *              "owner_type"="USER",
- *              "owner_field_name"="owner",
- *              "owner_column_name"="user_owner_id",
- *              "organization_field_name"="organization",
- *              "organization_column_name"="organization_id"
- *          },
- *          "security"={
- *              "type"="ACL",
- *              "group_name"="",
- *              "category"="dmkclub_data"
- *          },
- *          "tag"={
- *              "enabled"=true
- *          },
- *          "dataaudit"={
- *              "auditable"=true
- *          }
- *      }
- * )
  */
+#[Config(
+    routeName: 'dmkclub_memberbilling_index',
+    routeView: 'dmkclub_memberbilling_view',
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-briefcase',
+        ],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'user_owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id',
+        ],
+        'security' => [
+            'type' => 'ACL',
+            'group_name' => '',
+            'category' => 'dmkclub_data',
+        ],
+        'tag' => [
+            'enabled' => true,
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInterface
 {
 
@@ -57,11 +57,10 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ConfigField(
-     *      defaultValues={
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [],
+    )]
     protected $id;
 
     /**
@@ -69,14 +68,14 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
      * @var \DateTime
      *
      * @ORM\Column(name="start_date", type="date", nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     protected $startDate;
 
     /**
@@ -84,14 +83,14 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
      * @var \DateTime
      *
      * @ORM\Column(name="end_date", type="date", nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     protected $endDate;
 
     /**
@@ -99,14 +98,14 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     protected $name;
 
     /**
@@ -114,14 +113,14 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
      * @var string
      *
      * @ORM\Column(name="sign", type="string", length=50, nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     protected $sign;
 
     /**
@@ -129,14 +128,14 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
      * @var string
      *
      * @ORM\Column(name="processor", type="string", length=255, nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     protected $processor;
 
     /**
@@ -144,14 +143,14 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
      * @var string
      *
      * @ORM\Column(name="processor_config", type="text", nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     protected $processorConfig;
 
     protected $processorSettings;
@@ -161,14 +160,14 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
      * @var string
      *
      * @ORM\Column(name="position_labels", type="text", nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     private $positionLabels = "FEE Fee from [STARTDATE] to [ENDDATE]
 ADMISSION  admission fee
 FEECORRECTION fee correction";
@@ -178,14 +177,14 @@ FEECORRECTION fee correction";
      * @var string
      *
      * @ORM\Column(name="export_filesystem", type="string", length=255, nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     private $exportFilesystem;
 
     /**
@@ -203,14 +202,14 @@ FEECORRECTION fee correction";
      * @var \DateTime $createdAt
      *
      * @ORM\Column(type="datetime", name="created_at")
-     * @ConfigField(
-     *      defaultValues={
-     *          "entity"={
-     *              "label"="oro.ui.created_at"
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'entity' => [
+                'label' => 'oro.ui.created_at',
+            ],
+        ],
+    )]
     protected $createdAt;
 
     /**
@@ -218,21 +217,27 @@ FEECORRECTION fee correction";
      * @var \DateTime $updatedAt
      *
      * @ORM\Column(type="datetime", name="updated_at")
-     * @ConfigField(
-     *      defaultValues={
-     *          "entity"={
-     *              "label"="oro.ui.updated_at"
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'entity' => [
+                'label' => 'oro.ui.updated_at',
+            ],
+        ],
+    )]
     protected $updatedAt;
 
     /**
      *
      * @ORM\OneToMany(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberFee", mappedBy="billing", cascade={"all"}, orphanRemoval=true)
-     * @ConfigField(defaultValues={"dataaudit"={"auditable"=true}})
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     protected $memberFees;
 
     /**

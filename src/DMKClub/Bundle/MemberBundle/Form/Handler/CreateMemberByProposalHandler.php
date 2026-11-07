@@ -6,8 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ObjectManager;
 
 use Oro\Bundle\ChannelBundle\Provider\RequestChannelProvider;
-use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
-use Oro\Bundle\EntityExtendBundle\Entity\Repository\EnumValueRepository;
+use Oro\Bundle\EntityExtendBundle\Provider\EnumOptionsProvider;
 
 use DMKClub\Bundle\MemberBundle\Entity\MemberProposal;
 use DMKClub\Bundle\MemberBundle\Entity\Manager\MemberManager;
@@ -24,18 +23,24 @@ class CreateMemberByProposalHandler implements FormHandlerInterface
      */
     protected $memberManager;
 
+    /** @var EnumOptionsProvider */
+    protected $enumOptionsProvider;
+
     /**
      *
      * @param ObjectManager $manager
-     * @param RequestChannelProvider $requestChannelProvider
+     * @param MemberManager $memberManager
+     * @param EnumOptionsProvider $enumOptionsProvider
      */
     public function __construct(
         ObjectManager $manager,
-        MemberManager $memberManager
+        MemberManager $memberManager,
+        EnumOptionsProvider $enumOptionsProvider
     )
     {
         $this->manager = $manager;
         $this->memberManager = $memberManager;
+        $this->enumOptionsProvider = $enumOptionsProvider;
     }
 
     /**
@@ -86,9 +91,6 @@ class CreateMemberByProposalHandler implements FormHandlerInterface
 
     protected function getEnumValue($enumName, $valueId)
     {
-        $className = ExtendHelper::buildEnumValueClassName($enumName);
-        /** @var EnumValueRepository $enumRepo */
-        $enumRepo = $this->manager->getRepository($className);
-        return $enumRepo->findOneById($valueId);
+        return $this->enumOptionsProvider->getEnumOptionByCode($enumName, $valueId);
     }
 }

@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Oro\Bundle\FormBundle\Form\Type\Select2EntityType;
+use Oro\Bundle\SegmentBundle\Entity\Segment;
 
 /**
  * Class MemberSegmentSelectType
@@ -44,7 +45,7 @@ class MemberSegmentSelectType extends AbstractType
         $resolver->setDefaults(
             [
                 'label'         => 'oro.segment.entity_label',
-                'class'         => 'OroSegmentBundle:Segment',
+                'class'         => Segment::class,
                 'choice_label'  => 'name',
                 'random_id'     => true,
                 'choices'       => [],
@@ -64,7 +65,7 @@ class MemberSegmentSelectType extends AbstractType
                 $em = $options['em'];
 
                 /** @var EntityRepository $repository */
-                $repository = $em->getRepository('OroSegmentBundle:Segment');
+                $repository = $em->getRepository(Segment::class);
                 $entities   = $options['entities'];
                 $qb = $this->getQueryBuilder($repository, $entities);
                 return $qb->getQuery()->getResult();

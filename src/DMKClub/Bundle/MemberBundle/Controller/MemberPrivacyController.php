@@ -1,6 +1,7 @@
 <?php
 namespace DMKClub\Bundle\MemberBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Form\Form;
@@ -9,7 +10,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 
 use DMKClub\Bundle\MemberBundle\Entity\Member;
 use DMKClub\Bundle\MemberBundle\Entity\MemberPrivacy;
@@ -21,9 +22,10 @@ class MemberPrivacyController extends AbstractController
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
+            'doctrine' => ManagerRegistry::class,
             TranslatorInterface::class,
             MemberPrivacyHandler::class,
             'dmkclub_member.memberprivacy.form' => Form::class,
@@ -33,9 +35,9 @@ class MemberPrivacyController extends AbstractController
     /**
      *
      * @Route("/widget/privacyinfo/{id}", name="dmkclub_member_memberprivacy_widget_infoblock", options={"expose"=true}, requirements={"id"="\d+"}))
-     * @AclAncestor("dmkclub_member_view")
      * @Template
      */
+    #[AclAncestor('dmkclub_member_view')]
     public function privacyInfoAction(Member $member)
     {
         return [
@@ -52,9 +54,9 @@ class MemberPrivacyController extends AbstractController
      *      requirements={"memberId"="\d+","id"="\d+"}
      * )
      * @Template
-     * @AclAncestor("dmkclub_member_update")
      * @ParamConverter("member", options={"id" = "memberId" })
      */
+    #[AclAncestor('dmkclub_member_update')]
     public function updateAction(Member $member, MemberPrivacy $privacy)
     {
         return $this->update($member, $privacy);
@@ -74,15 +76,13 @@ class MemberPrivacyController extends AbstractController
             'member' => $member
         ];
 
-        if ($this->get(MemberPrivacyHandler::class)->process($privacy)) {
-            $this->getDoctrine()
-                ->getManager()
-                ->flush();
+        if ($this->container->get(MemberPrivacyHandler::class)->process($privacy)) {
+            $this->container->get('doctrine')->getManager()->flush();
             $responseData['entity'] = $privacy;
             $responseData['saved'] = true;
         }
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->get('dmkclub_member.memberprivacy.form');
+        $form = $this->container->get('dmkclub_member.memberprivacy.form');
         $responseData['form'] = $form->createView();
         return $responseData;
     }

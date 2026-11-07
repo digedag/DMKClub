@@ -15,3 +15,9 @@ services:
         tags:
             - { name: container.service_subscriber }
             - { name: container.service_subscriber, id: 'dmkclub.sponsor.form' }
+
+    DMKClub\Bundle\SponsorBundle\Controller\Api\Rest\SponsorController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }

@@ -2,13 +2,14 @@
 
 namespace DMKClub\Bundle\MemberBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 use DMKClub\Bundle\MemberBundle\Entity\Member;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFeeDiscount;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,9 +23,10 @@ class MemberFeeDiscountController extends AbstractController
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
+            'doctrine' => ManagerRegistry::class,
             TranslatorInterface::class,
             MemberFeeDiscountHandler::class,
             'dmkclub_member.memberfeediscount.form' => Form::class,
@@ -34,8 +36,8 @@ class MemberFeeDiscountController extends AbstractController
 	/**
 	 * @Route("/info-block/{id}", name="dmkclub_member_memberfeediscount_infoblock", requirements={"id"="\d+"})
 	 * @Template
-	 * @AclAncestor("dmkclub_member_view")
 	 */
+	#[AclAncestor('dmkclub_member_view')]
 	public function infoBlockAction(Member $contact)
 	{
 		return [
@@ -51,9 +53,9 @@ class MemberFeeDiscountController extends AbstractController
 	 *      requirements={"memberId"="\d+"}
 	 * )
 	 * @Template("DMKClubMemberBundle:MemberFeeDiscount:update.html.twig")
-	 * @AclAncestor("dmkclub_member_create")
 	 * @ParamConverter("member", options={"id" = "memberId"})
 	 */
+	#[AclAncestor('dmkclub_member_create')]
 	public function createAction(Member $member)
 	{
 		$discount = new MemberFeeDiscount();
@@ -72,9 +74,9 @@ class MemberFeeDiscountController extends AbstractController
 	 *      requirements={"memberId"="\d+","id"="\d+"},defaults={"id"=0}
 	 * )
 	 * @Template
-	 * @AclAncestor("dmkclub_member_update")
 	 * @ParamConverter("member", options={"id" = "memberId"})
 	 */
+	#[AclAncestor('dmkclub_member_update')]
 	public function updateAction(Member $member, MemberFeeDiscount $discount)
 	{
 		return $this->update($member, $discount);
@@ -94,13 +96,13 @@ class MemberFeeDiscountController extends AbstractController
 		];
 
 
-		if ($this->get(MemberFeeDiscountHandler::class)->process($discount)) {
-			$this->getDoctrine()->getManager()->flush();
+		if ($this->container->get(MemberFeeDiscountHandler::class)->process($discount)) {
+			$this->container->get('doctrine')->getManager()->flush();
 			$responseData['entity'] = $discount;
 			$responseData['saved'] = true;
 		}
 		/* @var $form \Symfony\Component\Form\Form */
-		$form = $this->get('dmkclub_member.memberfeediscount.form');
+		$form = $this->container->get('dmkclub_member.memberfeediscount.form');
 //		$form->setData($discount);
 		$responseData['form'] = $form->createView();
 		return $responseData;

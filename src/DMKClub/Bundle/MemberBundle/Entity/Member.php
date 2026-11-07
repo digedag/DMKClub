@@ -4,8 +4,8 @@ namespace DMKClub\Bundle\MemberBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 use Oro\Bundle\ContactBundle\Entity\Contact;
 use Oro\Bundle\AddressBundle\Entity\Address;
 use Oro\Bundle\ChannelBundle\Model\ChannelAwareInterface;
@@ -22,47 +22,49 @@ use Oro\Bundle\ContactBundle\Entity\ContactEmail;
  * @ORM\Entity(repositoryClass="DMKClub\Bundle\MemberBundle\Entity\Repository\MemberRepository")
  * @ORM\Table(name="dmkclub_member")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *      routeName="dmkclub_member_index",
- *      routeView="dmkclub_member_view",
- *      defaultValues={
- *          "entity"={
- *              "icon"="fa-user-circle",
- *              "contact_information"={
- *                  "email"={
- *                      {"fieldName"="primaryEmail"}
- *                  }
- *              }
- *          },
- *          "ownership"={
- *              "owner_type"="USER",
- *              "owner_field_name"="owner",
- *              "owner_column_name"="user_owner_id",
- *              "organization_field_name"="organization",
- *              "organization_column_name"="organization_id"
- *          },
- *          "security"={
- *              "type"="ACL",
- *              "group_name"="",
- *              "category"="dmkclub_data"
- *          },
- *          "form"={
- *              "grid_name"="dmkclub-members-grid",
- *              "form_type"="dmkclub_member_select"
- *          },
- *          "comment"={
- *              "enabled"=true
- *          },
- *          "tag"={
- *              "enabled"=true
- *          },
- *          "dataaudit"={
- *              "auditable"=true
- *          }
- *      }
- * )
  * Die Angaben in "form" dienen dem create_select_form_inline
  */
+#[Config(
+    routeName: 'dmkclub_member_index',
+    routeView: 'dmkclub_member_view',
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-user-circle',
+            'contact_information' => [
+                'email' => [
+                    [
+                        'fieldName' => 'primaryEmail',
+                    ],
+                ],
+            ],
+        ],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'user_owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id',
+        ],
+        'security' => [
+            'type' => 'ACL',
+            'group_name' => '',
+            'category' => 'dmkclub_data',
+        ],
+        'form' => [
+            'grid_name' => 'dmkclub-members-grid',
+            'form_type' => 'dmkclub_member_select',
+        ],
+        'comment' => [
+            'enabled' => true,
+        ],
+        'tag' => [
+            'enabled' => true,
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderInterface
 {
     use ChannelEntityTrait, LifecycleTrait;
@@ -77,14 +79,14 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ConfigField(
-     *      defaultValues={
-     *          "importexport"={
-     *              "order"=10
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'order' => 10,
+            ],
+        ],
+    )]
     protected $id;
 
     /**
@@ -92,18 +94,18 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @var string
      *
      * @ORM\Column(name="member_code", type="string", length=255, nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "identity"=true,
-     *              "order"=20
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'identity' => true,
+                'order' => 20,
+            ],
+        ],
+    )]
     protected $memberCode;
 
     /**
@@ -111,18 +113,18 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @var string
      *
      * @ORM\Column(name="member_code_int", type="integer", nullable=true, options={"default" : 0})
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "identity"=true,
-     *              "order"=21
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'identity' => true,
+                'order' => 21,
+            ],
+        ],
+    )]
     protected $memberCodeInt;
 
     /**
@@ -130,17 +132,17 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @var \DateTime
      *
      * @ORM\Column(name="start_date", type="date", nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "order"=75
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 75,
+            ],
+        ],
+    )]
     protected $startDate;
 
     /**
@@ -148,17 +150,17 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @var \DateTime
      *
      * @ORM\Column(name="end_date", type="date", nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "order"=77
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 77,
+            ],
+        ],
+    )]
     protected $endDate;
 
     /**
@@ -166,53 +168,65 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "order"=30
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 30,
+            ],
+        ],
+    )]
     protected $name;
 
     /**
      *
      * @ORM\OneToMany(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberFee", mappedBy="member", cascade={"all"}, orphanRemoval=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={"auditable"=true},
-     *          "importexport"={"excluded"=true}
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     private $memberFees;
 
     /**
      *
      * @ORM\OneToMany(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberFeeDiscount", mappedBy="member", cascade={"all"}, orphanRemoval=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={"auditable"=true},
-     *          "importexport"={"excluded"=true}
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     private $memberFeeDiscounts;
 
     /**
      *
      * @ORM\OneToMany(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberProposal", mappedBy="member")
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={"auditable"=true},
-     *          "importexport"={"excluded"=true}
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     private $memberProposals;
 
     /**
@@ -221,18 +235,18 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\ContactBundle\Entity\Contact", cascade="PERSIST")
      * @ORM\JoinColumn(name="contact_id", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "order"=500,
-     *              "full"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 500,
+                'full' => true,
+            ],
+        ],
+    )]
     protected $contact;
 
     /**
@@ -241,18 +255,18 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\ContactBundle\Entity\Contact", cascade="PERSIST")
      * @ORM\JoinColumn(name="legal_contact_id", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "order"=501,
-     *              "full"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 501,
+                'full' => true,
+            ],
+        ],
+    )]
     protected $legalContact;
 
     /**
@@ -260,15 +274,17 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @var boolean
      *
      * @ORM\Column(type="boolean", name="is_active", options={"default" : false})
-     * @ConfigField(
-     * 	   defaultValues={
-     *         "dataaudit"={"auditable"=true},
-     *         "importexport"={
-     *             "order"=40
-     *         }
-     *     }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 40,
+            ],
+        ],
+    )]
     protected $isActive = false;
 
     /**
@@ -276,15 +292,17 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @var boolean
      *
      * @ORM\Column(type="boolean", name="is_honorary", options={"default" : false})
-     * @ConfigField(
-     *   defaultValues={
-     *       "dataaudit"={"auditable"=true},
-     *       "importexport"={
-     *           "order"=50
-     *       }
-     *   }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 50,
+            ],
+        ],
+    )]
     protected $isHonorary = false;
 
     /**
@@ -292,13 +310,17 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @var boolean
      *
      * @ORM\Column(type="boolean", name="is_free_of_charge", options={"default" : false})
-     * @ConfigField(defaultValues={"dataaudit"={"auditable"=true},
-     *          "importexport"={
-     *              "order"=60
-     *          }
-     *   }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 60,
+            ],
+        ],
+    )]
     protected $isFreeOfCharge = false;
 
     /**
@@ -306,17 +328,17 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=20, nullable=true, options={"default" : "active"})
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "order"=70
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 70,
+            ],
+        ],
+    )]
     protected $status;
 
     /**
@@ -325,18 +347,18 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      *
      * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\PaymentBundle\Entity\BankAccount", cascade="PERSIST")
      * @ORM\JoinColumn(name="bank_account", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "full"=true,
-     *              "order"=85
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'full' => true,
+                'order' => 85,
+            ],
+        ],
+    )]
     protected $bankAccount;
 
     /**
@@ -345,24 +367,30 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\AddressBundle\Entity\Address", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="postal_address", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          },
-     *          "importexport"={
-     *              "full"=true,
-     *              "order"=150
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'full' => true,
+                'order' => 150,
+            ],
+        ],
+    )]
     protected $postalAddress;
 
     /**
      * @ORM\OneToOne(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberPrivacy", cascade={"all"}, mappedBy="member")
-     * @ConfigField(defaultValues={"dataaudit"={"auditable"=true}})
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     protected $privacy;
 
     /**
@@ -379,15 +407,15 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\AccountBundle\Entity\Account", cascade="PERSIST")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "importexport"={
-     *              "full"=false,
-     *              "order"=450
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'full' => false,
+                'order' => 450,
+            ],
+        ],
+    )]
     protected $account;
 
     /**
@@ -396,15 +424,15 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
      * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "importexport"={
-     *              "full"=false,
-     *              "order"=460
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'full' => false,
+                'order' => 460,
+            ],
+        ],
+    )]
     protected $organization;
 
     /**

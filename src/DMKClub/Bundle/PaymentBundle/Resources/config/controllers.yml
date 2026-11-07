@@ -9,3 +9,8 @@ services:
             - { name: container.service_subscriber }
             - { name: container.service_subscriber, id: 'dmkclub_payment.sepacreditor.form' }
 
+    DMKClub\Bundle\PaymentBundle\Controller\Api\Rest\SepaCreditorController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }

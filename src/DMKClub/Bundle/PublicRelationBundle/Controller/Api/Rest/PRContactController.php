@@ -4,23 +4,29 @@ namespace DMKClub\Bundle\PublicRelationBundle\Controller\Api\Rest;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use FOS\RestBundle\Controller\Annotations\NamePrefix;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Symfony\Component\HttpFoundation\Response;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 
 /**
- * @NamePrefix("oro_api_")
  */
-class PRContactController extends RestController implements ClassResourceInterface
+class PRContactController extends RestController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            'dmkclub.prcontact.manager.api' => ApiEntityManager::class,
+        ]);
+    }
     /**
      * REST DELETE
      *
@@ -30,14 +36,9 @@ class PRContactController extends RestController implements ClassResourceInterfa
      *      description="Delete P/R Contact",
      *      resource=true
      * )
-     * @Acl(
-     *      id="dmkclub_prcontact_delete",
-     *      type="entity",
-     *      permission="DELETE",
-     *      class="DMKClubPublicRelationBundle:PRContact"
-     * )
      * @return Response
      */
+    #[Acl(id: 'dmkclub_prcontact_delete', type: 'entity', permission: 'DELETE', class: \DMKClub\Bundle\PublicRelationBundle\Entity\PRContact::class)]
     public function deleteAction($id)
     {
         return $this->handleDeleteRequest($id);
@@ -50,7 +51,7 @@ class PRContactController extends RestController implements ClassResourceInterfa
      */
     public function getManager()
     {
-        return $this->get('dmkclub.prcontact.manager.api');
+        return $this->container->get('dmkclub.prcontact.manager.api');
     }
 
     /**

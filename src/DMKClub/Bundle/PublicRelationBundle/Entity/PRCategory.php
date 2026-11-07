@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 
 use DMKClub\Bundle\BasicsBundle\Model\LifecycleTrait;
 use DMKClub\Bundle\PublicRelationBundle\Model\ExtendPRCategory;
@@ -20,36 +20,36 @@ use DMKClub\Bundle\PublicRelationBundle\Model\ExtendPRCategory;
  * @ORM\Entity(repositoryClass="DMKClub\Bundle\PublicRelationBundle\Entity\Repository\PRCategoryRepository")
  * @ORM\Table(name="dmkclub_prcategory")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *      routeName="dmkclub_prcategory_index",
- *      routeView="dmkclub_prcategory_view",
- *      defaultValues={
- *          "entity"={
- *              "icon"="fa-gear"
- *          },
- *          "ownership"={
- *              "owner_type"="USER",
- *              "owner_field_name"="owner",
- *              "owner_column_name"="user_owner_id",
- *              "organization_field_name"="organization",
- *              "organization_column_name"="organization_id"
- *          },
- *          "security"={
- *              "type"="ACL",
- *              "group_name"="",
- *              "category"="dmkclub_data"
- *          },
- *          "form"={
- *              "form_type"="dmkclub_prcategory_select",
- *              "grid_name"="dmkclub-prcategories-select-grid"
- *          },
- *          "dataaudit"={
- *              "auditable"=true
- *          }
- *      }
- * )
  * Die Angaben in "form" dienen dem create_select_form_inline
  */
+#[Config(
+    routeName: 'dmkclub_prcategory_index',
+    routeView: 'dmkclub_prcategory_view',
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-gear',
+        ],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'user_owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id',
+        ],
+        'security' => [
+            'type' => 'ACL',
+            'group_name' => '',
+            'category' => 'dmkclub_data',
+        ],
+        'form' => [
+            'form_type' => 'dmkclub_prcategory_select',
+            'grid_name' => 'dmkclub-prcategories-select-grid',
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class PRCategory extends ExtendPRCategory
 {
     use LifecycleTrait;
@@ -63,14 +63,14 @@ class PRCategory extends ExtendPRCategory
 	 * @ORM\Id
 	 * @ORM\Column(type="integer", name="id")
 	 * @ORM\GeneratedValue(strategy="AUTO")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "importexport"={
-	 *              "order"=10
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'importexport' => [
+	            'order' => 10,
+	        ],
+	    ],
+	)]
 	protected $id;
 
 
@@ -78,18 +78,18 @@ class PRCategory extends ExtendPRCategory
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          },
-	 *          "importexport"={
-	 *              "identity"=true,
-	 *              "order"=30
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'identity' => true,
+	            'order' => 30,
+	        ],
+	    ],
+	)]
 	protected $name;
 
 	/**

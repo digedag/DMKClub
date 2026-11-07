@@ -1,33 +1,20 @@
 <?php
 namespace DMKClub\Bundle\BasicsBundle\Form\Handler;
 
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\Persistence\ObjectManager;
+use Oro\Bundle\FormBundle\Form\Handler\FormHandlerInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
+
 use DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate;
 
-class TwigTemplateHandler
+class TwigTemplateHandler implements FormHandlerInterface
 {
-
-    /** @var FormInterface */
-    protected $form;
-
-    /** @var RequestStack */
-    protected $request;
-
     /** @var ObjectManager */
     protected $manager;
 
-    /**
-     *
-     * @param FormInterface $form
-     * @param RequestStack $request
-     * @param ObjectManager $manager
-     */
-    public function __construct(FormInterface $form, RequestStack $request, ObjectManager $manager)
+    public function __construct(ObjectManager $manager)
     {
-        $this->form = $form;
-        $this->request = $request;
         $this->manager = $manager;
     }
 
@@ -38,18 +25,17 @@ class TwigTemplateHandler
      *
      * @return bool True on successful processing, false otherwise
      */
-    public function process(TwigTemplate $entity)
+    public function process($entity, FormInterface $form, Request $request)
     {
-        $this->form->setData($entity);
+        $form->setData($entity);
 
-        $request = $this->request->getCurrentRequest();
         if (in_array($request->getMethod(), [
             'POST',
             'PUT'
         ])) {
-            $this->form->handleRequest($request);
+            $form->handleRequest($request);
 
-            if ($this->form->isValid()) {
+            if ($form->isValid()) {
                 $this->onSuccess($entity);
 
                 return true;

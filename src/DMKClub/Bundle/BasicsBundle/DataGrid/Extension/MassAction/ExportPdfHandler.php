@@ -2,7 +2,7 @@
 namespace DMKClub\Bundle\BasicsBundle\DataGrid\Extension\MassAction;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionHandlerInterface;
 use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionHandlerArgs;
@@ -121,7 +121,7 @@ class ExportPdfHandler implements MassActionHandlerInterface
             'count' => $entitiesCount
         ];
 
-        return new MassActionResponse($successful, $this->translator->transChoice($responseMessage, $entitiesCount, [
+        return new MassActionResponse($successful, $this->translator->trans($responseMessage, [
             '%count%' => $entitiesCount
         ]), $options);
     }

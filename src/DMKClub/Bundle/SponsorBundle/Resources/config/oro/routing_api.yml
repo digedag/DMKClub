@@ -1,3 +1,47 @@
-dmkclub_sponsor_api:
-    resource:     "@DMKClubSponsorBundle/Controller/Api/Rest/SponsorController.php"
-    type:         rest
+dmkclub_api_cget_sponsor:
+    path: '/sponsors.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'DMKClub\Bundle\SponsorBundle\Controller\Api\Rest\SponsorController::cgetAction'
+        _format: json
+    requirements:
+        _format: json
+
+dmkclub_api_get_sponsor:
+    path: '/sponsors/{id}.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'DMKClub\Bundle\SponsorBundle\Controller\Api\Rest\SponsorController::getAction'
+        _format: json
+    requirements:
+        id: \d+
+        _format: json
+
+dmkclub_api_put_sponsor:
+    path: '/sponsors/{id}.{_format}'
+    methods: [PUT]
+    defaults:
+        _controller: 'DMKClub\Bundle\SponsorBundle\Controller\Api\Rest\SponsorController::putAction'
+        _format: json
+    requirements:
+        id: \d+
+        _format: json
+
+dmkclub_api_post_sponsor:
+    path: '/sponsors.{_format}'
+    methods: [POST]
+    defaults:
+        _controller: 'DMKClub\Bundle\SponsorBundle\Controller\Api\Rest\SponsorController::postAction'
+        _format: json
+    requirements:
+        _format: json
+
+dmkclub_api_delete_sponsor:
+    path: '/sponsors/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'DMKClub\Bundle\SponsorBundle\Controller\Api\Rest\SponsorController::deleteAction'
+        _format: json
+    requirements:
+        id: \d+
+        _format: json

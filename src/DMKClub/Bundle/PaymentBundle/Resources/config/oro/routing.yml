@@ -8,7 +8,7 @@ dmkclub_payment_bundle:
 
 dmkclub_payment_bundle_api:
     resource: "@DMKClubPaymentBundle/Resources/config/oro/routing_api.yml"
-    type: rest
+    type: yaml
     prefix:       api/rest/{version}
     requirements:
         version:  latest|v1

@@ -9,7 +9,7 @@ use Oro\Bundle\EmailBundle\Model\EmailTemplateInterface;
 use Oro\Bundle\EmailBundle\Provider\EmailRenderer;
 use Oro\Bundle\EmailBundle\Tools\EmailHolderHelper;
 use Oro\Bundle\EmailBundle\Model\EmailHolderInterface;
-use Oro\Bundle\EmailBundle\Mailer\Processor;
+use Oro\Bundle\EmailBundle\Sender\EmailModelSender;
 use Oro\Bundle\EmailBundle\Form\Model\Email As EmailModel;
 use Oro\Bundle\EmailBundle\Entity\EmailAttachment;
 use Oro\Bundle\EmailBundle\Entity\EmailAttachmentContent;
@@ -19,6 +19,7 @@ use Oro\Bundle\UserBundle\Entity\UserInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 use DMKClub\Bundle\BasicsBundle\Model\TemplateNotFoundException;
+use Oro\Bundle\EmailBundle\Entity\EmailTemplate;
 
 /**
  * Ggf. ins BasicsBundle verschieben
@@ -37,7 +38,7 @@ class BaseProcessor
     /** @var EmailHolderHelper */
     protected $emailHolderHelper;
 
-    /** @var Processor */
+    /** @var EmailModelSender */
     protected $mailer;
 
     /** @var EventDispatcherInterface */
@@ -49,7 +50,7 @@ class BaseProcessor
      * @param ConfigManager $configManager
      * @param EmailRenderer $renderer
      * @param EmailHolderHelper $emailHolderHelper
-     * @param \Swift_Mailer $mailer
+     * @param EmailModelSender $mailer
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -57,7 +58,7 @@ class BaseProcessor
         ConfigManager $configManager,
         EmailRenderer $renderer,
         EmailHolderHelper $emailHolderHelper,
-        Processor $mailer
+        EmailModelSender $mailer
     ) {
         $this->eventDispatcher   = $eventDispatcher;
         $this->objectManager   = $objectManager;
@@ -111,7 +112,7 @@ class BaseProcessor
             $formAttachment->setEmailAttachment($attachment);
             $emailModel->addAttachment($formAttachment);
         }
-        return $this->mailer->process($emailModel);
+        return $this->mailer->send($emailModel);
     }
 
     protected function buildEmailAddressString($email, $name)
@@ -127,7 +128,7 @@ class BaseProcessor
     protected function findEmailTemplateByName($emailTemplateName)
     {
         return $this->objectManager
-            ->getRepository('OroEmailBundle:EmailTemplate')
+            ->getRepository(EmailTemplate::class)
             ->findByName($emailTemplateName);
     }
 

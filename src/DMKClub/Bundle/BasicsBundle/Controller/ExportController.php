@@ -11,8 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Oro\Bundle\ImportExportBundle\Handler\ExportHandler;
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 
 
 
@@ -24,7 +22,7 @@ class ExportController extends AbstractController
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return array_merge(
             parent::getSubscribedServices(),
@@ -56,6 +54,6 @@ class ExportController extends AbstractController
      */
     protected function getExportHandler()
     {
-        return $this->get(ExportHandler::class);
+        return $this->container->get(ExportHandler::class);
     }
 }

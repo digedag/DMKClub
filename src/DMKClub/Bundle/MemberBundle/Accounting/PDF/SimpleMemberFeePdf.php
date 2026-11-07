@@ -32,10 +32,10 @@ class SimpleMemberFeePdf implements GeneratorInterface
     /** @var Environment */
     protected $twig;
 
-    /** @var \WhiteOctober\TCPDFBundle\Controller\TCPDFController */
+    /** @var \Qipsius\TCPDFBundle\Controller\TCPDFController */
     protected $tcpdfController;
 
-    public function __construct(\WhiteOctober\TCPDFBundle\Controller\TCPDFController $tcpdfController, TranslatorInterface $translator, Environment $twig)
+    public function __construct(\Qipsius\TCPDFBundle\Controller\TCPDFController $tcpdfController, TranslatorInterface $translator, Environment $twig)
     {
         $this->tcpdfController = $tcpdfController;
         $this->translator = $translator;

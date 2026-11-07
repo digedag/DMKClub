@@ -2,7 +2,7 @@
 namespace DMKClub\Bundle\MemberBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
 
 use DMKClub\Bundle\MemberBundle\Model\ExtendMemberFeeDiscount;
 
@@ -12,14 +12,14 @@ use DMKClub\Bundle\MemberBundle\Model\ExtendMemberFeeDiscount;
  * @ORM\Entity
  * @ORM\Table(name="dmkclub_member_feediscount")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *   defaultValues={
- *     "entity"={
- *       "icon"="fa-list"
- *     }
- *   }
- * )
  */
+#[Config(
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-list',
+        ],
+    ],
+)]
 class MemberFeeDiscount extends ExtendMemberFeeDiscount
 {
 

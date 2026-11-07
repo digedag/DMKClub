@@ -23,19 +23,16 @@ services:
         public: true
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "@service_container"
             - '@DMKClub\Bundle\MemberBundle\Accounting\ProcessorProvider'
             - "@oro_segment.segment_manager"
             - "@oro_message_queue.message_producer"
     DMKClub\Bundle\MemberBundle\Entity\Manager\MemberManager:
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "@service_container"
 
     DMKClub\Bundle\MemberBundle\Entity\Manager\MemberFeeManager:
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "@service_container"
         
     dmkclub_member.memberfeediscount.manager.api:
         public: true
@@ -60,7 +57,7 @@ services:
             - '@oro_config.global'
             - '@oro_email.email_renderer'
             - '@oro_email.email_holder_helper'
-            - '@oro_email.mailer.processor'
+            - '@oro_email.sender.email_model_sender'
 #            - '@oro_email.direct_mailer'
             - '@DMKClub\Bundle\BasicsBundle\PDF\Manager'
 
@@ -77,7 +74,7 @@ services:
     dmkclub_member.memberfee.pdf.simplegenerator:
         class: "%dmkclub_member.memberfee.pdf.simplegenerator.class%"
         arguments:
-            - "@white_october.tcpdf"
+            - "@qipsius.tcpdf"
             - "@translator"
             - "@twig"
         tags:

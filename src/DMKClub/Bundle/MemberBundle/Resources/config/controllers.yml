@@ -45,3 +45,27 @@ services:
         tags:
             - { name: container.service_subscriber }
             - { name: container.service_subscriber, id: 'dmkclub_member.memberfeediscount.form' }
+
+    DMKClub\Bundle\MemberBundle\Controller\Dashboard\DashboardController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    DMKClub\Bundle\MemberBundle\Controller\Api\Rest\MemberController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    DMKClub\Bundle\MemberBundle\Controller\Api\Rest\MemberFeeController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    DMKClub\Bundle\MemberBundle\Controller\Api\Rest\MemberFeeDiscountController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }

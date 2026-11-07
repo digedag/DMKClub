@@ -2,8 +2,8 @@
 namespace DMKClub\Bundle\MemberBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 
 use DMKClub\Bundle\MemberBundle\Model\ExtendMemberFeePosition;
 
@@ -13,14 +13,14 @@ use DMKClub\Bundle\MemberBundle\Model\ExtendMemberFeePosition;
  * @ORM\Entity
  * @ORM\Table(name="dmkclub_member_feeposition")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *   defaultValues={
- *     "entity"={
- *       "icon"="fa-list"
- *     }
- *   }
- * )
  */
+#[Config(
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-list',
+        ],
+    ],
+)]
 class MemberFeePosition extends ExtendMemberFeePosition
 {
 
@@ -49,8 +49,14 @@ class MemberFeePosition extends ExtendMemberFeePosition
     /**
      * @ORM\ManyToOne(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberFee", inversedBy="positions")
      * @ORM\JoinColumn(name="member_fee", referencedColumnName="id", onDelete="CASCADE")
-     * @ConfigField(defaultValues={"dataaudit"={"auditable"=true}})
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+        ],
+    )]
     private $memberFee;
 
     /**

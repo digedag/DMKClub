@@ -1,7 +1,7 @@
 <?php
 namespace DMKClub\Bundle\MemberBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Gaufrette\File;
 
 class CreatePdf4EmailEvent extends Event

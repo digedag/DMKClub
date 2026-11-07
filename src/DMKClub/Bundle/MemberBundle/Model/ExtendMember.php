@@ -5,12 +5,12 @@ namespace DMKClub\Bundle\MemberBundle\Model;
 
 /**
  *
- * method \Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue getStatus()
- * method ExtendMember setStatus(\Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue $status)
- * @method \Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue getPaymentOption()
- * @method ExtendMember setPaymentOption(\Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue $status)
- * @method \Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue getPaymentInterval()
- * @method ExtendMember setPaymentInterval(\Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue $status)
+ * method \Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface getStatus()
+ * method ExtendMember setStatus(\Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface $status)
+ * @method \Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface getPaymentOption()
+ * @method ExtendMember setPaymentOption(\Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface $status)
+ * @method \Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface getPaymentInterval()
+ * @method ExtendMember setPaymentInterval(\Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface $status)
  */
 class ExtendMember
 {

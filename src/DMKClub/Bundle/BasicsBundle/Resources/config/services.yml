@@ -14,7 +14,7 @@ services:
     DMKClub\Bundle\BasicsBundle\PDF\Manager:
         public: true
         arguments:
-            - "@white_october.tcpdf"
+            - "@qipsius.tcpdf"
             - "@twig"
             - "@oro_importexport.file.file_manager"
             - '@oro_importexport.file_manager'

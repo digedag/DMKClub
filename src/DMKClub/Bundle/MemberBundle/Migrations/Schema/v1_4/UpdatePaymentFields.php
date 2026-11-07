@@ -8,24 +8,13 @@ use Oro\Bundle\MigrationBundle\Migration\OrderedMigrationInterface;
 
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use DMKClub\Bundle\PaymentBundle\Model\PaymentInterval;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Oro\Bundle\MigrationBundle\Migration\ParametrizedSqlMigrationQuery;
 use Doctrine\DBAL\Types\Type;
 use DMKClub\Bundle\PaymentBundle\Model\PaymentOption;
 
-class UpdatePaymentFields implements Migration, OrderedMigrationInterface, ContainerAwareInterface
+class UpdatePaymentFields implements Migration, OrderedMigrationInterface
 {
-    /** @var ContainerInterface */
-    protected $container;
-    /**
-     * {@inheritdoc}
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
     /**
      * {@inheritdoc}
      */

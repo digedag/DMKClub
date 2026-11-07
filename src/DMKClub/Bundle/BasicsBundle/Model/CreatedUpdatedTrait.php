@@ -3,7 +3,7 @@
 namespace DMKClub\Bundle\BasicsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 
 trait CreatedUpdatedTrait {
 
@@ -11,34 +11,34 @@ trait CreatedUpdatedTrait {
      * @var \DateTime $createdAt
      *
      * @ORM\Column(type="datetime", name="created_at")
-     * @ConfigField(
-     *      defaultValues={
-     *          "entity"={
-     *              "label"="oro.ui.created_at"
-     *          },
-     *          "importexport"={
-     *              "excluded"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'entity' => [
+                'label' => 'oro.ui.created_at',
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     protected $createdAt;
 
     /**
      * @var \DateTime $updatedAt
      *
      * @ORM\Column(type="datetime", name="updated_at")
-     * @ConfigField(
-     *      defaultValues={
-     *          "entity"={
-     *              "label"="oro.ui.updated_at"
-     *          },
-     *          "importexport"={
-     *              "excluded"=true
-     *          }
-     *      }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'entity' => [
+                'label' => 'oro.ui.updated_at',
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     protected $updatedAt;
 
 

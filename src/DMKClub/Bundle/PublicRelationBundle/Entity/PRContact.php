@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 
 use DMKClub\Bundle\BasicsBundle\Model\LifecycleTrait;
 use DMKClub\Bundle\PublicRelationBundle\Model\ExtendPRContact;
@@ -24,36 +24,36 @@ use Oro\Bundle\AccountBundle\Entity\Account;
  * @ORM\Entity(repositoryClass="DMKClub\Bundle\PublicRelationBundle\Entity\Repository\PRContactRepository")
  * @ORM\Table(name="dmkclub_prcontact")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *      routeName="dmkclub_prcontact_index",
- *      routeView="dmkclub_prcontact_view",
- *      defaultValues={
- *          "entity"={
- *              "icon"="fa-newspaper-o"
- *          },
- *          "ownership"={
- *              "owner_type"="USER",
- *              "owner_field_name"="owner",
- *              "owner_column_name"="user_owner_id",
- *              "organization_field_name"="organization",
- *              "organization_column_name"="organization_id"
- *          },
- *          "security"={
- *              "type"="ACL",
- *              "group_name"="",
- *              "category"="dmkclub_data"
- *          },
- *          "form"={
- *              "form_type"="dmkclub_prcontact_select",
- *              "grid_name"="dmkclub-prcontact-select-grid"
- *          },
- *          "dataaudit"={
- *              "auditable"=true
- *          }
- *      }
- * )
  * Die Angaben in "form" dienen dem create_select_form_inline
  */
+#[Config(
+    routeName: 'dmkclub_prcontact_index',
+    routeView: 'dmkclub_prcontact_view',
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-newspaper-o',
+        ],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'user_owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id',
+        ],
+        'security' => [
+            'type' => 'ACL',
+            'group_name' => '',
+            'category' => 'dmkclub_data',
+        ],
+        'form' => [
+            'form_type' => 'dmkclub_prcontact_select',
+            'grid_name' => 'dmkclub-prcontact-select-grid',
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class PRContact extends ExtendPRContact implements ChannelAwareInterface
 {
     use ChannelEntityTrait, LifecycleTrait;
@@ -67,14 +67,14 @@ class PRContact extends ExtendPRContact implements ChannelAwareInterface
 	 * @ORM\Id
 	 * @ORM\Column(type="integer", name="id")
 	 * @ORM\GeneratedValue(strategy="AUTO")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "importexport"={
-	 *              "order"=10
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'importexport' => [
+	            'order' => 10,
+	        ],
+	    ],
+	)]
 	protected $id;
 
 
@@ -82,18 +82,18 @@ class PRContact extends ExtendPRContact implements ChannelAwareInterface
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          },
-	 *          "importexport"={
-	 *              "identity"=true,
-	 *              "order"=30
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'identity' => true,
+	            'order' => 30,
+	        ],
+	    ],
+	)]
 	protected $name;
 
 	/**
@@ -101,18 +101,18 @@ class PRContact extends ExtendPRContact implements ChannelAwareInterface
 	 *
 	 * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\PublicRelationBundle\Entity\PRCategory")
 	 * @ORM\JoinColumn(name="category", referencedColumnName="id", onDelete="SET NULL")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          },
-	 *          "importexport"={
-	 *              "order"=230,
-	 *              "short"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'order' => 230,
+	            'short' => true,
+	        ],
+	    ],
+	)]
 	protected $category;
 
 	/**

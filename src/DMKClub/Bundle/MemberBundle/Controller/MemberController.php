@@ -1,12 +1,13 @@
 <?php
 namespace DMKClub\Bundle\MemberBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 use Oro\Bundle\AccountBundle\Entity\Account;
 use Oro\Bundle\ChannelBundle\Entity\Channel;
 use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
@@ -27,9 +28,10 @@ class MemberController extends AbstractController
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
+            'doctrine' => ManagerRegistry::class,
             TranslatorInterface::class,
             MemberHandler::class,
             'dmkclub_member.member.form' => Form::class,
@@ -41,9 +43,9 @@ class MemberController extends AbstractController
     /**
      *
      * @Route("/", name="dmkclub_member_index")
-     * @AclAncestor("dmkclub_member_view")
      * @Template
      */
+    #[AclAncestor('dmkclub_member_view')]
     public function indexAction()
     {
         return [
@@ -56,13 +58,8 @@ class MemberController extends AbstractController
      *
      * @Route("/create", name="dmkclub_member_create")
      * @Template("DMKClubMemberBundle:Member:update.html.twig")
-     * @Acl(
-     *      id="dmkclub_member_create",
-     *      type="entity",
-     *      permission="CREATE",
-     *      class="DMKClubMemberBundle:Member"
-     * )
      */
+    #[Acl(id: 'dmkclub_member_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\MemberBundle\Entity\Member::class)]
     public function createAction()
     {
         return $this->update(new Member());
@@ -74,13 +71,8 @@ class MemberController extends AbstractController
      * @Route("/update/{id}", name="dmkclub_member_update", requirements={"id"="\d+"}, defaults={"id"=0})
      *
      * @Template
-     * @Acl(
-     *      id="dmkclub_member_update",
-     *      type="entity",
-     *      permission="EDIT",
-     *      class="DMKClubMemberBundle:Member"
-     * )
      */
+    #[Acl(id: 'dmkclub_member_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\MemberBundle\Entity\Member::class)]
     public function updateAction(Member $entity)
     {
         return $this->update($entity);
@@ -95,14 +87,14 @@ class MemberController extends AbstractController
     protected function update(Member $entity)
     {
         /* @var $handler  \Oro\Bundle\FormBundle\Model\UpdateHandlerFacade */
-        $handler = $this->get(UpdateHandlerFacade::class);
+        $handler = $this->container->get(UpdateHandlerFacade::class);
 
         $data = $handler->update(
             $entity,
-            $this->get('dmkclub_member.member.form'),
-            $this->get(TranslatorInterface::class)->trans('dmkclub.member.message.saved'),
+            $this->container->get('dmkclub_member.member.form'),
+            $this->container->get(TranslatorInterface::class)->trans('dmkclub.member.message.saved'),
             null,
-            $this->get(MemberHandler::class)
+            $this->container->get(MemberHandler::class)
         );
         return $data;
     }
@@ -110,14 +102,9 @@ class MemberController extends AbstractController
     /**
      *
      * @Route("/view/{id}", name="dmkclub_member_view", requirements={"id"="\d+"}))
-     * @Acl(
-     *      id="dmkclub_member_view",
-     *      type="entity",
-     *      permission="VIEW",
-     *      class="DMKClubMemberBundle:Member"
-     * )
      * @Template
      */
+    #[Acl(id: 'dmkclub_member_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\MemberBundle\Entity\Member::class)]
     public function viewAction(Member $member)
     {
         return [
@@ -128,9 +115,9 @@ class MemberController extends AbstractController
     /**
      *
      * @Route("/widget/info/{id}", name="dmkclub_member_widget_info", requirements={"id"="\d+"}))
-     * @AclAncestor("dmkclub_member_view")
      * @Template
      */
+    #[AclAncestor('dmkclub_member_view')]
     public function infoAction(Member $member)
     {
         return [
@@ -141,9 +128,9 @@ class MemberController extends AbstractController
     /**
      *
      * @Route("/widget/additionalinfo/{id}", name="dmkclub_member_widget_additionalinfo", options={"expose"=true}, requirements={"id"="\d+"}))
-     * @AclAncestor("dmkclub_member_view")
      * @Template
      */
+    #[AclAncestor('dmkclub_member_view')]
     public function additionalInfoAction(Member $member)
     {
         return [
@@ -165,15 +152,14 @@ class MemberController extends AbstractController
      *      name="dmkclub_member_widget_account_member_info",
      *      requirements={"accountId"="\d+", "channelId"="\d+"}
      * )
-     * @ParamConverter("account", class="OroAccountBundle:Account", options={"id" = "accountId"})
-     * @ParamConverter("channel", class="OroChannelBundle:Channel", options={"id" = "channelId"})
-     * @AclAncestor("dmkclub_member_view")
+     * @ParamConverter("account", class="Oro\Bundle\AccountBundle\Entity\Account", options={"id" = "accountId"})
+     * @ParamConverter("channel", class="Oro\Bundle\ChannelBundle\Entity\Channel", options={"id" = "channelId"})
      * @Template
      */
+    #[AclAncestor('dmkclub_member_view')]
     public function accountMemberInfoAction(Account $account, Channel $channel)
     {
-        $entities = $this->getDoctrine()
-            ->getRepository('DMKClubMemberBundle:Member')
+        $entities = $this->container->get('doctrine')->getRepository(Member::class)
             ->findBy([
             'account' => $account,
             'dataChannel' => $channel
@@ -193,10 +179,10 @@ class MemberController extends AbstractController
      *        name="dmkclub_member_widget_member_info",
      *        requirements={"id"="\d+", "channelId"="\d+"}
      * )
-     * @ParamConverter("channel", class="OroChannelBundle:Channel", options={"id" = "channelId"})
-     * @AclAncestor("dmkclub_member_view")
+     * @ParamConverter("channel", class="Oro\Bundle\ChannelBundle\Entity\Channel", options={"id" = "channelId"})
      * @Template
      */
+    #[AclAncestor('dmkclub_member_view')]
     public function memberInfoAction(Member $entity, Channel $channel)
     {
         return [

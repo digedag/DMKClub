@@ -5,7 +5,7 @@ dmkclub_basics_bundle:
 
 dmkclub_basics_bundle_api:
     resource: "@DMKClubBasicsBundle/Resources/config/oro/routing_api.yml"
-    type: rest
+    type: yaml
     prefix:       api/rest/{version}
     requirements:
         version:  latest|v1

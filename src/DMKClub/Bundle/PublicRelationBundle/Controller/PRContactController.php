@@ -7,21 +7,39 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
+use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use DMKClub\Bundle\PublicRelationBundle\Entity\PRContact;
+use DMKClub\Bundle\PublicRelationBundle\Form\Handler\PRContactHandler;
 
 /**
  * @Route("/prcontact")
  */
 class PRContactController extends AbstractController
 {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            'oro_form.update_handler' => UpdateHandlerFacade::class,
+            'dmkclub.prcontact.form' => Form::class,
+            'dmkclub.prcontact.form.handler' => PRContactHandler::class,
+            'translator' => TranslatorInterface::class,
+        ]);
+    }
+
 	/**
 	 * @Route("/", name="dmkclub_prcontact_index")
-	 * @AclAncestor("dmkclub_prcontact_view")
 	 * @Template
 	 */
+	#[AclAncestor('dmkclub_prcontact_view')]
 	public function indexAction() {
 		return [
 				'entity_class' => $this->container->getParameter ( 'dmkclub.prcontact.entity.class' )
@@ -30,14 +48,9 @@ class PRContactController extends AbstractController
 
 	/**
 	 * @Route("/view/{id}", name="dmkclub_prcontact_view", requirements={"id"="\d+"}))
-	 * @Acl(
-	 * id="dmkclub_prcontact_view",
-	 * type="entity",
-	 * permission="VIEW",
-	 * class="DMKClubPublicRelationBundle:PRContact"
-	 * )
 	 * @Template
 	 */
+	#[Acl(id: 'dmkclub_prcontact_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\PublicRelationBundle\Entity\PRContact::class)]
 	public function viewAction(PRContact $entity) {
 		return [
 				'entity' => $entity
@@ -47,9 +60,9 @@ class PRContactController extends AbstractController
 	/**
 	 *
 	 * @Route("/widget/info/{id}", name="dmkclub_prcontact_widget_info", requirements={"id"="\d+"}))
-	 * @AclAncestor("dmkclub_prcontact_view")
 	 * @Template
 	 */
+	#[AclAncestor('dmkclub_prcontact_view')]
 	public function infoAction(PRContact $entity)
 	{
 	    return [
@@ -61,15 +74,10 @@ class PRContactController extends AbstractController
 	 * Create form
 	 * @Route("/create", name="dmkclub_prcontact_create")
 	 * @Template("DMKClubPublicRelationBundle:PRContact:update.html.twig")
-	 * @Acl(
-	 *   id="dmkclub_prcontact_create",
-	 *   type="entity",
-	 *   permission="CREATE",
-	 *   class="DMKClubPublicRelationBundle:PRContact"
-	 * )
 	 */
-	public function createAction() {
-		return $this->update ( new PRContact() );
+	#[Acl(id: 'dmkclub_prcontact_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\PublicRelationBundle\Entity\PRContact::class)]
+	public function createAction(Request $request) {
+		return $this->update ( new PRContact(), $request );
 	}
 
     /**
@@ -77,16 +85,11 @@ class PRContactController extends AbstractController
      * @Route("/update/{id}", name="dmkclub_prcontact_update", requirements={"id"="\d+"}, defaults={"id"=0})
      *
      * @Template
-     * @Acl(
-     *      id="dmkclub_prcontact_update",
-     *      type="entity",
-     *      permission="EDIT",
-     *      class="DMKClubPublicRelationBundle:PRContact"
-     * )
      */
-    public function updateAction(PRContact $entity)
+    #[Acl(id: 'dmkclub_prcontact_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\PublicRelationBundle\Entity\PRContact::class)]
+    public function updateAction(PRContact $entity, Request $request)
     {
-    	return $this->update($entity);
+    	return $this->update($entity, $request);
     }
 
     /**
@@ -94,14 +97,14 @@ class PRContactController extends AbstractController
      *
      * @return array
      */
-    protected function update(PRContact $entity)
+    protected function update(PRContact $entity, Request $request)
     {
-    	return $this->get('oro_form.update_handler')->update(
+    	return $this->container->get('oro_form.update_handler')->update(
             $entity,
-            $this->get('dmkclub.prcontact.form'),
-            $this->get('translator')->trans('dmkclub.publicrelation.prcontact.saved.message'),
-            null,
-            $this->get('dmkclub.prcontact.form.handler')
+            $this->container->get('dmkclub.prcontact.form'),
+            $this->container->get('translator')->trans('dmkclub.publicrelation.prcontact.saved.message'),
+            $request,
+            $this->container->get('dmkclub.prcontact.form.handler')
     	);
     }
 }

@@ -1,10 +1,29 @@
-dmkclub_member_bundle_member_api:
-    resource:     "@DMKClubMemberBundle/Controller/Api/Rest/MemberController.php"
-    type:         rest
-dmkclub_member_bundle_memberfeediscount_api:
-    resource:     "@DMKClubMemberBundle/Controller/Api/Rest/MemberFeeDiscountController.php"
-    type:     rest
-dmkclub_member_bundle_memberfee_api:
-    resource:     "@DMKClubMemberBundle/Controller/Api/Rest/MemberFeeController.php"
-    type:     rest
-    
+dmkclub_api_delete_member:
+    path: '/members/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'DMKClub\Bundle\MemberBundle\Controller\Api\Rest\MemberController::deleteAction'
+        _format: json
+    requirements:
+        id: \d+
+        _format: json
+
+dmkclub_api_delete_memberfee:
+    path: '/memberfees/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'DMKClub\Bundle\MemberBundle\Controller\Api\Rest\MemberFeeController::deleteAction'
+        _format: json
+    requirements:
+        id: \d+
+        _format: json
+
+dmkclub_api_delete_memberfeediscount:
+    path: '/memberfeediscounts/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'DMKClub\Bundle\MemberBundle\Controller\Api\Rest\MemberFeeDiscountController::deleteAction'
+        _format: json
+    requirements:
+        id: \d+
+        _format: json

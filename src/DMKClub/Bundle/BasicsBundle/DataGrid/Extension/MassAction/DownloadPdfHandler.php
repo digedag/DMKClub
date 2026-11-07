@@ -14,6 +14,7 @@ use DMKClub\Bundle\BasicsBundle\PDF\Manager;
 use Symfony\Component\Routing\RouterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use DMKClub\Bundle\BasicsBundle\Datasource\ORM\NoOrderingIterableResult;
+use DMKClub\Bundle\MemberBundle\Entity\MemberFee;
 
 /**
  * Generic handler to download a combined PDF. The source of PDF is created by callback.
@@ -138,7 +139,7 @@ class DownloadPdfHandler implements MassActionHandlerInterface
      */
     public function getMemberFeeRepository()
     {
-        return $this->entityManager->getRepository('DMKClubMemberBundle:MemberFee');
+        return $this->entityManager->getRepository(MemberFee::class);
     }
 
     /**
@@ -180,7 +181,7 @@ class DownloadPdfHandler implements MassActionHandlerInterface
         }
         $options['url'] = $url;
 
-        return new MassActionResponse($successful, $this->translator->transChoice($responseMessage, $entitiesCount, [
+        return new MassActionResponse($successful, $this->translator->trans($responseMessage, [
             '%count%' => $entitiesCount
         ]), $options);
     }

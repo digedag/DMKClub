@@ -41,7 +41,7 @@ class Manager
      *
      * @param \TCPDF $tcpdf
      */
-    public function __construct(\WhiteOctober\TCPDFBundle\Controller\TCPDFController $tcpdf, Environment $twig, FileManager $fm, GaufretteFileManager $gaufretteFileManager, Logger $logger)
+    public function __construct(\Qipsius\TCPDFBundle\Controller\TCPDFController $tcpdf, Environment $twig, FileManager $fm, GaufretteFileManager $gaufretteFileManager, Logger $logger)
     {
         $this->tcpdf = $tcpdf;
         $this->twig = clone $twig;

@@ -26,8 +26,6 @@ services:
     DMKClub\Bundle\BasicsBundle\Form\Handler\TwigTemplateHandler:
         public: true
         arguments:
-            - "@dmkclub_basics.twigtemplate.form"
-            - "@request_stack"
             - "@doctrine.orm.entity_manager"
 
 # ####

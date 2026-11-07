@@ -171,7 +171,7 @@ class SendMemberFeeHandler implements MassActionHandlerInterface
             'count' => $entitiesCount,
         ];
 
-        return new MassActionResponse($successful, $this->translator->transChoice($responseMessage, $entitiesCount, [
+        return new MassActionResponse($successful, $this->translator->trans($responseMessage, [
             '%count%' => $entitiesCount,
         ]), $options);
     }

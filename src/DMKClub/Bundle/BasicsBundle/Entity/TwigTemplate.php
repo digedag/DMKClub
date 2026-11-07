@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 
@@ -18,31 +18,31 @@ use Symfony\Component\Yaml\Exception\ParseException;
  * @ORM\Entity(repositoryClass="DMKClub\Bundle\BasicsBundle\Entity\Repository\TwigTemplateRepository")
  * @ORM\Table(name="dmkclub_basics_twigtemplate")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *      routeName="dmkclub_basics_twigtemplate_index",
- *      routeView="dmkclub_basics_twigtemplate_view",
- *      defaultValues={
- *          "entity"={
- *              "icon"="fa-file"
- *          },
- *          "ownership"={
- *              "owner_type"="USER",
- *              "owner_field_name"="owner",
- *              "owner_column_name"="user_owner_id",
- *              "organization_field_name"="organization",
- *              "organization_column_name"="organization_id"
- *          },
- *          "security"={
- *              "type"="ACL",
- *              "group_name"="",
- *              "category"="dmkclub_data"
- *          },
- *          "dataaudit"={
- *              "auditable"=true
- *          }
- *      }
- * )
  */
+#[Config(
+    routeName: 'dmkclub_basics_twigtemplate_index',
+    routeView: 'dmkclub_basics_twigtemplate_view',
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-file',
+        ],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'user_owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id',
+        ],
+        'security' => [
+            'type' => 'ACL',
+            'group_name' => '',
+            'category' => 'dmkclub_data',
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class TwigTemplate {
 	/**
 	 * @var int
@@ -50,39 +50,38 @@ class TwigTemplate {
 	 * @ORM\Id
 	 * @ORM\Column(type="integer", name="id")
 	 * @ORM\GeneratedValue(strategy="AUTO")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [],
+	)]
 	protected $id;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255, nullable=true)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	    ],
+	)]
 	protected $name;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="template", type="text")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	    ],
+	)]
 	protected $template;
 
 	/**
@@ -90,14 +89,14 @@ class TwigTemplate {
 	 * Generatorklasse für PDF-Dateien
 	 *
 	 * @ORM\Column(name="generator", type="string", length=255, nullable=true)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	    ],
+	)]
 	private $generator;
 
 	public function getGenerator() {
@@ -112,27 +111,27 @@ class TwigTemplate {
 	 * @var string
 	 *
 	 * @ORM\Column(name="orientation", type="string", length=50, nullable=true)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	    ],
+	)]
 	private $orientation = 'P';
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="page_format", type="text")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	    ],
+	)]
 	private $pageFormat;
 
 
@@ -140,28 +139,28 @@ class TwigTemplate {
 	 * @var \DateTime $createdAt
 	 *
 	 * @ORM\Column(type="datetime", name="created_at")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "entity"={
-	 *              "label"="oro.ui.created_at"
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'entity' => [
+	            'label' => 'oro.ui.created_at',
+	        ],
+	    ],
+	)]
 	protected $createdAt;
 
 	/**
 	 * @var \DateTime $updatedAt
 	 *
 	 * @ORM\Column(type="datetime", name="updated_at")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "entity"={
-	 *              "label"="oro.ui.updated_at"
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'entity' => [
+	            'label' => 'oro.ui.updated_at',
+	        ],
+	    ],
+	)]
 	protected $updatedAt;
 
 	/**

@@ -2,31 +2,36 @@
 
 namespace DMKClub\Bundle\SponsorBundle\Controller\Api\Rest;
 
-use FOS\RestBundle\Controller\Annotations\NamePrefix;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use Oro\Bundle\SoapBundle\Form\Handler\ApiFormHandler;
 
 /**
- * @RouteResource("sponsor")
- * @NamePrefix("dmkclub_api_")
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class SponsorController extends RestController implements ClassResourceInterface
+class SponsorController extends RestController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            'dmkclub_sponsor.sponsor.manager.api' => ApiEntityManager::class,
+        ]);
+    }
     /**
      * REST GET list
      *
@@ -52,11 +57,11 @@ class SponsorController extends RestController implements ClassResourceInterface
      *      description="Get all sponsors items",
      *      resource=true
      * )
-     * @AclAncestor("dmkclub_sponsor_view")
      *
      * @throws \Exception
      * @return Response
      */
+    #[AclAncestor('dmkclub_sponsor_view')]
     public function cgetAction()
     {
         $page  = (int)$this->getRequest()->get('page', 1);
@@ -94,9 +99,9 @@ class SponsorController extends RestController implements ClassResourceInterface
      *      description="Get sponsor item",
      *      resource=true
      * )
-     * @AclAncestor("dmkclub_sponsor_view")
      * @return Response
      */
+    #[AclAncestor('dmkclub_sponsor_view')]
     public function getAction($id)
     {
         return $this->handleGetRequest($id);
@@ -111,9 +116,9 @@ class SponsorController extends RestController implements ClassResourceInterface
      *      description="Update sponsor",
      *      resource=true
      * )
-     * @AclAncestor("dmkclub_sponsor_update")
      * @return Response
      */
+    #[AclAncestor('dmkclub_sponsor_update')]
     public function putAction($id)
     {
         return $this->handleUpdateRequest($id);
@@ -126,8 +131,8 @@ class SponsorController extends RestController implements ClassResourceInterface
      *      description="Create new sponsor",
      *      resource=true
      * )
-     * @AclAncestor("dmkclub_sponsor_create")
      */
+    #[AclAncestor('dmkclub_sponsor_create')]
     public function postAction()
     {
         return $this->handleCreateRequest();
@@ -142,14 +147,9 @@ class SponsorController extends RestController implements ClassResourceInterface
      *      description="Delete Sponsor",
      *      resource=true
      * )
-     * @Acl(
-     *      id="dmkclub_sponsor_delete",
-     *      type="entity",
-     *      permission="DELETE",
-     *      class="DMKClubSponsorBundle:Sponsor"
-     * )
      * @return Response
      */
+    #[Acl(id: 'dmkclub_sponsor_delete', type: 'entity', permission: 'DELETE', class: \DMKClub\Bundle\SponsorBundle\Entity\Sponsor::class)]
     public function deleteAction($id)
     {
         return $this->handleDeleteRequest($id);
@@ -162,8 +162,8 @@ class SponsorController extends RestController implements ClassResourceInterface
      */
     public function getManager()
     {
-        return $this->get('dmkclub_sponsor.sponsor.manager.api');
-    	//return $this->get('orocrm_contact.contact.manager.api');
+        return $this->container->get('dmkclub_sponsor.sponsor.manager.api');
+    	//return $this->container->get('orocrm_contact.contact.manager.api');
     }
 
     /**
@@ -172,7 +172,7 @@ class SponsorController extends RestController implements ClassResourceInterface
     public function getForm()
     {
     	throw new \Exception('Not implemented');
-    	// return $this->get('orocrm_call.call.form.api');
+    	// return $this->container->get('orocrm_call.call.form.api');
     }
 
     /**
@@ -181,7 +181,7 @@ class SponsorController extends RestController implements ClassResourceInterface
     public function getFormHandler()
     {
     	throw new \Exception('Not implemented');
-    	// return $this->get('orocrm_call.call.form.handler.api');
+    	// return $this->container->get('orocrm_call.call.form.handler.api');
     }
 
 }

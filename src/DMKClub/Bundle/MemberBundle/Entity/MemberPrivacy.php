@@ -3,8 +3,8 @@ namespace DMKClub\Bundle\MemberBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 
 use DMKClub\Bundle\MemberBundle\Model\ExtendMemberPrivacy;
 
@@ -14,17 +14,17 @@ use DMKClub\Bundle\MemberBundle\Model\ExtendMemberPrivacy;
  * @ORM\Entity
  * @ORM\Table(name="dmkclub_member_privacy")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *   defaultValues={
- *     "entity"={
- *       "icon"="fa-money"
- *     },
- *     "dataaudit"={
- *       "auditable"=true
- *     }
- *   }
- * )
  */
+#[Config(
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-money',
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class MemberPrivacy extends ExtendMemberPrivacy
 {
 
@@ -34,29 +34,31 @@ class MemberPrivacy extends ExtendMemberPrivacy
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ConfigField(
-     *   defaultValues={
-     *     "importexport"={
-     *       "order"=10
-     *     }
-     *   }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'importexport' => [
+                'order' => 10,
+            ],
+        ],
+    )]
     protected $id;
 
     /**
      *
      * @var \DateTime
      * @ORM\Column(name="sign_date", type="date", nullable=true)
-     * @ConfigField(
-     * defaultValues={
-     *   "dataaudit"={"auditable"=true},
-     *   "importexport"={
-     *     "order"=75
-     *   }
-     * }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 75,
+            ],
+        ],
+    )]
     protected $signDate;
 
     /**
@@ -70,15 +72,17 @@ class MemberPrivacy extends ExtendMemberPrivacy
      * @var boolean
      *
      * @ORM\Column(type="boolean", name="phone_allowed", options={"default" : false})
-     * @ConfigField(
-     * 	   defaultValues={
-     *         "dataaudit"={"auditable"=true},
-     *         "importexport"={
-     *             "order"=40
-     *         }
-     *     }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 40,
+            ],
+        ],
+    )]
     protected $phoneAllowed = false;
 
     /**
@@ -86,15 +90,17 @@ class MemberPrivacy extends ExtendMemberPrivacy
      * @var boolean
      *
      * @ORM\Column(type="boolean", name="email_allowed", options={"default" : false})
-     * @ConfigField(
-     * 	   defaultValues={
-     *         "dataaudit"={"auditable"=true},
-     *         "importexport"={
-     *             "order"=40
-     *         }
-     *     }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 40,
+            ],
+        ],
+    )]
     protected $emailAllowed = false;
 
     /**
@@ -102,15 +108,17 @@ class MemberPrivacy extends ExtendMemberPrivacy
      * @var boolean
      *
      * @ORM\Column(type="boolean", name="postal_allowed", options={"default" : false})
-     * @ConfigField(
-     * 	   defaultValues={
-     *         "dataaudit"={"auditable"=true},
-     *         "importexport"={
-     *             "order"=40
-     *         }
-     *     }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 40,
+            ],
+        ],
+    )]
     protected $postalAllowed = false;
 
     /**
@@ -118,15 +126,17 @@ class MemberPrivacy extends ExtendMemberPrivacy
      * @var boolean
      *
      * @ORM\Column(type="boolean", name="merchandising_allowed", options={"default" : false})
-     * @ConfigField(
-     * 	   defaultValues={
-     *         "dataaudit"={"auditable"=true},
-     *         "importexport"={
-     *             "order"=40
-     *         }
-     *     }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 40,
+            ],
+        ],
+    )]
     protected $merchandisingAllowed = false;
 
     /**
@@ -134,41 +144,51 @@ class MemberPrivacy extends ExtendMemberPrivacy
      * @var boolean
      *
      * @ORM\Column(type="boolean", name="sharing_allowed", options={"default" : false})
-     * @ConfigField(
-     * 	   defaultValues={
-     *         "dataaudit"={"auditable"=true},
-     *         "importexport"={
-     *             "order"=40
-     *         }
-     *     }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'dataaudit' => [
+                'auditable' => true,
+            ],
+            'importexport' => [
+                'order' => 40,
+            ],
+        ],
+    )]
     protected $sharingAllowed = false;
 
     /**
      *
      * @var \DateTime $createdAt
      * @ORM\Column(type="datetime", name="created_at")
-     * @ConfigField(
-     *   defaultValues={
-     *     "entity"={"label"="oro.ui.created_at"},
-     *     "importexport"={"excluded"=true}
-     *   }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'entity' => [
+                'label' => 'oro.ui.created_at',
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     protected $createdAt;
 
     /**
      *
      * @var \DateTime $updatedAt
      * @ORM\Column(type="datetime", name="updated_at")
-     * @ConfigField(
-     *   defaultValues={
-     *     "entity"={"label"="oro.ui.updated_at"},
-     *     "importexport"={"excluded"=true}
-     *   }
-     * )
      */
+    #[ConfigField(
+        defaultValues: [
+            'entity' => [
+                'label' => 'oro.ui.updated_at',
+            ],
+            'importexport' => [
+                'excluded' => true,
+            ],
+        ],
+    )]
     protected $updatedAt;
 
     /**

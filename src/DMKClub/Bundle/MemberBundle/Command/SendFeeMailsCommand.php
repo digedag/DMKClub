@@ -2,23 +2,28 @@
 namespace DMKClub\Bundle\MemberBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-use Oro\Bundle\ConfigBundle\Config\ConfigManager;
+use Oro\Bundle\LocaleBundle\Model\LocaleSettings;
 
 use DMKClub\Bundle\MemberBundle\Entity\MemberFee;
 use DMKClub\Bundle\MemberBundle\Mailer\Processor;
 use DMKClub\Bundle\BasicsBundle\Model\TemplateNotFoundException;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 /**
  * Send membership fees to member by email.
  */
-class SendFeeMailsCommand extends ContainerAwareCommand
+#[AsCommand(
+    name: 'dmkclub:send:fee',
+    description: 'Command to send a number of fees by email to member'
+)]
+class SendFeeMailsCommand extends Command
 {
 
     const NAME = 'dmkclub:send:fee';
@@ -27,26 +32,40 @@ class SendFeeMailsCommand extends ContainerAwareCommand
 
     protected $output;
 
-
-    /** @var \Psr\Log\LoggerInterface */
+    /** @var LoggerInterface */
     private $logger;
 
-    /**
-     *
-     * @var TranslatorInterface
-     */
+    /** @var TranslatorInterface */
     private $translator;
 
+    /** @var LocaleSettings */
+    private $localeSettings;
 
-    /**
-     *
-     * @return ConfigManager
-     */
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    /** @var Processor */
+    private $mailer;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        Processor $mailer,
+        LoggerInterface $logger,
+        TranslatorInterface $translator,
+        LocaleSettings $localeSettings
+    ) {
+        parent::__construct();
+
+        $this->entityManager = $entityManager;
+        $this->mailer = $mailer;
+        $this->logger = $logger;
+        $this->translator = $translator;
+        $this->localeSettings = $localeSettings;
+    }
+
     protected function configure()
     {
-        $this->setName(self::NAME)
-            ->setDescription('Command to send a number of fees by email to member')
-            ->addArgument('ids', InputArgument::REQUIRED, 'commaseperated id of fees to send');
+        $this->addArgument('ids', InputArgument::REQUIRED, 'commaseperated id of fees to send');
     }
 
     /**
@@ -55,7 +74,7 @@ class SendFeeMailsCommand extends ContainerAwareCommand
      */
     protected function getEntityManager()
     {
-        return $this->getContainer()->get('doctrine.orm.entity_manager');
+        return $this->entityManager;
     }
 
     /**
@@ -64,10 +83,10 @@ class SendFeeMailsCommand extends ContainerAwareCommand
      */
     protected function getMailer()
     {
-        return $this->getContainer()->get(Processor::class);
+        return $this->mailer;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->initLanguage();
 
@@ -79,7 +98,11 @@ class SendFeeMailsCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $output->writeln(sprintf('<error>Job failed</error>'));
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
+
+            return Command::FAILURE;
         }
+
+        return Command::SUCCESS;
     }
 
     protected function processEmails($feeIds)
@@ -122,16 +145,11 @@ class SendFeeMailsCommand extends ContainerAwareCommand
 
     protected function log($msg)
     {
-        if (!$this->logger) {
-            $this->logger = $this->getContainer()->get('logger');
-        }
         $this->logger->critical($msg);
     }
 
     protected function initLanguage()
     {
-        $this->translator = $this->getContainer()->get('translator');
-        $this->localSettings = $this->getContainer()->get('oro_locale.settings');
-        $this->translator->setLocale($this->localSettings->getLanguage());
+        $this->translator->setLocale($this->localeSettings->getLanguage());
     }
 }

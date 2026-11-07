@@ -1,3 +1,3 @@
 bundles:
     - { name: DMKClub\Bundle\BasicsBundle\DMKClubBasicsBundle, priority: 160 }
-    - { name: WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle, priority: 100 }
+    - { name: Qipsius\TCPDFBundle\QipsiusTCPDFBundle, priority: 100 }

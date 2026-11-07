@@ -1,3 +1,9 @@
-dmkclub_payment_api:
-    resource:     "@DMKClubPaymentBundle/Controller/Api/Rest/SepaCreditorController.php"
-    type:         rest
+dmkclub_api_delete_sepacreditor:
+    path: '/sepacreditors/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'DMKClub\Bundle\PaymentBundle\Controller\Api\Rest\SepaCreditorController::deleteAction'
+        _format: json
+    requirements:
+        id: \d+
+        _format: json

@@ -6,20 +6,27 @@ use BadMethodCallException;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\Controller\Annotations\NamePrefix;
 
 use Symfony\Component\HttpFoundation\Response;
 
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
+use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 
 /**
- * @RouteResource("sepacreditor")
- * @NamePrefix("dmkclub_api_")
  */
 class SepaCreditorController extends RestController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            'dmkclub.payment.sepacreditor.manager.api' => ApiEntityManager::class,
+        ]);
+    }
     /**
      * @param int $id
      *
@@ -27,14 +34,9 @@ class SepaCreditorController extends RestController
      *      description="Delete sepa creditors",
      *      resource=true
      * )
-     * @Acl(
-     *      id="dmkclub_payment_sepacreditor_delete",
-     *      type="entity",
-     *      permission="DELETE",
-     *      class="DMKClubPaymentBundle:SepaCreditor"
-     * )
      * @return Response
      */
+    #[Acl(id: 'dmkclub_payment_sepacreditor_delete', type: 'entity', permission: 'DELETE', class: \DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor::class)]
     public function deleteAction($id)
     {
         return $this->handleDeleteRequest($id);
@@ -53,6 +55,6 @@ class SepaCreditorController extends RestController
      */
     public function getManager()
     {
-        return $this->get('dmkclub.payment.sepacreditor.manager.api');
+        return $this->container->get('dmkclub.payment.sepacreditor.manager.api');
     }
 }

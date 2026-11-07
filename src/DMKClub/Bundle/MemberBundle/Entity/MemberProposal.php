@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 use Oro\Bundle\AddressBundle\Entity\Address;
 use Oro\Bundle\LocaleBundle\Model\FullNameInterface;
 use Oro\Bundle\EmailBundle\Model\EmailHolderInterface;
@@ -25,37 +25,37 @@ use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
  * @ORM\Table(name="dmkclub_member_proposal")
  * @ORM\Entity(repositoryClass="DMKClub\Bundle\MemberBundle\Entity\Repository\MemberProposalRepository")
  * @ORM\HasLifecycleCallbacks()
- * @Config(
- *      routeName="dmkclub_member_proposal_index",
- *      routeView="dmkclub_member_proposal_view",
- *      defaultValues={
- *          "entity"={
- *              "icon"="fa-envelope"
- *          },
- *          "ownership"={
- *              "owner_type"="USER",
- *              "owner_field_name"="owner",
- *              "owner_column_name"="owner_id",
- *              "organization_field_name"="organization",
- *              "organization_column_name"="organization_id"
- *          },
- *          "security"={
- *              "type"="ACL",
- *              "group_name"="",
- *              "category"="dmkclub_data"
- *          },
- *          "comment"={
- *              "enabled"=true
- *          },
- *          "tag"={
- *              "enabled"=true
- *          },
- *          "dataaudit"={
- *              "auditable"=true
- *          }
- *      }
- * )
  */
+#[Config(
+    routeName: 'dmkclub_member_proposal_index',
+    routeView: 'dmkclub_member_proposal_view',
+    defaultValues: [
+        'entity' => [
+            'icon' => 'fa-envelope',
+        ],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id',
+        ],
+        'security' => [
+            'type' => 'ACL',
+            'group_name' => '',
+            'category' => 'dmkclub_data',
+        ],
+        'comment' => [
+            'enabled' => true,
+        ],
+        'tag' => [
+            'enabled' => true,
+        ],
+        'dataaudit' => [
+            'auditable' => true,
+        ],
+    ],
+)]
 class MemberProposal extends ExtendMemberProposal implements
     ChannelAwareInterface,
     FullNameInterface,
@@ -71,29 +71,31 @@ class MemberProposal extends ExtendMemberProposal implements
 	 * @ORM\Id
 	 * @ORM\Column(type="integer", name="id")
 	 * @ORM\GeneratedValue(strategy="AUTO")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "importexport"={
-	 *              "order"=10
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'importexport' => [
+	            'order' => 10,
+	        ],
+	    ],
+	)]
 	protected $id;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="name_prefix", type="string", length=255, nullable=true)
-	 * @ConfigField(
-	 *  defaultValues={
-	 *      "dataaudit"={"auditable"=true},
-	 *      "importexport"={
-	 *          "order"=30
-	 *      }
-	 *  }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'order' => 30,
+	        ],
+	    ],
+	)]
 	protected $namePrefix;
 
 
@@ -101,109 +103,117 @@ class MemberProposal extends ExtendMemberProposal implements
 	 * @var string
 	 *
 	 * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          },
-	 *          "importexport"={
-	 *              "order"=40
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'order' => 40,
+	        ],
+	    ],
+	)]
 	protected $firstName;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="middle_name", type="string", length=255, nullable=true)
-	 * @ConfigField(
-	 *  defaultValues={
-	 *      "dataaudit"={"auditable"=true},
-	 *      "importexport"={
-	 *          "order"=50
-	 *      }
-	 *  }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'order' => 50,
+	        ],
+	    ],
+	)]
 	protected $middleName;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          },
-	 *          "importexport"={
-	 *              "order"=60
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'order' => 60,
+	        ],
+	    ],
+	)]
 	protected $lastName;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="name_suffix", type="string", length=255, nullable=true)
-	 * @ConfigField(
-	 *  defaultValues={
-	 *      "dataaudit"={"auditable"=true},
-	 *      "importexport"={
-	 *          "order"=70
-	 *      }
-	 *  }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'order' => 70,
+	        ],
+	    ],
+	)]
 	protected $nameSuffix;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="email_address", type="string", length=100, nullable=true)
-	 * @ConfigField(
-	 *  defaultValues={
-	 *      "dataaudit"={"auditable"=true}
-	 *  }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	    ],
+	)]
 	protected $emailAddress;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="phone", type="string", length=100, nullable=true)
-	 * @ConfigField(
-	 *  defaultValues={
-	 *      "dataaudit"={"auditable"=true}
-	 *  }
-	 * )
 
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	    ],
+	)]
 	protected $phone;
 
 	/**
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="birthday", type="date", nullable=true)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          },
-	 *          "importexport"={
-	 *              "order"=80
-	 *          },
-	 *          "merge"={
-	 *              "display"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'order' => 80,
+	        ],
+	        'merge' => [
+	            'display' => true,
+	        ],
+	    ],
+	)]
 	protected $birthday;
 
 	/**
@@ -217,29 +227,34 @@ class MemberProposal extends ExtendMemberProposal implements
 	 * @var boolean
 	 *
 	 * @ORM\Column(type="boolean", name="is_active", options={"default" : false})
-	 * @ConfigField(
-	 * 	defaultValues={"dataaudit"={"auditable"=true},
-	 *          "importexport"={
-	 *              "order"=100
-	 *          }
-	 *  }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'order' => 100,
+	        ],
+	    ],
+	)]
 	protected $isActive = false;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="job_title", type="string", length=255, nullable=true)
-	 * @ConfigField(
-	 *  defaultValues={
-	 *      "dataaudit"={"auditable"=true},
-	 *      "importexport"={
-	 *          "order"=130
-	 *      }
-	 *  }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'order' => 130,
+	        ],
+	    ],
+	)]
 	protected $jobTitle;
 
 
@@ -247,18 +262,18 @@ class MemberProposal extends ExtendMemberProposal implements
 	 *
 	 * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\MemberBundle\Entity\MemberProposalBankAccount", cascade={"persist", "remove"})
 	 * @ORM\JoinColumn(name="bank_account", referencedColumnName="id", onDelete="SET NULL")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          },
-	 *          "importexport"={
-	 *              "full"=true,
-	 *              "order"=140
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'full' => true,
+	            'order' => 140,
+	        ],
+	    ],
+	)]
 	protected $bankAccount;
 
 	/**
@@ -266,45 +281,45 @@ class MemberProposal extends ExtendMemberProposal implements
 	 *
 	 * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\MemberBundle\Entity\MemberProposalAddress", cascade={"persist", "remove"})
 	 * @ORM\JoinColumn(name="postal_address", referencedColumnName="id", onDelete="SET NULL")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          },
-	 *          "importexport"={
-	 *              "full"=true,
-	 *              "order"=150
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'full' => true,
+	            'order' => 150,
+	        ],
+	    ],
+	)]
 	protected $postalAddress;
 
 	/**
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="discount_start_date", type="date", nullable=true)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	    ],
+	)]
 	protected $discountStartDate;
 	/**
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="discount_end_date", type="date", nullable=true)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "dataaudit"={
-	 *              "auditable"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	    ],
+	)]
 	protected $discountEndDate;
 
 	/**
@@ -319,50 +334,52 @@ class MemberProposal extends ExtendMemberProposal implements
 	 *
 	 * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\MemberBundle\Entity\Member", inversedBy="memberProposals")
 	 * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="SET NULL")
-	 * @ConfigField(
-	 *  defaultValues={
-	 *      "dataaudit"={"auditable"=false},
-	 *      "importexport"={
-	 *          "order"=160,
-	 *          "short"=true
-	 *      }
-	 *  }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => false,
+	        ],
+	        'importexport' => [
+	            'order' => 160,
+	            'short' => true,
+	        ],
+	    ],
+	)]
 	protected $member;
 
 	/**
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(type="datetime")
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "entity"={
-	 *              "label"="oro.ui.created_at"
-	 *          },
-	 *          "importexport"={
-	 *              "excluded"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'entity' => [
+	            'label' => 'oro.ui.created_at',
+	        ],
+	        'importexport' => [
+	            'excluded' => true,
+	        ],
+	    ],
+	)]
 	protected $createdAt;
 
 	/**
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(type="datetime", nullable=true)
-	 * @ConfigField(
-	 *      defaultValues={
-	 *          "entity"={
-	 *              "label"="oro.ui.updated_at"
-	 *          },
-	 *          "importexport"={
-	 *              "excluded"=true
-	 *          }
-	 *      }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'entity' => [
+	            'label' => 'oro.ui.updated_at',
+	        ],
+	        'importexport' => [
+	            'excluded' => true,
+	        ],
+	    ],
+	)]
 	protected $updatedAt;
 
 
@@ -387,16 +404,18 @@ class MemberProposal extends ExtendMemberProposal implements
 	 *
 	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
 	 * @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id", onDelete="SET NULL")
-	 * @ConfigField(
-	 *  defaultValues={
-	 *      "dataaudit"={"auditable"=true},
-	 *      "importexport"={
-	 *          "order"=180,
-	 *          "short"=true
-	 *      }
-	 *  }
-	 * )
 	 */
+	#[ConfigField(
+	    defaultValues: [
+	        'dataaudit' => [
+	            'auditable' => true,
+	        ],
+	        'importexport' => [
+	            'order' => 180,
+	            'short' => true,
+	        ],
+	    ],
+	)]
 	protected $owner;
 
 	/**

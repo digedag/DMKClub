@@ -69,8 +69,6 @@ services:
     DMKClub\Bundle\PaymentBundle\Form\Handler\SepaCreditorHandler:
         public: true
         arguments:
-            - "@dmkclub_payment.sepacreditor.form"
-            - "@request_stack"
             - "@doctrine.orm.entity_manager"
 
 # ####

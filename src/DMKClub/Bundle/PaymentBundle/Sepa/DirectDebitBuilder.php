@@ -17,7 +17,7 @@ class DirectDebitBuilder
 
     public function init($uniqueMessageIdentification, $initiatingPartyName, $painFormat = 'pain.008.002.02')
     {
-        $this->directDebit = TransferFileFacadeFactory::createDirectDebit($uniqueMessageIdentification, $initiatingPartyName);
+        $this->directDebit = TransferFileFacadeFactory::createDirectDebit($uniqueMessageIdentification, $initiatingPartyName, $painFormat);
     }
 
     /**

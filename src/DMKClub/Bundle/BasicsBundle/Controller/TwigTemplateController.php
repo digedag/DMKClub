@@ -3,14 +3,15 @@ namespace DMKClub\Bundle\BasicsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Oro\Bundle\FormBundle\Model\UpdateHandler;
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 
 use DMKClub\Bundle\BasicsBundle\Form\Handler\TwigTemplateHandler;
 use DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate;
@@ -26,22 +27,22 @@ class TwigTemplateController extends AbstractController
      *
      * {@inheritdoc}
      */
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
             TranslatorInterface::class,
             TwigTemplateHandler::class,
             'dmkclub_basics.twigtemplate.form' => Form::class,
-            UpdateHandler::class
+            UpdateHandlerFacade::class
         ]);
     }
 
     /**
      *
      * @Route("/", name="dmkclub_basics_twigtemplate_index")
-     * @AclAncestor("dmkclub_basics_twigtemplate_view")
      * @Template
      */
+    #[AclAncestor('dmkclub_basics_twigtemplate_view')]
     public function indexAction()
     {
         return [
@@ -54,16 +55,11 @@ class TwigTemplateController extends AbstractController
      *
      * @Route("/create", name="dmkclub_basics_twigtemplate_create")
      * @Template("DMKClubBasicsBundle:TwigTemplate:update.html.twig")
-     * @Acl(
-     *      id="dmkclub_basics_twigtemplate_create",
-     *      type="entity",
-     *      permission="CREATE",
-     *      class="DMKClubBasicsBundle:TwigTemplate"
-     * )
      */
-    public function createAction()
+    #[Acl(id: 'dmkclub_basics_twigtemplate_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate::class)]
+    public function createAction(Request $request)
     {
-        return $this->update(new TwigTemplate());
+        return $this->update(new TwigTemplate(), $request);
     }
 
     /**
@@ -72,16 +68,11 @@ class TwigTemplateController extends AbstractController
      * @Route("/update/{id}", name="dmkclub_basics_twigtemplate_update", requirements={"id"="\d+"}, defaults={"id"=0})
      *
      * @Template
-     * @Acl(
-     *      id="dmkclub_basics_twigtemplate_update",
-     *      type="entity",
-     *      permission="EDIT",
-     *      class="DMKClubBasicsBundle:TwigTemplate"
-     * )
      */
-    public function updateAction(TwigTemplate $entity)
+    #[Acl(id: 'dmkclub_basics_twigtemplate_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate::class)]
+    public function updateAction(TwigTemplate $entity, Request $request)
     {
-        return $this->update($entity);
+        return $this->update($entity, $request);
     }
 
     /**
@@ -90,42 +81,23 @@ class TwigTemplateController extends AbstractController
      *
      * @return array
      */
-    protected function update(TwigTemplate $entity)
+    protected function update(TwigTemplate $entity, Request $request)
     {
-        return $this->get(UpdateHandler::class)->handleUpdate($entity,
-            $this->get('dmkclub_basics.twigtemplate.form'),
-            function (TwigTemplate $entity) {
-                return [
-                    'route' => 'dmkclub_basics_twigtemplate_update',
-                    'parameters' => [
-                        'id' => $entity->getId()
-                    ]
-                ];
-            },
-            function (TwigTemplate $entity) {
-                return [
-                    'route' => 'dmkclub_basics_twigtemplate_view',
-                    'parameters' => [
-                        'id' => $entity->getId()
-                    ]
-                ];
-            },
-            $this->get(TranslatorInterface::class)->trans('dmkclub.basics.twigtemplate.message.saved'),
-            $this->get(TwigTemplateHandler::class)
+        return $this->container->get(UpdateHandlerFacade::class)->update(
+            $entity,
+            $this->container->get('dmkclub_basics.twigtemplate.form'),
+            $this->container->get(TranslatorInterface::class)->trans('dmkclub.basics.twigtemplate.message.saved'),
+            $request,
+            $this->container->get(TwigTemplateHandler::class)
         );
     }
 
     /**
      *
      * @Route("/view/{id}", name="dmkclub_basics_twigtemplate_view", requirements={"id"="\d+"}))
-     * @Acl(
-     *      id="dmkclub_basics_twigtemplate_view",
-     *      type="entity",
-     *      permission="VIEW",
-     *      class="DMKClubBasicsBundle:TwigTemplate"
-     * )
      * @Template
      */
+    #[Acl(id: 'dmkclub_basics_twigtemplate_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate::class)]
     public function viewAction(TwigTemplate $entity)
     {
         return [
@@ -137,9 +109,9 @@ class TwigTemplateController extends AbstractController
      * Wird zur Anzeige des Info-Widgets in der Detailansicht verwendet
      *
      * @Route("/widget/info/{id}", name="dmkclub_basics_twigtemplate_widget_info", requirements={"id"="\d+"}))
-     * @AclAncestor("dmkclub_basics_twigtemplate_view")
      * @Template
      */
+    #[AclAncestor('dmkclub_basics_twigtemplate_view')]
     public function infoAction(TwigTemplate $entity)
     {
         return [

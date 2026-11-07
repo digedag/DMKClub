@@ -1,3 +1,9 @@
-dmkclub_basics_bundle_twigtemplate_api:
-    resource:     "@DMKClubBasicsBundle/Controller/Api/Rest/TwigTemplateController.php"
-    type:         rest
+oro_api_delete_twigtemplate:
+    path: '/twigtemplates/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'DMKClub\Bundle\BasicsBundle\Controller\Api\Rest\TwigTemplateController::deleteAction'
+        _format: json
+    requirements:
+        id: \d+
+        _format: json

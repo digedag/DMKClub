@@ -6,20 +6,27 @@ use BadMethodCallException;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\Controller\Annotations\NamePrefix;
 
 use Symfony\Component\HttpFoundation\Response;
 
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
+use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 
 /**
- * @RouteResource("memberfeediscount")
- * @NamePrefix("dmkclub_api_")
  */
 class MemberFeeDiscountController extends RestController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            'dmkclub_member.memberfeediscount.manager.api' => ApiEntityManager::class,
+        ]);
+    }
     /**
      * @param int $id
      *
@@ -28,14 +35,9 @@ class MemberFeeDiscountController extends RestController
      *      resource=true
      * )
      * Der Discount hat keine Entity-ACL. Wir nutzen die ACL des MemberFee
-     * @Acl(
-     *      id="dmkclub_member_memberfee_delete",
-     *      type="entity",
-     *      permission="DELETE",
-     *      class="DMKClubMemberBundle:MemberFee"
-     * )
      * @return Response
      */
+    #[Acl(id: 'dmkclub_member_memberfee_delete', type: 'entity', permission: 'DELETE', class: \DMKClub\Bundle\MemberBundle\Entity\MemberFee::class)]
     public function deleteAction($id)
     {
         return $this->handleDeleteRequest($id);
@@ -54,6 +56,6 @@ class MemberFeeDiscountController extends RestController
      */
     public function getManager()
     {
-        return $this->get('dmkclub_member.memberfeediscount.manager.api');
+        return $this->container->get('dmkclub_member.memberfeediscount.manager.api');
     }
 }

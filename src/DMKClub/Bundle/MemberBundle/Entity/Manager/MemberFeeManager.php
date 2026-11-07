@@ -1,30 +1,23 @@
 <?php
 namespace DMKClub\Bundle\MemberBundle\Entity\Manager;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use DMKClub\Bundle\MemberBundle\Entity\Member;
+use DMKClub\Bundle\MemberBundle\Entity\MemberBilling;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFee;
 
-class MemberFeeManager implements ContainerAwareInterface
+class MemberFeeManager
 {
 
     /**
      *
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
-    /**
-     *
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    public function __construct(EntityManager $em, ContainerInterface $container)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->setContainer($container);
     }
 
     /**
@@ -46,25 +39,12 @@ class MemberFeeManager implements ContainerAwareInterface
     }
 
     /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface|null $container
-     *            A ContainerInterface instance or null
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
-    /**
      *
      * @return \DMKClub\Bundle\MemberBundle\Entity\Repository\MemberRepository
      */
     public function getMemberRepository()
     {
-        return $this->em->getRepository('DMKClubMemberBundle:Member');
+        return $this->em->getRepository(Member::class);
     }
 
     /**
@@ -73,7 +53,7 @@ class MemberFeeManager implements ContainerAwareInterface
      */
     public function getMemberFeeRepository()
     {
-        return $this->em->getRepository('DMKClubMemberBundle:MemberFee');
+        return $this->em->getRepository(MemberFee::class);
     }
 
     /**
@@ -82,6 +62,6 @@ class MemberFeeManager implements ContainerAwareInterface
      */
     public function getMemberBillingRepository()
     {
-        return $this->em->getRepository('DMKClubMemberBundle:MemberBilling');
+        return $this->em->getRepository(MemberBilling::class);
     }
 }

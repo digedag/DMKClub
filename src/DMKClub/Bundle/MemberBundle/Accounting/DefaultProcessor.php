@@ -259,7 +259,7 @@ class DefaultProcessor extends AbstractProcessor
      */
     public function getMemberRepository()
     {
-        return $this->em->getRepository('DMKClubMemberBundle:Member');
+        return $this->em->getRepository(Member::class);
     }
 
     public function formatSettings(array $options)
