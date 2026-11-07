@@ -3,14 +3,13 @@ namespace DMKClub\Bundle\MemberBundle\Tests\Unit\Entity;
 
 use DMKClub\Bundle\MemberBundle\Entity\MemberBilling;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFeePosition;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class MemberBillingTest extends TestCase
 {
 
-    /**
-     * @dataProvider getLabels
-     */
+    #[DataProvider('getLabels')]
     public function testGetPositionLabelMap($labels)
     {
         $billing = new MemberBilling();
@@ -23,7 +22,7 @@ class MemberBillingTest extends TestCase
         $this->assertEquals('Einmalige Aufnahmegebühr', $labels[MemberFeePosition::FLAG_ADMISSON]);
         $this->assertEquals('Korrektur Ihres Beitrags', $labels[MemberFeePosition::FLAG_CORRECTION]);
     }
-    public function getLabels()
+    public static function getLabels()
     {
         return [
             [

@@ -8,6 +8,7 @@ use Oro\Bundle\ContactBundle\Entity\Contact;
 use Psr\Log\NullLogger;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFeeDiscount;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFeePosition;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use DMKClub\Bundle\MemberBundle\Accounting\AgeCalculator;
 
@@ -28,10 +29,7 @@ class DefaultProcessorTest extends TestCase
         $this->assertEquals('dmkclub.member.accounting.processor.default', $processor->getLabel(), 'Label is wrong');
     }
 
-    /**
-     *
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testExecute($start, $end, $options, $member, $expectedFee, $expectedTotal, $positionCnt, $tag)
     {
         $emMock = $this->getEMMockBuilder()->getMock();
@@ -60,7 +58,7 @@ class DefaultProcessorTest extends TestCase
         $this->assertEquals($expectedTotal, $memberFee->getPriceTotal(), $tag . ' - Price in summary total is wrong');
     }
 
-    public function dataProvider()
+    public static function dataProvider()
     {
         $year = 2016;
         $feeOptions = [
@@ -96,7 +94,7 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2010-02-01', NULL, '1970-05-13'),
+                self::buildMember('2010-02-01', NULL, '1970-05-13'),
                 12000,
                 12000,
                 1,
@@ -107,7 +105,7 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2016-08-01', NULL, '1970-05-13'),
+                self::buildMember('2016-08-01', NULL, '1970-05-13'),
                 11000,
                 11350,
                 2,
@@ -118,7 +116,7 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2015-08-01', '2016-08-01', '1970-05-13'),
+                self::buildMember('2015-08-01', '2016-08-01', '1970-05-13'),
                 2000,
                 2000,
                 1,
@@ -129,7 +127,7 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2010-12-01', NULL, ($year - 4) . '-04-20'),
+                self::buildMember('2010-12-01', NULL, ($year - 4) . '-04-20'),
                 0,
                 0,
                 1,
@@ -140,7 +138,7 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2016-12-01', NULL, ($year - 4) . '-04-20'),
+                self::buildMember('2016-12-01', NULL, ($year - 4) . '-04-20'),
                 0,
                 350,
                 2,
@@ -151,7 +149,7 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2010-02-01', NULL, ($year - 10) . '-05-13'),
+                self::buildMember('2010-02-01', NULL, ($year - 10) . '-05-13'),
                 2400,
                 2400,
                 1,
@@ -162,8 +160,8 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2010-02-01', NULL, ($year - 10) . '-05-13', [
-                    $this->buildMemberFeeDiscount('2017-02-01', '2017-04-30')
+                self::buildMember('2010-02-01', NULL, ($year - 10) . '-05-13', [
+                    self::buildMemberFeeDiscount('2017-02-01', '2017-04-30')
                 ]),
                 2400,
                 2400,
@@ -176,7 +174,7 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2010-02-01', NULL, ($year - 6) . '-05-13'),
+                self::buildMember('2010-02-01', NULL, ($year - 6) . '-05-13'),
                 9600,
                 9600,
                 1,
@@ -187,8 +185,8 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2010-02-01', NULL, ($year - 6) . '-05-13', [
-                    $this->buildMemberFeeDiscount('2017-02-01', '2017-06-30')
+                self::buildMember('2010-02-01', NULL, ($year - 6) . '-05-13', [
+                    self::buildMemberFeeDiscount('2017-02-01', '2017-06-30')
                 ]),
                 8600,
                 8600,
@@ -201,7 +199,7 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2010-02-01', NULL, ($year - 17) . '-05-13'),
+                self::buildMember('2010-02-01', NULL, ($year - 17) . '-05-13'),
                 3200,
                 3200,
                 1,
@@ -212,7 +210,7 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2010-02-01', '2017-05-01', ($year - 17) . '-05-13'),
+                self::buildMember('2010-02-01', '2017-05-01', ($year - 17) . '-05-13'),
                 2200,
                 2200,
                 1,
@@ -223,7 +221,7 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2016-08-01', NULL, ($year - 17) . '-05-13'),
+                self::buildMember('2016-08-01', NULL, ($year - 17) . '-05-13'),
                 3000,
                 3350,
                 2,
@@ -235,8 +233,8 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2015-07-01', NULL, '1970-05-13', [
-                    $this->buildMemberFeeDiscount('2015-07-01', NULL)
+                self::buildMember('2015-07-01', NULL, '1970-05-13', [
+                    self::buildMemberFeeDiscount('2015-07-01', NULL)
                 ]),
                 7200,
                 7200,
@@ -248,8 +246,8 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2016-08-01', NULL, '1970-05-13', [
-                    $this->buildMemberFeeDiscount('2015-07-01', NULL)
+                self::buildMember('2016-08-01', NULL, '1970-05-13', [
+                    self::buildMemberFeeDiscount('2015-07-01', NULL)
                 ]),
                 6600,
                 6950,
@@ -261,8 +259,8 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2015-08-01', NULL, '1970-05-13', [
-                    $this->buildMemberFeeDiscount('2015-07-01', '2016-12-31')
+                self::buildMember('2015-08-01', NULL, '1970-05-13', [
+                    self::buildMemberFeeDiscount('2015-07-01', '2016-12-31')
                 ]),
                 9600,
                 9600,
@@ -275,9 +273,9 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2015-08-01', NULL, '1970-05-13', [
-                    $this->buildMemberFeeDiscount('2015-07-01', '2016-12-31'),
-                    $this->buildMemberFeeDiscount('2017-05-01', NULL)
+                self::buildMember('2015-08-01', NULL, '1970-05-13', [
+                    self::buildMemberFeeDiscount('2015-07-01', '2016-12-31'),
+                    self::buildMemberFeeDiscount('2017-05-01', NULL)
                 ]),
                 8800,
                 8800,
@@ -290,8 +288,8 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2016-07-01'),
                 new \DateTime('2017-06-30'),
                 $feeOptions,
-                $this->buildMember('2015-08-01', NULL, '1970-05-13', [
-                    $this->buildMemberFeeDiscount('2017-05-01', NULL)
+                self::buildMember('2015-08-01', NULL, '1970-05-13', [
+                    self::buildMemberFeeDiscount('2017-05-01', NULL)
                 ]),
                 11200,
                 11200,
@@ -304,8 +302,8 @@ class DefaultProcessorTest extends TestCase
                 new \DateTime('2017-01-01'),
                 new \DateTime('2017-03-31'),
                 $feeOptions,
-                $this->buildMember('2015-08-01', NULL, '1970-05-13', [
-                    $this->buildMemberFeeDiscount('2017-02-01', NULL)
+                self::buildMember('2015-08-01', NULL, '1970-05-13', [
+                    self::buildMemberFeeDiscount('2017-02-01', NULL)
                 ]),
                 2200,
                 2200,
@@ -327,7 +325,7 @@ class DefaultProcessorTest extends TestCase
      *            Zeiträume
      * @return
      */
-    protected function buildMember($start, $end, $birthday, array $discounts = array())
+    protected static function buildMember($start, $end, $birthday, array $discounts = array())
     {
         $contact = new Contact();
         $contact->setBirthday(new \DateTime($birthday));
@@ -352,7 +350,7 @@ class DefaultProcessorTest extends TestCase
      * @param string $end
      *            Ende der Ermäßigung oder NULL
      */
-    protected function buildMemberFeeDiscount($start, $end)
+    protected static function buildMemberFeeDiscount($start, $end)
     {
         $discount = new MemberFeeDiscount();
         $discount->setStartDate(new \DateTime($start));

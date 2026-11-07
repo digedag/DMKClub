@@ -2,15 +2,13 @@
 namespace DMKClub\Bundle\MemberBundle\Tests\Unit\Entity;
 
 use DMKClub\Bundle\MemberBundle\Entity\MemberFeeDiscount;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class MemberFeeDiscountTest extends TestCase
 {
 
-    /**
-     *
-     * @dataProvider dataProvider4Contains
-     */
+    #[DataProvider('dataProvider4Contains')]
     public function testContains($start, $end, $testDay, $expected)
     {
         $discount = new MemberFeeDiscount();
@@ -20,7 +18,7 @@ class MemberFeeDiscountTest extends TestCase
         $this->assertEquals($expected, $current);
     }
 
-    public function dataProvider4Contains()
+    public static function dataProvider4Contains()
     {
         return [
             [

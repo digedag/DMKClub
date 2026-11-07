@@ -8,6 +8,7 @@ use Oro\Bundle\ContactBundle\Entity\Contact;
 use Psr\Log\NullLogger;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFeeDiscount;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFeePosition;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use DMKClub\Bundle\MemberBundle\Accounting\AgeCalculator;
 
@@ -21,10 +22,7 @@ class AgeCalculatorTest extends TestCase
         $this->calculator = new AgeCalculator();
     }
 
-    /**
-     *
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testGetAgeInMonth($currentMonth, $birthday, $raiseOnBirthday, $expected)
     {
         $age = $this->calculator->getAgeInMonth($currentMonth, $birthday, $raiseOnBirthday);
@@ -32,7 +30,7 @@ class AgeCalculatorTest extends TestCase
         $this->assertEquals($expected, $age);
     }
 
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             [ new \DateTime('2016-07-01'), new \DateTime('2016-05-13'), false, 0],

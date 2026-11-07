@@ -2,15 +2,13 @@
 namespace DMKClub\Bundle\MemberBundle\Tests\Unit\Accounting;
 
 use DMKClub\Bundle\MemberBundle\Accounting\Time\TimeCalculator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class TimeSpanCalculatorTest extends TestCase
+class TimeCalculatorTest extends TestCase
 {
 
-    /**
-     *
-     * @dataProvider timeSpanProvider
-     */
+    #[DataProvider('timeSpanProvider')]
     public function testCalculateSpanInMonth($start, $end, $expected)
     {
         $calculator = new TimeCalculator();
@@ -19,7 +17,7 @@ class TimeSpanCalculatorTest extends TestCase
         $this->assertEquals($expected, count($span));
     }
 
-    public function timeSpanProvider()
+    public static function timeSpanProvider()
     {
         return [
             [
@@ -45,10 +43,7 @@ class TimeSpanCalculatorTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @dataProvider lastDayProvider
-     */
+    #[DataProvider('lastDayProvider')]
     public function testGetLastDayInMonth($date, $expected)
     {
         $calculator = new TimeCalculator();
@@ -56,7 +51,7 @@ class TimeSpanCalculatorTest extends TestCase
         $this->assertEquals($expected, $lastDay);
     }
 
-    public function lastDayProvider()
+    public static function lastDayProvider()
     {
         return [
             [
