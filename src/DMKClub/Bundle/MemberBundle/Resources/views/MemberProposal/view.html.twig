@@ -1,8 +1,8 @@
-{% extends 'OroUIBundle:actions:view.html.twig' %}
-{% import 'OroUIBundle::macros.html.twig' as macros %}
-{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
-{% import 'OroUIBundle::macros.html.twig' as UI %}
-{% import 'DMKClubBasicsBundle::macros.html.twig' as CLUBUI %}
+{% extends '@OroUI/actions/view.html.twig' %}
+{% import '@OroUI/macros.html.twig' as macros %}
+{% import '@OroDataGrid/macros.html.twig' as dataGrid %}
+{% import '@OroUI/macros.html.twig' as UI %}
+{% import '@DMKClubBasics/macros.html.twig' as CLUBUI %}
 
 {% set fullname = entity|oro_format_name|default('N/A') %}
 {% oro_title_set({params : {"%member.name%": fullname} }) %}

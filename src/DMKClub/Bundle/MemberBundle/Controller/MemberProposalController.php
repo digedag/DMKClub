@@ -49,7 +49,7 @@ class MemberProposalController extends AbstractController
         ];
     }
     #[Route('/create', name: 'dmkclub_member_proposal_create')]
-    #[Template('DMKClubMemberBundle:MemberProposal:update.html.twig')]
+    #[Template('@DMKClubMember/MemberProposal/update.html.twig')]
     #[Acl(id: 'dmkclub_member_proposal_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\MemberBundle\Entity\MemberProposal::class)]
     public function createAction()
     {

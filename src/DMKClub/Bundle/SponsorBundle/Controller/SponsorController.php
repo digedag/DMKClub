@@ -49,7 +49,7 @@ class SponsorController extends AbstractController
      * Create sponsor form
      */
     #[Route('/create', name: 'dmkclub_sponsor_create')]
-    #[Template('DMKClubSponsorBundle:Sponsor:update.html.twig')]
+    #[Template('@DMKClubSponsor/Sponsor/update.html.twig')]
     #[Acl(id: 'dmkclub_sponsor_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\SponsorBundle\Entity\Sponsor::class)]
     public function createAction() {
     	return $this->update(new Sponsor());

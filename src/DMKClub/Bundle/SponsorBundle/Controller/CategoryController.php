@@ -45,7 +45,7 @@ class CategoryController extends AbstractController
 	 * Create sponsorcategory form
 	 */
 	#[Route('/create', name: 'dmkclub_sponsorcategory_create')]
-	#[Template('DMKClubSponsorBundle:Category:update.html.twig')]
+	#[Template('@DMKClubSponsor/Category/update.html.twig')]
     #[Acl(id: 'dmkclub_sponsorcategory_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\SponsorBundle\Entity\Category::class)]
     public function createAction() {
     	return $this->update(new Category());

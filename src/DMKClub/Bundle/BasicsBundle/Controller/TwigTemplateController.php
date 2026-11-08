@@ -48,7 +48,7 @@ class TwigTemplateController extends AbstractController
      * Create template form
      */
     #[Route('/create', name: 'dmkclub_basics_twigtemplate_create')]
-    #[Template('DMKClubBasicsBundle:TwigTemplate:update.html.twig')]
+    #[Template('@DMKClubBasics/TwigTemplate/update.html.twig')]
     #[Acl(id: 'dmkclub_basics_twigtemplate_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate::class)]
     public function createAction(Request $request)
     {

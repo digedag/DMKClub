@@ -45,7 +45,7 @@ class MemberFeeDiscountController extends AbstractController
 	}
 
 	#[Route('/{memberId}/memberfeediscount-create', name: 'dmkclub_member_memberfeediscount_create', requirements: ['memberId' => '\d+'])]
-	#[Template('DMKClubMemberBundle:MemberFeeDiscount:update.html.twig')]
+	#[Template('@DMKClubMember/MemberFeeDiscount/update.html.twig')]
 	#[ParamConverter('member', options: ['id' => 'memberId'])]
 	#[AclAncestor('dmkclub_member_create')]
 	public function createAction(Member $member)

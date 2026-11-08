@@ -50,7 +50,7 @@ class MemberController extends AbstractController
      * Create member form
      */
     #[Route('/create', name: 'dmkclub_member_create')]
-    #[Template('DMKClubMemberBundle:Member:update.html.twig')]
+    #[Template('@DMKClubMember/Member/update.html.twig')]
     #[Acl(id: 'dmkclub_member_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\MemberBundle\Entity\Member::class)]
     public function createAction()
     {

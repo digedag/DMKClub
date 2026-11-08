@@ -6,7 +6,7 @@ search:
             name: dmkclub_sponsor_view
             parameters:
                 id: id
-        search_template: DMKClubSponsorBundle:Sponsor:searchResult.html.twig
+        search_template: "@DMKClubSponsor/Sponsor/searchResult.html.twig"
         fields:
             -
                 name:                   name
@@ -27,7 +27,7 @@ search:
             name: dmkclub_sponsorcategory_view
             parameters:
                 id: id
-        search_template: DMKClubSponsorBundle:Category:searchResult.html.twig
+        search_template: "@DMKClubSponsor/Category/searchResult.html.twig"
         fields:
             -
                 name:                   name

@@ -45,7 +45,7 @@ class SepaCreditorController extends AbstractController
      * Create sepacreditor form
      */
     #[Route('/create', name: 'dmkclub_sepacreditor_create')]
-    #[Template('DMKClubPaymentBundle:SepaCreditor:update.html.twig')]
+    #[Template('@DMKClubPayment/SepaCreditor/update.html.twig')]
     #[Acl(id: 'dmkclub_sepacreditor_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor::class)]
     public function createAction(Request $request)
     {

@@ -3,7 +3,7 @@
 	Alias für attibuteRow (fehlendes "r")
 #}
 {% macro attributeRow(title, value, additionalData) %}
-	{% import 'OroUIBundle::macros.html.twig' as UI %}
+	{% import '@OroUI/macros.html.twig' as UI %}
 	{{ UI.attibuteRow(title, value, additionalData) }}
 {% endmacro %}
 
@@ -19,7 +19,7 @@
 		{% endif %}
   {% endmacro %}
 
-	{% import 'OroUIBundle::macros.html.twig' as UI %}
+	{% import '@OroUI/macros.html.twig' as UI %}
 	{{ UI.attibuteRow(title, _self.value_bool(value), additionalData) }}
 {% endmacro %}
 
@@ -35,32 +35,32 @@
 		{% endif %}
   {% endmacro %}
 
-	{% import 'OroUIBundle::macros.html.twig' as UI %}
+	{% import '@OroUI/macros.html.twig' as UI %}
 	{{ UI.renderHtmlProperty(title, _self.value_bool(value)|raw) }}
 {% endmacro %}
 
 {% macro cent2Euro(value) %}
-	{% import 'OroUIBundle::macros.html.twig' as UI %}
+	{% import '@OroUI/macros.html.twig' as UI %}
 	{{ (value/100)|number_format(2, ',', '.') ~ ' €' }}
 {% endmacro %}
 
 {% macro attributeInEuro(title, value, additionalData) %}
-	{% import 'OroUIBundle::macros.html.twig' as UI %}
+	{% import '@OroUI/macros.html.twig' as UI %}
 	{{ UI.attibuteRow(title, [value|number_format(2, ',', '.')]|merge([' €'])|join, additionalData) }}
 {% endmacro %}
 
 {% macro attributeInPercent(title, value, additionalData) %}
-	{% import 'OroUIBundle::macros.html.twig' as UI %}
+	{% import '@OroUI/macros.html.twig' as UI %}
 	{{ UI.attibuteRow(title, [value|number_format(4, ',', '.')]|merge([' %'])|join, additionalData) }}
 {% endmacro %}
 
 {% macro attributeInDays(title, value, additionalData) %}
-	{% import 'OroUIBundle::macros.html.twig' as UI %}
+	{% import '@OroUI/macros.html.twig' as UI %}
 	{{ UI.attibuteRow(title, [value|number_format(0, ',', '.')]|merge(['Days'|trans])|join(' '), additionalData) }}
 {% endmacro %}
 
 {% macro attributeWithText(title, value, text, additionalData) %}
-	{% import 'OroUIBundle::macros.html.twig' as UI %}
+	{% import '@OroUI/macros.html.twig' as UI %}
 	{{ UI.attibuteRow(title, [value]|merge([text])|join(' '), additionalData) }}
 {% endmacro %}
 
@@ -85,7 +85,7 @@
     Renders a given file size value in Byte to a human readable format
 #}
 {% macro bytesToSize(bytes) %}
-{% spaceless %}
+{% apply spaceless %}
     {% set kilobyte = 1024 %}
     {% set megabyte = kilobyte * 1024 %}
     {% set gigabyte = megabyte * 1024 %}
@@ -102,6 +102,6 @@
     {% else %}
         {{ (bytes / terabyte)|number_format(2, '.') ~ ' TB' }}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endmacro %}
 

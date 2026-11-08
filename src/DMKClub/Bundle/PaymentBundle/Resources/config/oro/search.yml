@@ -6,7 +6,7 @@ search:
             name: dmkclub_sepacreditor_view
             parameters:
                 id: id
-        search_template: DMKClubPaymentBundle:SepaCreditor:searchResult.html.twig
+        search_template: "@DMKClubPayment/SepaCreditor/searchResult.html.twig"
         fields:
             -
                 name:                   name

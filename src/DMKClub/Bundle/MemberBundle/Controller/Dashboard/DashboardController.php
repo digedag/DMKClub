@@ -36,7 +36,7 @@ class DashboardController extends AbstractController
      * @return array
      */
     #[Route('/dmkclub_member_dashboard_members_in_active_chart/chart/{widget}', name: 'dmkclub_member_dashboard_members_in_active_chart', requirements: ['widget' => '[\w-]+'])]
-    #[Template('DMKClubMemberBundle:Dashboard:membersActivePassiveChart.html.twig')]
+    #[Template('@DMKClubMember/Dashboard/membersActivePassiveChart.html.twig')]
     public function membersActivePassiveAction(Request $request, $widget)
     {
         /** @var TranslatorInterface $translator */
@@ -80,7 +80,7 @@ class DashboardController extends AbstractController
      * @return array
      */
     #[Route('/dmkclub_member_dashboard_members_gender_chart/chart/{widget}', name: 'dmkclub_member_dashboard_members_gender_chart', requirements: ['widget' => '[\w-]+'])]
-    #[Template('DMKClubMemberBundle:Dashboard:membersGenderChart.html.twig')]
+    #[Template('@DMKClubMember/Dashboard/membersGenderChart.html.twig')]
     public function membersByGenderAction(Request $request, $widget)
     {
         /** @var TranslatorInterface $translator */
@@ -122,7 +122,7 @@ class DashboardController extends AbstractController
      * @return array
      */
     #[Route('/dmkclub_member_dashboard_members_new_by_year_chart/chart/{widget}', name: 'dmkclub_member_dashboard_members_new_by_year_chart', requirements: ['widget' => '[\w-]+'])]
-    #[Template('DMKClubMemberBundle:Dashboard:membersNewByYearChart.html.twig')]
+    #[Template('@DMKClubMember/Dashboard/membersNewByYearChart.html.twig')]
     public function membersNewByYearAction(Request $request, $widget)
     {
         $chartData = $this->getMemberRepository()->getNewMembersByYear($this->container->get(WidgetConfigs::class)
@@ -149,7 +149,7 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/dmkclub_member_dashboard_members_age_chart/chart/{widget}', name: 'dmkclub_member_dashboard_members_age_chart', requirements: ['widget' => '[\w-]+'])]
-    #[Template('DMKClubMemberBundle:Dashboard:flowChart.html.twig')]
+    #[Template('@DMKClubMember/Dashboard/flowChart.html.twig')]
     public function memberByAge(Request $request, $widget)
     {
         $chartData = $this->getMemberRepository()->getMemberByAge($this->container->get(WidgetConfigs::class)

@@ -48,7 +48,7 @@ class MemberBillingController extends AbstractController
      * Create member form
      */
     #[Route('/create', name: 'dmkclub_memberbilling_create')]
-    #[Template('DMKClubMemberBundle:MemberBilling:update.html.twig')]
+    #[Template('@DMKClubMember/MemberBilling/update.html.twig')]
     #[Acl(id: 'dmkclub_memberbilling_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\MemberBundle\Entity\MemberBilling::class)]
     public function createAction()
     {

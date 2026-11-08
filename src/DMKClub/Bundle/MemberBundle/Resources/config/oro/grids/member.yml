@@ -15,10 +15,6 @@ datagrids:
                     - m.isHonorary
                     - m.isActive
                     - m.status
-                    - po.id as paymentOption
-                    - po.name as paymentOptionLabel
-                    - pi.id as paymentInterval
-                    - pi.name as paymentIntervalLabel
                     - a.city
                     - c.birthday
                     - email.email
@@ -38,8 +34,6 @@ datagrids:
                         - { join: c.emails, alias: email, conditionType: WITH, condition: 'email.primary = true' }
                         - { join: m.postalAddress, alias: a }
                         - { join: m.bankAccount, alias: b }
-                        - { join: m.payment_option, alias: po }
-                        - { join: m.payment_interval, alias: pi }
         columns:
             id:
                 label:         dmkclub.member.id.label
@@ -67,12 +61,16 @@ datagrids:
                 type:          translatable
             paymentOption:
                 label:         dmkclub.member.payment_option.label
-                choices:       "@oro_entity_extend.enum_value_provider->getEnumChoicesByCode('dmkclb_paymentoption')"
+                data_name:     payment_option
+                choices:       "@oro_entity_extend.enum_options_provider->getEnumChoicesByCode('dmkclb_paymentoption')"
                 frontend_type: select
+                translatable_options: false
             paymentInterval:
                 label:         dmkclub.member.payment_interval.label
-                choices:       "@oro_entity_extend.enum_value_provider->getEnumChoicesByCode('dmkclb_paymentintval')"
+                data_name:     payment_interval
+                choices:       "@oro_entity_extend.enum_options_provider->getEnumChoicesByCode('dmkclb_paymentintval')"
                 frontend_type: select
+                translatable_options: false
             city:
                 label:         oro.address.city.label
             birthday:
@@ -136,9 +134,9 @@ datagrids:
                 status:
                     data_name: m.status
                 paymentOption:
-                    data_name: paymentOptionLabel
+                    data_name: payment_option
                 paymentInterval:
-                    data_name: paymentIntervalLabel
+                    data_name: payment_interval
                 city:
                     data_name: a.city
                 birthday:
@@ -199,12 +197,12 @@ datagrids:
                             translatable_options: false
                 paymentOption:
                     type:      enum
-                    data_name: m.payment_option
+                    data_name: payment_option
                     enum_code: dmkclb_paymentoption
 
                 paymentInterval:
                     type:      enum
-                    data_name: m.payment_interval
+                    data_name: payment_interval
                     enum_code: dmkclb_paymentintval
                 city:
                     type: string

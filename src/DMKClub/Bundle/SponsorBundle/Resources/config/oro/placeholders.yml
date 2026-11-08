@@ -6,4 +6,4 @@ placeholders:
                 dmkclub_sponsor_channel_info: ~
     items:
         dmkclub_sponsor_channel_info:
-            action: DMKClubSponsorBundle:Sponsor:accountSponsorInfo
+            action: DMKClub\Bundle\SponsorBundle\Controller\SponsorController::accountSponsorInfoAction

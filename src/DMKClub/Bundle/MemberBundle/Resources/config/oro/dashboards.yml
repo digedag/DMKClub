@@ -1,7 +1,7 @@
 dashboards:
     dashboards:
         dmkclub_dashboard:
-            twig: OroDashboardBundle:Index:default.html.twig
+            twig: "@OroDashboard/Index/default.html.twig"
     widgets:
         members_age_chart:
             label:       dmkclub.member.dashboard.members_age_chart.title

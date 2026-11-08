@@ -65,7 +65,7 @@ class PRContactController extends AbstractController
 	 * Create form
 	 */
 	#[Route('/create', name: 'dmkclub_prcontact_create')]
-	#[Template('DMKClubPublicRelationBundle:PRContact:update.html.twig')]
+	#[Template('@DMKClubPublicRelation/PRContact/update.html.twig')]
 	#[Acl(id: 'dmkclub_prcontact_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\PublicRelationBundle\Entity\PRContact::class)]
 	public function createAction(Request $request) {
 		return $this->update ( new PRContact(), $request );

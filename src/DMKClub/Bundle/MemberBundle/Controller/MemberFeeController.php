@@ -51,7 +51,7 @@ class MemberFeeController extends AbstractController
 	 * Create member form
 	 */
 	#[Route('/create', name: 'dmkclub_memberfee_create')]
-	#[Template('DMKClubMemberBundle:MemberFee:update.html.twig')]
+	#[Template('@DMKClubMember/MemberFee/update.html.twig')]
 	#[Acl(id: 'dmkclub_memberfee_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\MemberBundle\Entity\MemberFee::class)]
 	public function createAction()
 	{
@@ -60,7 +60,7 @@ class MemberFeeController extends AbstractController
 	/**
 	 * Method is called from "dmkgetpdf" datagrid-action.
 	 * Is creates a PDF-File for a single MemberFee and returns a download link.
-	 * -> nicht notwendig! Template("DMKClubMemberBundle:MemberFee:pdf.html.twig")
+	 * -> nicht notwendig! Template("@DMKClubMember/MemberFee/pdf.html.twig")
 	 */
 	#[Route('/pdf/{id}', name: 'dmkclub_memberfee_createpdf', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
 	#[AclAncestor('dmkclub_memberfee_view')]

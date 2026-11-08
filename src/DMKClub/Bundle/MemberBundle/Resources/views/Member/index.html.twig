@@ -1,12 +1,12 @@
-{% extends 'OroUIBundle:actions:index.html.twig' %}
-{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% extends '@OroUI/actions/index.html.twig' %}
+{% import '@OroUI/macros.html.twig' as UI %}
 
 {% set gridName = 'dmkclub-members-grid' %}
 {% set pageTitle = 'dmkclub.member.entity_plural_label'|trans %}
 
 
 {% block navButtons %}
-    {% include 'OroImportExportBundle:ImportExport:buttons.html.twig' with {
+    {% include '@OroImportExport/ImportExport/buttons.html.twig' with {
         entity_class: entity_class,
         exportProcessor: 'dmkclub_member',
         exportTemplateProcessor: 'dmkclub_member',

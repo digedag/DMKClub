@@ -6,7 +6,7 @@ search:
             name:                       dmkclub_member_view
             parameters:
                 id:                     id
-        search_template:                DMKClubMemberBundle:Member:searchResult.html.twig
+        search_template:                "@DMKClubMember/Member/searchResult.html.twig"
         fields:
             -
                 name:                   name
@@ -32,7 +32,7 @@ search:
             name:                       dmkclub_member_proposal_view
             parameters:
                 id:                     id
-        search_template:                DMKClubMemberBundle:MemberProposal:searchResult.html.twig
+        search_template:                "@DMKClubMember/MemberProposal/searchResult.html.twig"
         fields:
             -
                 name:                   lastName

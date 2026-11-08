@@ -1,5 +1,5 @@
-{% form_theme form with ['OroContactBundle:Include:fields.html.twig', 'OroFormBundle:Form:fields.html.twig', _self] %}
-{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% form_theme form with ['@OroContact/Include/fields.html.twig', '@OroForm/Form/fields.html.twig', _self] %}
+{% import '@OroUI/macros.html.twig' as UI %}
 <div class="widget-content">
 
     {% if saved %}
