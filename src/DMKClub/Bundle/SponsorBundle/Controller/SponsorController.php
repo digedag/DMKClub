@@ -4,7 +4,7 @@ namespace DMKClub\Bundle\SponsorBundle\Controller;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -19,10 +19,7 @@ use DMKClub\Bundle\SponsorBundle\Form\Handler\SponsorHandler;
 use Symfony\Component\Form\Form;
 use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
 
-
-/**
- * @Route("/sponsor")
- */
+#[Route('/sponsor')]
 class SponsorController extends AbstractController
 {
     /**
@@ -39,10 +36,8 @@ class SponsorController extends AbstractController
         ]);
     }
 
-	/**
-	 * @Route("/", name="dmkclub_sponsor_index")
-	 * @Template
-	 */
+	#[Route('/', name: 'dmkclub_sponsor_index')]
+	#[Template]
 	#[AclAncestor('dmkclub_sponsor_view')]
 	public function indexAction()
 	{
@@ -52,19 +47,18 @@ class SponsorController extends AbstractController
 	}
     /**
      * Create sponsor form
-     * @Route("/create", name="dmkclub_sponsor_create")
-     * @Template("DMKClubSponsorBundle:Sponsor:update.html.twig")
      */
+    #[Route('/create', name: 'dmkclub_sponsor_create')]
+    #[Template('DMKClubSponsorBundle:Sponsor:update.html.twig')]
     #[Acl(id: 'dmkclub_sponsor_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\SponsorBundle\Entity\Sponsor::class)]
     public function createAction() {
     	return $this->update(new Sponsor());
     }
     /**
      * Update sponsor form
-     * @Route("/update/{id}", name="dmkclub_sponsor_update", requirements={"id"="\d+"}, defaults={"id"=0})
-     *
-     * @Template
      */
+    #[Route('/update/{id}', name: 'dmkclub_sponsor_update', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+    #[Template]
     #[Acl(id: 'dmkclub_sponsor_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\SponsorBundle\Entity\Sponsor::class)]
     public function updateAction(Sponsor $entity)
     {
@@ -86,20 +80,16 @@ class SponsorController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/view/{id}", name="dmkclub_sponsor_view", requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/view/{id}', name: 'dmkclub_sponsor_view', requirements: ['id' => '\d+'])]
+    #[Template]
     #[Acl(id: 'dmkclub_sponsor_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\SponsorBundle\Entity\Sponsor::class)]
     public function viewAction(Sponsor $entity)
     {
         return ['entity' => $entity];
     }
 
-    /**
-     * @Route("/widget/info/{id}", name="dmkclub_sponsor_widget_info", requirements={"id"="\d+"})
-     * @Template
-     */
+    #[Route('/widget/info/{id}', name: 'dmkclub_sponsor_widget_info', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_sponsor_view')]
     public function infoAction(Sponsor $entity)
     {
@@ -115,16 +105,11 @@ class SponsorController extends AbstractController
      * im entsprechenden Channel bereit.
      * Die eigentlichen Datensätze werden dann in der Route
      * dmkclub_sponsor_widget_sponsor_info gerendert.
-     *
-     * @Route(
-     *      "/widget/sponsor-info/account/{accountId}/channel/{channelId}",
-     *      name="dmkclub_sponsor_widget_account_sponsor_info",
-     *      requirements={"accountId"="\d+", "channelId"="\d+"}
-     * )
-     * @ParamConverter("account", class="Oro\Bundle\AccountBundle\Entity\Account", options={"id" = "accountId"})
-     * @ParamConverter("channel", class="Oro\Bundle\ChannelBundle\Entity\Channel", options={"id" = "channelId"})
-     * @Template
      */
+    #[Route('/widget/sponsor-info/account/{accountId}/channel/{channelId}', name: 'dmkclub_sponsor_widget_account_sponsor_info', requirements: ['accountId' => '\d+', 'channelId' => '\d+'])]
+    #[ParamConverter('account', class: \Oro\Bundle\AccountBundle\Entity\Account::class, options: ['id' => 'accountId'])]
+    #[ParamConverter('channel', class: \Oro\Bundle\ChannelBundle\Entity\Channel::class, options: ['id' => 'channelId'])]
+    #[Template]
     #[AclAncestor('orocrm_sales_b2bcustomer_view')]
     public function accountSponsorInfoAction(Account $account, Channel $channel)
     {
@@ -134,15 +119,9 @@ class SponsorController extends AbstractController
         return ['account' => $account, 'sponsors' => $entities, 'channel' => $channel];
     }
 
-    /**
-     * @Route(
-     *        "/widget/sponsor-info/{id}/channel/{channelId}",
-     *        name="dmkclub_sponsor_widget_sponsor_info",
-     *        requirements={"id"="\d+", "channelId"="\d+"}
-     * )
-     * @ParamConverter("channel", class="Oro\Bundle\ChannelBundle\Entity\Channel", options={"id" = "channelId"})
-     * @Template
-     */
+    #[Route('/widget/sponsor-info/{id}/channel/{channelId}', name: 'dmkclub_sponsor_widget_sponsor_info', requirements: ['id' => '\d+', 'channelId' => '\d+'])]
+    #[ParamConverter('channel', class: \Oro\Bundle\ChannelBundle\Entity\Channel::class, options: ['id' => 'channelId'])]
+    #[Template]
     #[AclAncestor('orocrm_magento_customer_view')]
     public function sponsorInfoAction(Sponsor $entity, Channel $channel)
     {

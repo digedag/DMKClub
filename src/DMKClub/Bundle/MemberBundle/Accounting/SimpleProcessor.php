@@ -73,8 +73,7 @@ class SimpleProcessor extends AbstractProcessor
         $feeFull = (int) $this->getOption(self::OPTION_FEE);
 
         $fee = 0;
-        // Über jeden Monat iterieren, den erste und den letzten Monat merken
-        $firstMonth2Pay = null;
+        // Über jeden Monat iterieren, den erste und den letzten Monat ?merken $firstMonth2Pay = null;
         $lastMonth2Pay = null;
 
         /* @var $currentMonth \DateTime */

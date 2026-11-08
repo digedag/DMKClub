@@ -2,6 +2,9 @@
 
 namespace DMKClub\Bundle\MemberBundle\Model;
 
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
+
 
 /**
  *
@@ -12,8 +15,10 @@ namespace DMKClub\Bundle\MemberBundle\Model;
  * @method \Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface getPaymentInterval()
  * @method ExtendMember setPaymentInterval(\Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface $status)
  */
-class ExtendMember
+class ExtendMember implements ExtendEntityInterface 
 {
+    use ExtendEntityTrait;
+
     /**
      * Constructor
      *

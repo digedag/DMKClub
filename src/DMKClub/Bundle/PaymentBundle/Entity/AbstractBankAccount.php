@@ -6,20 +6,18 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 
 /**
  * Class BankAccount
- *
- * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\MappedSuperclass]
+#[ORM\HasLifecycleCallbacks]
 abstract class AbstractBankAccount
 {
 
     /**
-     *
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', name: 'id')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -30,10 +28,9 @@ abstract class AbstractBankAccount
     protected $id;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="account_owner", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'account_owner', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -47,10 +44,9 @@ abstract class AbstractBankAccount
     protected $accountOwner;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="iban", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'iban', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -64,10 +60,9 @@ abstract class AbstractBankAccount
     protected $iban;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="bic", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'bic', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -81,10 +76,9 @@ abstract class AbstractBankAccount
     protected $bic;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="bank_name", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'bank_name', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -98,10 +92,9 @@ abstract class AbstractBankAccount
     protected $bankName;
 
     /**
-     *
      * @var \DateTime
-     * @ORM\Column(name="direct_debit_valid_from", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'direct_debit_valid_from', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -116,10 +109,9 @@ abstract class AbstractBankAccount
 
     /**
      * Default SEPA direct debit mandate id
-     *
      * @var string
-     * @ORM\Column(name="direct_debit_mandate_id", type="string", length=50, nullable=true)
      */
+    #[ORM\Column(name: 'direct_debit_mandate_id', type: 'string', length: 50, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -133,10 +125,10 @@ abstract class AbstractBankAccount
     protected $directDebitMandateId;
 
     /**
-     *
      * @var \DateTime
-     * $created @ORM\Column(type="datetime")
+     * $created
      */
+    #[ORM\Column(type: 'datetime')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -150,10 +142,9 @@ abstract class AbstractBankAccount
     protected $created;
 
     /**
-     *
      * @var \DateTime $updated
-     * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(type: 'datetime')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -308,9 +299,8 @@ abstract class AbstractBankAccount
 
     /**
      * Pre persist event listener
-     *
-     * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function beforeSave()
     {
         $this->created = new \DateTime('now', new \DateTimeZone('UTC'));

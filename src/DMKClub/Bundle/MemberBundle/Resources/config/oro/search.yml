@@ -2,7 +2,6 @@ search:
     DMKClub\Bundle\MemberBundle\Entity\Member:
         alias:                          dmkclub_member
         label:                          dmkclub.member.entity_plural_label
-        title_fields:                   [firstName, lastName]
         route:
             name:                       dmkclub_member_view
             parameters:
@@ -29,7 +28,6 @@ search:
     DMKClub\Bundle\MemberBundle\Entity\MemberProposal:
         alias:                          dmkclub_member_proposal
         label:                          dmkclub.member_proposal.entity_plural_label
-        title_fields:                   [firstName, lastName]
         route:
             name:                       dmkclub_member_proposal_view
             parameters:

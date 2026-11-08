@@ -5,7 +5,6 @@ namespace DMKClub\Bundle\SponsorBundle\Controller\Api\Rest;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,28 +34,11 @@ class SponsorController extends RestController
     /**
      * REST GET list
      *
-     * @QueryParam(
-     *     name="page", requirements="\d+", nullable=true, description="Page number, starting from 1. Defaults to 1."
-     * )
-     * @QueryParam(
-     *     name="limit", requirements="\d+", nullable=true, description="Number of items per page. defaults to 10."
-     * )
-     * @QueryParam(
-     *     name="createdAt",
-     *     requirements="\d{4}(-\d{2}(-\d{2}([T ]\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|([-+]\d{2}(:?\d{2})?))?)?)?)?",
-     *     nullable=true,
-     *     description="Date in RFC 3339 format. For example: 2009-11-05T13:15:30Z, 2008-07-01T22:35:17+08:00"
-     * )
-     * @QueryParam(
-     *     name="updatedAt",
-     *     requirements="\d{4}(-\d{2}(-\d{2}([T ]\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|([-+]\d{2}(:?\d{2})?))?)?)?)?",
-     *     nullable=true,
-     *     description="Date in RFC 3339 format. For example: 2009-11-05T13:15:30Z, 2008-07-01T22:35:17+08:00"
-     * )
-     * @ApiDoc(
-     *      description="Get all sponsors items",
-     *      resource=true
-     * )
+     * 
+     * 
+     * 
+     * 
+     * 
      *
      * @throws \Exception
      * @return Response
@@ -95,10 +77,7 @@ class SponsorController extends RestController
      *
      * @param string $id
      *
-     * @ApiDoc(
-     *      description="Get sponsor item",
-     *      resource=true
-     * )
+     * 
      * @return Response
      */
     #[AclAncestor('dmkclub_sponsor_view')]
@@ -112,10 +91,7 @@ class SponsorController extends RestController
      *
      * @param int $id Sponsor item id
      *
-     * @ApiDoc(
-     *      description="Update sponsor",
-     *      resource=true
-     * )
+     * 
      * @return Response
      */
     #[AclAncestor('dmkclub_sponsor_update')]
@@ -127,10 +103,7 @@ class SponsorController extends RestController
     /**
      * Create new sponsor
      *
-     * @ApiDoc(
-     *      description="Create new sponsor",
-     *      resource=true
-     * )
+     * 
      */
     #[AclAncestor('dmkclub_sponsor_create')]
     public function postAction()
@@ -143,10 +116,7 @@ class SponsorController extends RestController
      *
      * @param int $id
      *
-     * @ApiDoc(
-     *      description="Delete Sponsor",
-     *      resource=true
-     * )
+     * 
      * @return Response
      */
     #[Acl(id: 'dmkclub_sponsor_delete', type: 'entity', permission: 'DELETE', class: \DMKClub\Bundle\SponsorBundle\Entity\Sponsor::class)]

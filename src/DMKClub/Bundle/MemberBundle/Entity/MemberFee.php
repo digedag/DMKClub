@@ -17,11 +17,10 @@ use DMKClub\Bundle\PaymentBundle\Model\PaymentOption;
 
 /**
  * Class MemberFee
- *
- * @ORM\Entity(repositoryClass="DMKClub\Bundle\MemberBundle\Entity\Repository\MemberFeeRepository")
- * @ORM\Table(name="dmkclub_member_fee")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: \DMKClub\Bundle\MemberBundle\Entity\Repository\MemberFeeRepository::class)]
+#[ORM\Table(name: 'dmkclub_member_fee')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     routeName: 'dmkclub_memberfee_index',
     routeView: 'dmkclub_memberfee_view',
@@ -59,12 +58,11 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     const CORRECTION_STATUS_DONE = 2;
 
     /**
-     *
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', name: 'id')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -75,10 +73,9 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     protected $id;
 
     /**
-     *
      * @var \DateTime
-     * @ORM\Column(name="start_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'start_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -92,10 +89,9 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     protected $startDate;
 
     /**
-     *
      * @var \DateTime
-     * @ORM\Column(name="end_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'end_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -109,10 +105,9 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     protected $endDate;
 
     /**
-     *
      * @var \DateTime
-     * @ORM\Column(name="bill_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'bill_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -126,10 +121,9 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     protected $billDate;
 
     /**
-     *
      * @var \DateTime
-     * @ORM\Column(name="due_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'due_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -143,10 +137,9 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     protected $dueDate;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -160,10 +153,8 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     )]
     protected $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberBilling", inversedBy="memberFees")
-     * @ORM\JoinColumn(name="billing", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\MemberBilling::class, inversedBy: 'memberFees')]
+    #[ORM\JoinColumn(name: 'billing', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -173,10 +164,8 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     )]
     protected $billing;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\Member", inversedBy="memberFees")
-     * @ORM\JoinColumn(name="member", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\Member::class, inversedBy: 'memberFees')]
+    #[ORM\JoinColumn(name: 'member', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -186,9 +175,7 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     )]
     protected $member;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberFeePosition", mappedBy="memberFee", cascade={"all"}, orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\MemberFeePosition::class, mappedBy: 'memberFee', cascade: ['all'], orphanRemoval: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -199,17 +186,15 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     protected $positions;
 
     /**
-     *
      * @var integer
-     * @ORM\Column(name="price_total", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'price_total', type: 'integer', nullable: true)]
     private $priceTotal = 0;
 
     /**
-     *
      * @var integer
-     * @ORM\Column(name="payed_total", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'payed_total', type: 'integer', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -220,10 +205,9 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     private $payedTotal = 0;
 
     /**
-     *
      * @var integer
-     * @ORM\Column(name="correction_status", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'correction_status', type: 'integer', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -235,10 +219,9 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
 
     /**
      * Used SEPA direct debit mandate id
-     *
      * @var string
-     * @ORM\Column(name="direct_debit_mandate_id", type="string", length=50, nullable=true)
      */
+    #[ORM\Column(name: 'direct_debit_mandate_id', type: 'string', length: 50, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -249,11 +232,9 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     private $directDebitMandateId;
 
     /**
-     *
-     *
      * @var string
-     * @ORM\Column(name="remittance_information", type="string", length=120, nullable=true)
      */
+    #[ORM\Column(name: 'remittance_information', type: 'string', length: 120, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -264,10 +245,9 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     private $remittanceInformation;
 
     /**
-     *
      * @var \DateTime $createdAt
-     * @ORM\Column(type="datetime", name="created_at")
      */
+    #[ORM\Column(type: 'datetime', name: 'created_at')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -281,10 +261,9 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     protected $createdAt;
 
     /**
-     *
      * @var \DateTime $updatedAt
-     * @ORM\Column(type="datetime", name="updated_at")
      */
+    #[ORM\Column(type: 'datetime', name: 'updated_at')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -298,19 +277,17 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
     protected $updatedAt;
 
     /**
-     *
      * @var User
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\UserBundle\Entity\User::class)]
+    #[ORM\JoinColumn(name: 'user_owner_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $owner;
 
     /**
-     *
      * @var Organization
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
-     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\OrganizationBundle\Entity\Organization::class)]
+    #[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $organization;
 
     /**
@@ -449,7 +426,7 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
      * @param Organization $organization
      * @return MemberFee
      */
-    public function setOrganization(Organization $organization = null)
+    public function setOrganization(?Organization $organization = null)
     {
         $this->organization = $organization;
 
@@ -686,9 +663,8 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
 
     /**
      * Pre persist event listener
-     *
-     * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         $this->createdAt = $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -696,9 +672,8 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
 
     /**
      * Pre update event handler
-     *
-     * @ORM\PreUpdate
      */
+    #[ORM\PreUpdate]
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));

@@ -20,12 +20,11 @@ use Oro\Bundle\AccountBundle\Entity\Account;
 
 /**
  * Class Sponsor
- *
  * @package DMKClub\Bundle\DMKClubSponsorBundle\Entity
- * @ORM\Entity(repositoryClass="DMKClub\Bundle\SponsorBundle\Entity\Repository\SponsorRepository")
- * @ORM\Table(name="dmkclub_sponsor")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: \DMKClub\Bundle\SponsorBundle\Entity\Repository\SponsorRepository::class)]
+#[ORM\Table(name: 'dmkclub_sponsor')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     routeName: 'dmkclub_sponsor_index',
     routeView: 'dmkclub_sponsor_view',
@@ -65,11 +64,10 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
 	*/
 	/**
 	 * @var int
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer", name="id")
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
+	#[ORM\Id]
+	#[ORM\Column(type: 'integer', name: 'id')]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
 	#[ConfigField(
 	    defaultValues: [
 	        'importexport' => [
@@ -81,9 +79,8 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="start_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'start_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -98,9 +95,8 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="end_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'end_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -115,9 +111,8 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 255)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -133,33 +128,29 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
 
     /**
      * @var Contact
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\ContactBundle\Entity\Contact", cascade="PERSIST")
-     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\ContactBundle\Entity\Contact::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'contact_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $contact;
 
     /**
      * @var Account
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\AccountBundle\Entity\Account", cascade="PERSIST")
-     * @ORM\JoinColumn(name="account_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\AccountBundle\Entity\Account::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'account_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $account;
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(type="boolean", name="is_active")
      */
+    #[ORM\Column(type: 'boolean', name: 'is_active')]
     protected $isActive = false;
 
     /**
      * @var Collection
-     *
-     * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\SponsorBundle\Entity\Category")
-     * @ORM\JoinColumn(name="category", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\SponsorBundle\Entity\Category::class)]
+    #[ORM\JoinColumn(name: 'category', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -175,10 +166,9 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
 
     /**
      * @var Address $billingAddress
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\AddressBundle\Entity\Address", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\AddressBundle\Entity\Address::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'billing_address_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -194,10 +184,9 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
 
     /**
      * @var Address $postalAddress
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\AddressBundle\Entity\Address", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="postal_address_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\AddressBundle\Entity\Address::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'postal_address_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -210,17 +199,16 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\UserBundle\Entity\User::class)]
+    #[ORM\JoinColumn(name: 'user_owner_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $owner;
 
     /**
      * @var Organization
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
-     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\OrganizationBundle\Entity\Organization::class)]
+    #[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $organization;
 
     /**
@@ -339,7 +327,6 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
     	return $this;
     }
 
-
     /**
      * @param bool $isActive
      *
@@ -414,7 +401,7 @@ class Sponsor extends ExtendSponsor implements ChannelAwareInterface
      * @param Organization $organization
      * @return Sponsor
      */
-    public function setOrganization(Organization $organization = null)
+    public function setOrganization(?Organization $organization = null)
     {
         $this->organization = $organization;
 

@@ -8,11 +8,10 @@ use DMKClub\Bundle\MemberBundle\Model\ExtendMemberFeeDiscount;
 
 /**
  * Class MemberFeeDiscount
- *
- * @ORM\Entity
- * @ORM\Table(name="dmkclub_member_feediscount")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'dmkclub_member_feediscount')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     defaultValues: [
         'entity' => [
@@ -24,39 +23,33 @@ class MemberFeeDiscount extends ExtendMemberFeeDiscount
 {
 
     /**
-     *
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', name: 'id')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\Member", inversedBy="memberFeeDiscounts")
-     * @ORM\JoinColumn(name="member", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\Member::class, inversedBy: 'memberFeeDiscounts')]
+    #[ORM\JoinColumn(name: 'member', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected $member;
 
     /**
-     *
      * @var \DateTime
-     * @ORM\Column(name="start_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'start_date', type: 'date', nullable: true)]
     protected $startDate;
 
     /**
-     *
      * @var \DateTime
-     * @ORM\Column(name="end_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'end_date', type: 'date', nullable: true)]
     protected $endDate;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="reason", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'reason', type: 'string', length: 255, nullable: true)]
     private $reason;
 
     // single_price, total_price

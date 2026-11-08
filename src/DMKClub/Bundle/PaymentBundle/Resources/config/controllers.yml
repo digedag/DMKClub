@@ -14,3 +14,4 @@ services:
             - ['setContainer', ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'dmkclub.payment.sepacreditor.manager.api' }

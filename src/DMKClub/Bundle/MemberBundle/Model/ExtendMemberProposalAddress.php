@@ -2,10 +2,15 @@
 
 namespace DMKClub\Bundle\MemberBundle\Model;
 
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
+
 use Oro\Bundle\AddressBundle\Entity\AbstractAddress;
 
-class ExtendMemberProposalAddress extends AbstractAddress
+class ExtendMemberProposalAddress extends AbstractAddress implements ExtendEntityInterface 
 {
+    use ExtendEntityTrait;
+
     /**
      * Constructor
      *

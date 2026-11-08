@@ -4,7 +4,6 @@ namespace DMKClub\Bundle\PaymentBundle\Controller\Api\Rest;
 
 use BadMethodCallException;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 
 use Symfony\Component\HttpFoundation\Response;
@@ -13,8 +12,6 @@ use Oro\Bundle\SecurityBundle\Attribute\Acl;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 
-/**
- */
 class SepaCreditorController extends RestController
 {
 
@@ -30,10 +27,7 @@ class SepaCreditorController extends RestController
     /**
      * @param int $id
      *
-     * @ApiDoc(
-     *      description="Delete sepa creditors",
-     *      resource=true
-     * )
+     * 
      * @return Response
      */
     #[Acl(id: 'dmkclub_payment_sepacreditor_delete', type: 'entity', permission: 'DELETE', class: \DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor::class)]

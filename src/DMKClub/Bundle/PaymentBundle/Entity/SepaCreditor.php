@@ -11,12 +11,11 @@ use DMKClub\Bundle\PaymentBundle\Model\ExtendSepaCreditor;
 
 /**
  * Class SepaCreditor
- *
  * @package DMKClub\Bundle\DMKClubPaymentBundle\Entity
- * @ORM\Entity(repositoryClass="DMKClub\Bundle\PaymentBundle\Entity\Repository\SepaCreditorRepository")
- * @ORM\Table(name="dmkclub_sepacreditor")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: \DMKClub\Bundle\PaymentBundle\Entity\Repository\SepaCreditorRepository::class)]
+#[ORM\Table(name: 'dmkclub_sepacreditor')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     defaultValues: [
         'entity' => [
@@ -47,12 +46,11 @@ class SepaCreditor extends ExtendSepaCreditor
 {
 
     /**
-     *
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', name: 'id')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -63,10 +61,9 @@ class SepaCreditor extends ExtendSepaCreditor
     protected $id;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -77,9 +74,9 @@ class SepaCreditor extends ExtendSepaCreditor
     protected $name;
 
     /**
-     *
-     * @var string @ORM\Column(name="iban", type="string", length=255, nullable=true)
+     * @var string
      */
+    #[ORM\Column(name: 'iban', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -90,10 +87,9 @@ class SepaCreditor extends ExtendSepaCreditor
     protected $iban;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="bic", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'bic', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -104,10 +100,9 @@ class SepaCreditor extends ExtendSepaCreditor
     protected $bic;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="creditor_id", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'creditor_id', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -118,10 +113,9 @@ class SepaCreditor extends ExtendSepaCreditor
     protected $creditorId;
 
     /**
-     *
      * @var \DateTime $created
-     * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(type: 'datetime')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -135,19 +129,17 @@ class SepaCreditor extends ExtendSepaCreditor
     protected $created;
 
     /**
-     *
      * @var User
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\UserBundle\Entity\User::class)]
+    #[ORM\JoinColumn(name: 'user_owner_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $owner;
 
     /**
-     *
      * @var Organization
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
-     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\OrganizationBundle\Entity\Organization::class)]
+    #[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -159,10 +151,9 @@ class SepaCreditor extends ExtendSepaCreditor
     protected $organization;
 
     /**
-     *
      * @var \DateTime $updated
-     * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(type: 'datetime')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -267,7 +258,7 @@ class SepaCreditor extends ExtendSepaCreditor
      * @param Organization $organization
      * @return SepaCreditor
      */
-    public function setOrganization(Organization $organization = null)
+    public function setOrganization(?Organization $organization = null)
     {
         $this->organization = $organization;
         return $this;
@@ -331,9 +322,8 @@ class SepaCreditor extends ExtendSepaCreditor
 
     /**
      * Pre persist event listener
-     *
-     * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function beforeSave()
     {
         $this->created = new \DateTime('now', new \DateTimeZone('UTC'));

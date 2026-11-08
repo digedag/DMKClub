@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionHandlerInterface;
 use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionHandlerArgs;
 use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionResponse;
+use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionResponseInterface;
 use Oro\Bundle\DataGridBundle\Datasource\Orm\IterableResultInterface;
 
 use DMKClub\Bundle\MemberBundle\Entity\Manager\MemberFeeManager;
@@ -74,7 +75,7 @@ class MemberFeeCorrectionHandler implements MassActionHandlerInterface
      * {@inheritdoc}
      *
      */
-    public function handle(MassActionHandlerArgs $args)
+    public function handle(MassActionHandlerArgs $args): MassActionResponseInterface
     {
         $data = $args->getData();
         $massAction = $args->getMassAction();

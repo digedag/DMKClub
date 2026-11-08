@@ -6,7 +6,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
@@ -16,10 +16,7 @@ use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 use DMKClub\Bundle\BasicsBundle\Form\Handler\TwigTemplateHandler;
 use DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate;
 
-/**
- *
- * @Route("/twigtemplate")
- */
+#[Route('/twigtemplate')]
 class TwigTemplateController extends AbstractController
 {
 
@@ -37,11 +34,8 @@ class TwigTemplateController extends AbstractController
         ]);
     }
 
-    /**
-     *
-     * @Route("/", name="dmkclub_basics_twigtemplate_index")
-     * @Template
-     */
+    #[Route('/', name: 'dmkclub_basics_twigtemplate_index')]
+    #[Template]
     #[AclAncestor('dmkclub_basics_twigtemplate_view')]
     public function indexAction()
     {
@@ -52,10 +46,9 @@ class TwigTemplateController extends AbstractController
 
     /**
      * Create template form
-     *
-     * @Route("/create", name="dmkclub_basics_twigtemplate_create")
-     * @Template("DMKClubBasicsBundle:TwigTemplate:update.html.twig")
      */
+    #[Route('/create', name: 'dmkclub_basics_twigtemplate_create')]
+    #[Template('DMKClubBasicsBundle:TwigTemplate:update.html.twig')]
     #[Acl(id: 'dmkclub_basics_twigtemplate_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate::class)]
     public function createAction(Request $request)
     {
@@ -64,11 +57,9 @@ class TwigTemplateController extends AbstractController
 
     /**
      * Update twigtemplate form
-     *
-     * @Route("/update/{id}", name="dmkclub_basics_twigtemplate_update", requirements={"id"="\d+"}, defaults={"id"=0})
-     *
-     * @Template
      */
+    #[Route('/update/{id}', name: 'dmkclub_basics_twigtemplate_update', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+    #[Template]
     #[Acl(id: 'dmkclub_basics_twigtemplate_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate::class)]
     public function updateAction(TwigTemplate $entity, Request $request)
     {
@@ -92,11 +83,8 @@ class TwigTemplateController extends AbstractController
         );
     }
 
-    /**
-     *
-     * @Route("/view/{id}", name="dmkclub_basics_twigtemplate_view", requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/view/{id}', name: 'dmkclub_basics_twigtemplate_view', requirements: ['id' => '\d+'])]
+    #[Template]
     #[Acl(id: 'dmkclub_basics_twigtemplate_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate::class)]
     public function viewAction(TwigTemplate $entity)
     {
@@ -107,10 +95,9 @@ class TwigTemplateController extends AbstractController
 
     /**
      * Wird zur Anzeige des Info-Widgets in der Detailansicht verwendet
-     *
-     * @Route("/widget/info/{id}", name="dmkclub_basics_twigtemplate_widget_info", requirements={"id"="\d+"}))
-     * @Template
      */
+    #[Route('/widget/info/{id}', name: 'dmkclub_basics_twigtemplate_widget_info', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_basics_twigtemplate_view')]
     public function infoAction(TwigTemplate $entity)
     {

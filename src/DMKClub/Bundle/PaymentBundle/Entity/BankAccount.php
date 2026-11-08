@@ -10,17 +10,13 @@ use DMKClub\Bundle\PaymentBundle\Model\ExtendBankAccount;
 
 /**
  * Class BankAccount
- *
- * @ORM\Table(name="dmkclub_bankaccount")
- * @ORM\Entity(repositoryClass="DMKClub\Bundle\PaymentBundle\Entity\Repository\BankAccountRepository")
  */
+#[ORM\Table(name: 'dmkclub_bankaccount')]
+#[ORM\Entity(repositoryClass: \DMKClub\Bundle\PaymentBundle\Entity\Repository\BankAccountRepository::class)]
 #[Config(
     defaultValues: [
         'entity' => [
             'icon' => 'fa-briefcase',
-        ],
-        'note' => [
-            'immutable' => true,
         ],
         'activity' => [
             'immutable' => true,

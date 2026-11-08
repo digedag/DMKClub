@@ -3,7 +3,7 @@
 namespace DMKClub\Bundle\MemberBundle\Controller;
 
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Component\Form\Form;
@@ -20,9 +20,7 @@ use DMKClub\Bundle\MemberBundle\Entity\MemberFee;
 use DMKClub\Bundle\MemberBundle\Form\Handler\MemberFeeHandler;
 use DMKClub\Bundle\BasicsBundle\PDF\Manager;
 
-/**
- * @Route("/memberfee")
- */
+#[Route('/memberfee')]
 class MemberFeeController extends AbstractController
 {
     /**
@@ -40,10 +38,8 @@ class MemberFeeController extends AbstractController
         ]);
     }
 
-	/**
-	 * @Route("/", name="dmkclub_memberfee_index")
-	 * @Template
-	 */
+	#[Route('/', name: 'dmkclub_memberfee_index')]
+	#[Template]
 	#[AclAncestor('dmkclub_memberfee_view')]
 	public function indexAction()
 	{
@@ -53,9 +49,9 @@ class MemberFeeController extends AbstractController
 	}
 	/**
 	 * Create member form
-	 * @Route("/create", name="dmkclub_memberfee_create")
-	 * @Template("DMKClubMemberBundle:MemberFee:update.html.twig")
 	 */
+	#[Route('/create', name: 'dmkclub_memberfee_create')]
+	#[Template('DMKClubMemberBundle:MemberFee:update.html.twig')]
 	#[Acl(id: 'dmkclub_memberfee_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\MemberBundle\Entity\MemberFee::class)]
 	public function createAction()
 	{
@@ -64,10 +60,9 @@ class MemberFeeController extends AbstractController
 	/**
 	 * Method is called from "dmkgetpdf" datagrid-action.
 	 * Is creates a PDF-File for a single MemberFee and returns a download link.
-	 *
-	 * @Route("/pdf/{id}", name="dmkclub_memberfee_createpdf", requirements={"id"="\d+"}, defaults={"id"=0})
 	 * -> nicht notwendig! Template("DMKClubMemberBundle:MemberFee:pdf.html.twig")
 	 */
+	#[Route('/pdf/{id}', name: 'dmkclub_memberfee_createpdf', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
 	#[AclAncestor('dmkclub_memberfee_view')]
 	public function createPDFAction(MemberFee $entity) {
 		$responseData = [
@@ -96,10 +91,9 @@ class MemberFeeController extends AbstractController
 
 	/**
 	 * Update memberfee form
-	 * @Route("/update/{id}", name="dmkclub_memberfee_update", requirements={"id"="\d+"}, defaults={"id"=0})
-	 *
-	 * @Template
 	 */
+	#[Route('/update/{id}', name: 'dmkclub_memberfee_update', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+	#[Template]
 	#[Acl(id: 'dmkclub_memberfee_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\MemberBundle\Entity\MemberFee::class)]
 	public function updateAction(MemberFee $entity)
 	{
@@ -117,7 +111,6 @@ class MemberFeeController extends AbstractController
 	        'saved' => false,
 	    ];
 
-
 	    if ($this->container->get(MemberFeeHandler::class)->process($entity)) {
 	        $this->container->get('doctrine')->getManager()->flush();
 	        $responseData['entity'] = $entity;
@@ -131,20 +124,17 @@ class MemberFeeController extends AbstractController
 
 	/**
 	 * Show positions grid
-	 * @Route("/{id}/positions", name="dmkclub_memberfee_listpositions", requirements={"id"="\d+"}, defaults={"id"=0})
-	 *
-	 * @Template
 	 */
+	#[Route('/{id}/positions', name: 'dmkclub_memberfee_listpositions', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+	#[Template]
 	#[AclAncestor('dmkclub_memberfee_view')]
 	public function listPositionsAction(MemberFee $entity)
 	{
 	    return ['entity' => $entity];
 	}
 
-	/**
-	 * @Route("/view/{id}", name="dmkclub_memberfee_view", requirements={"id"="\d+"}))
-	 * @Template
-	 */
+	#[Route('/view/{id}', name: 'dmkclub_memberfee_view', requirements: ['id' => '\d+'])]
+	#[Template]
 	#[Acl(id: 'dmkclub_memberfee_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\MemberBundle\Entity\MemberFee::class)]
 	public function viewAction(MemberFee $entity) {
 	    return ['entity' => $entity];

@@ -14,12 +14,11 @@ use DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor;
 
 /**
  * Class Billing
- *
  * @package DMKClub\Bundle\DMKClubMemberBundle\Entity
- * @ORM\Entity(repositoryClass="DMKClub\Bundle\MemberBundle\Entity\Repository\MemberBillingRepository")
- * @ORM\Table(name="dmkclub_member_billing")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: \DMKClub\Bundle\MemberBundle\Entity\Repository\MemberBillingRepository::class)]
+#[ORM\Table(name: 'dmkclub_member_billing')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     routeName: 'dmkclub_memberbilling_index',
     routeView: 'dmkclub_memberbilling_view',
@@ -51,24 +50,20 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
 {
 
     /**
-     *
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', name: 'id')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ConfigField(
         defaultValues: [],
     )]
     protected $id;
 
     /**
-     *
      * @var \DateTime
-     *
-     * @ORM\Column(name="start_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'start_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -79,11 +74,9 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
     protected $startDate;
 
     /**
-     *
      * @var \DateTime
-     *
-     * @ORM\Column(name="end_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'end_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -94,11 +87,9 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
     protected $endDate;
 
     /**
-     *
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -109,11 +100,9 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
     protected $name;
 
     /**
-     *
      * @var string
-     *
-     * @ORM\Column(name="sign", type="string", length=50, nullable=true)
      */
+    #[ORM\Column(name: 'sign', type: 'string', length: 50, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -124,11 +113,9 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
     protected $sign;
 
     /**
-     *
      * @var string
-     *
-     * @ORM\Column(name="processor", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'processor', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -139,11 +126,9 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
     protected $processor;
 
     /**
-     *
      * @var string
-     *
-     * @ORM\Column(name="processor_config", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'processor_config', type: 'text', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -156,11 +141,9 @@ class MemberBilling extends ExtendMemberBilling implements SepaPaymentAwareInter
     protected $processorSettings;
 
     /**
-     *
      * @var string
-     *
-     * @ORM\Column(name="position_labels", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'position_labels', type: 'text', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -173,11 +156,9 @@ ADMISSION  admission fee
 FEECORRECTION fee correction";
 
     /**
-     *
      * @var string
-     *
-     * @ORM\Column(name="export_filesystem", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'export_filesystem', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -188,21 +169,17 @@ FEECORRECTION fee correction";
     private $exportFilesystem;
 
     /**
-     *
      * @var integer
-     *
-     * @ORM\Column(name="fee_total", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'fee_total', type: 'integer', nullable: true)]
     private $feeTotal;
 
     private $payedTotal;
 
     /**
-     *
      * @var \DateTime $createdAt
-     *
-     * @ORM\Column(type="datetime", name="created_at")
      */
+    #[ORM\Column(type: 'datetime', name: 'created_at')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -213,11 +190,9 @@ FEECORRECTION fee correction";
     protected $createdAt;
 
     /**
-     *
      * @var \DateTime $updatedAt
-     *
-     * @ORM\Column(type="datetime", name="updated_at")
      */
+    #[ORM\Column(type: 'datetime', name: 'updated_at')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -227,10 +202,7 @@ FEECORRECTION fee correction";
     )]
     protected $updatedAt;
 
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberFee", mappedBy="billing", cascade={"all"}, orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\MemberFee::class, mappedBy: 'billing', cascade: ['all'], orphanRemoval: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -241,44 +213,38 @@ FEECORRECTION fee correction";
     protected $memberFees;
 
     /**
-     *
      * @var Segment
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\SegmentBundle\Entity\Segment")
-     * @ORM\JoinColumn(name="segment_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\SegmentBundle\Entity\Segment::class)]
+    #[ORM\JoinColumn(name: 'segment_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $segment;
 
     /**
-     *
      * @var SepaCreditor
-     * @ORM\ManyToOne(targetEntity="\DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor")
-     * @ORM\JoinColumn(name="creditor_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\PaymentBundle\Entity\SepaCreditor::class)]
+    #[ORM\JoinColumn(name: 'creditor_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $sepaCreditor;
 
     /**
-     *
      * @var \DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate
-     * @ORM\ManyToOne(targetEntity="\DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate")
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\BasicsBundle\Entity\TwigTemplate::class)]
+    #[ORM\JoinColumn(name: 'template_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $template;
 
     /**
-     *
      * @var User
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\UserBundle\Entity\User::class)]
+    #[ORM\JoinColumn(name: 'user_owner_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $owner;
 
     /**
-     *
      * @var Organization
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
-     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\OrganizationBundle\Entity\Organization::class)]
+    #[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $organization;
 
     /**
@@ -546,7 +512,7 @@ FEECORRECTION fee correction";
      * @param Organization $organization
      * @return Member
      */
-    public function setOrganization(Organization $organization = null)
+    public function setOrganization(?Organization $organization = null)
     {
         $this->organization = $organization;
 
@@ -710,9 +676,8 @@ FEECORRECTION fee correction";
 
     /**
      * Pre persist event listener
-     *
-     * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         $this->createdAt = $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -720,9 +685,8 @@ FEECORRECTION fee correction";
 
     /**
      * Pre update event handler
-     *
-     * @ORM\PreUpdate
      */
+    #[ORM\PreUpdate]
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));

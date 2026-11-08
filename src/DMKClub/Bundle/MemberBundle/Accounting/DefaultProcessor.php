@@ -109,8 +109,7 @@ class DefaultProcessor extends AbstractProcessor
         $agePrices = $this->getAgePrices();
 
         $fee = 0;
-        // Über jeden Monat iterieren, den erste und den letzten Monat merken
-        $firstMonth2Pay = null;
+        // Über jeden Monat iterieren, den erste und den letzten Monat ?merken $firstMonth2Pay = null;
         $lastMonth2Pay = null;
         /* @var $currentMonth \DateTime */
         $currentMonthFirstDay = $this->newDate($startDate->format('Y-m-d'));

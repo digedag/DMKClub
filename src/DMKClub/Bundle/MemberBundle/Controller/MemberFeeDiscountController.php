@@ -5,7 +5,7 @@ namespace DMKClub\Bundle\MemberBundle\Controller;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -33,10 +33,8 @@ class MemberFeeDiscountController extends AbstractController
         ]);
     }
 
-	/**
-	 * @Route("/info-block/{id}", name="dmkclub_member_memberfeediscount_infoblock", requirements={"id"="\d+"})
-	 * @Template
-	 */
+	#[Route('/info-block/{id}', name: 'dmkclub_member_memberfeediscount_infoblock', requirements: ['id' => '\d+'])]
+	#[Template]
 	#[AclAncestor('dmkclub_member_view')]
 	public function infoBlockAction(Member $contact)
 	{
@@ -46,15 +44,9 @@ class MemberFeeDiscountController extends AbstractController
 		];
 	}
 
-	/**
-	 * @Route(
-	 *      "/{memberId}/memberfeediscount-create",
-	 *      name="dmkclub_member_memberfeediscount_create",
-	 *      requirements={"memberId"="\d+"}
-	 * )
-	 * @Template("DMKClubMemberBundle:MemberFeeDiscount:update.html.twig")
-	 * @ParamConverter("member", options={"id" = "memberId"})
-	 */
+	#[Route('/{memberId}/memberfeediscount-create', name: 'dmkclub_member_memberfeediscount_create', requirements: ['memberId' => '\d+'])]
+	#[Template('DMKClubMemberBundle:MemberFeeDiscount:update.html.twig')]
+	#[ParamConverter('member', options: ['id' => 'memberId'])]
 	#[AclAncestor('dmkclub_member_create')]
 	public function createAction(Member $member)
 	{
@@ -67,15 +59,9 @@ class MemberFeeDiscountController extends AbstractController
 		return $this->update($member, $discount);
 	}
 
-	/**
-	 * @Route(
-	 *      "/{memberId}/memberfeediscount-update/{id}",
-	 *      name="dmkclub_member_memberfeediscount_update",
-	 *      requirements={"memberId"="\d+","id"="\d+"},defaults={"id"=0}
-	 * )
-	 * @Template
-	 * @ParamConverter("member", options={"id" = "memberId"})
-	 */
+	#[Route('/{memberId}/memberfeediscount-update/{id}', name: 'dmkclub_member_memberfeediscount_update', requirements: ['memberId' => '\d+', 'id' => '\d+'], defaults: ['id' => 0])]
+	#[Template]
+	#[ParamConverter('member', options: ['id' => 'memberId'])]
 	#[AclAncestor('dmkclub_member_update')]
 	public function updateAction(Member $member, MemberFeeDiscount $discount)
 	{
@@ -94,7 +80,6 @@ class MemberFeeDiscountController extends AbstractController
 			'saved' => false,
 			'member' => $member
 		];
-
 
 		if ($this->container->get(MemberFeeDiscountHandler::class)->process($discount)) {
 			$this->container->get('doctrine')->getManager()->flush();

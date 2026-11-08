@@ -5,7 +5,6 @@ namespace DMKClub\Bundle\MemberBundle\Controller\Api\Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Oro\Bundle\SecurityBundle\Attribute\Acl;
 use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
@@ -14,8 +13,6 @@ use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use Symfony\Component\HttpFoundation\Response;
 use DMKClub\Bundle\MemberBundle\Entity\Manager\MemberManager;
 
-/**
- */
 class MemberController extends RestController
 {
 
@@ -33,10 +30,7 @@ class MemberController extends RestController
      *
      * @param int $id
      *
-     * @ApiDoc(
-     *      description="Delete Member",
-     *      resource=true
-     * )
+     * 
      * @return Response
      */
     #[Acl(id: 'dmkclub_member_delete', type: 'entity', permission: 'DELETE', class: \DMKClub\Bundle\MemberBundle\Entity\Member::class)]

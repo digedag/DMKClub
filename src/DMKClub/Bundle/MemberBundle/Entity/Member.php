@@ -17,13 +17,12 @@ use Oro\Bundle\ContactBundle\Entity\ContactEmail;
 
 /**
  * Class Member
- *
  * @package DMKClub\Bundle\DMKClubMemberBundle\Entity
- * @ORM\Entity(repositoryClass="DMKClub\Bundle\MemberBundle\Entity\Repository\MemberRepository")
- * @ORM\Table(name="dmkclub_member")
- * @ORM\HasLifecycleCallbacks()
  * Die Angaben in "form" dienen dem create_select_form_inline
  */
+#[ORM\Entity(repositoryClass: \DMKClub\Bundle\MemberBundle\Entity\Repository\MemberRepository::class)]
+#[ORM\Table(name: 'dmkclub_member')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     routeName: 'dmkclub_member_index',
     routeView: 'dmkclub_member_view',
@@ -73,13 +72,11 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * Fields have to be duplicated here to enable dataaudit and soap transformation only for contact
      */
     /**
-     *
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', name: 'id')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -90,11 +87,9 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $id;
 
     /**
-     *
      * @var string
-     *
-     * @ORM\Column(name="member_code", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'member_code', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -109,11 +104,9 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $memberCode;
 
     /**
-     *
      * @var string
-     *
-     * @ORM\Column(name="member_code_int", type="integer", nullable=true, options={"default" : 0})
      */
+    #[ORM\Column(name: 'member_code_int', type: 'integer', nullable: true, options: ['default' => 0])]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -128,11 +121,9 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $memberCodeInt;
 
     /**
-     *
      * @var \DateTime
-     *
-     * @ORM\Column(name="start_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'start_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -146,11 +137,9 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $startDate;
 
     /**
-     *
      * @var \DateTime
-     *
-     * @ORM\Column(name="end_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'end_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -164,11 +153,9 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $endDate;
 
     /**
-     *
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -181,10 +168,7 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     )]
     protected $name;
 
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberFee", mappedBy="member", cascade={"all"}, orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\MemberFee::class, mappedBy: 'member', cascade: ['all'], orphanRemoval: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -197,10 +181,7 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     )]
     private $memberFees;
 
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberFeeDiscount", mappedBy="member", cascade={"all"}, orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\MemberFeeDiscount::class, mappedBy: 'member', cascade: ['all'], orphanRemoval: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -213,10 +194,7 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     )]
     private $memberFeeDiscounts;
 
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberProposal", mappedBy="member")
-     */
+    #[ORM\OneToMany(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\MemberProposal::class, mappedBy: 'member')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -230,12 +208,10 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     private $memberProposals;
 
     /**
-     *
      * @var Contact
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\ContactBundle\Entity\Contact", cascade="PERSIST")
-     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\ContactBundle\Entity\Contact::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'contact_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -250,12 +226,10 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $contact;
 
     /**
-     *
      * @var Contact
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\ContactBundle\Entity\Contact", cascade="PERSIST")
-     * @ORM\JoinColumn(name="legal_contact_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\ContactBundle\Entity\Contact::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'legal_contact_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -270,11 +244,9 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $legalContact;
 
     /**
-     *
      * @var boolean
-     *
-     * @ORM\Column(type="boolean", name="is_active", options={"default" : false})
      */
+    #[ORM\Column(type: 'boolean', name: 'is_active', options: ['default' => false])]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -288,11 +260,9 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $isActive = false;
 
     /**
-     *
      * @var boolean
-     *
-     * @ORM\Column(type="boolean", name="is_honorary", options={"default" : false})
      */
+    #[ORM\Column(type: 'boolean', name: 'is_honorary', options: ['default' => false])]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -306,11 +276,9 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $isHonorary = false;
 
     /**
-     *
      * @var boolean
-     *
-     * @ORM\Column(type="boolean", name="is_free_of_charge", options={"default" : false})
      */
+    #[ORM\Column(type: 'boolean', name: 'is_free_of_charge', options: ['default' => false])]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -324,11 +292,9 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $isFreeOfCharge = false;
 
     /**
-     *
      * @var string
-     *
-     * @ORM\Column(name="status", type="string", length=20, nullable=true, options={"default" : "active"})
      */
+    #[ORM\Column(name: 'status', type: 'string', length: 20, nullable: true, options: ['default' => 'active'])]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -342,12 +308,10 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $status;
 
     /**
-     *
      * @var \DMKClub\Bundle\PaymentBundle\Entity\BankAccount
-     *
-     * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\PaymentBundle\Entity\BankAccount", cascade="PERSIST")
-     * @ORM\JoinColumn(name="bank_account", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\PaymentBundle\Entity\BankAccount::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'bank_account', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -362,12 +326,10 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $bankAccount;
 
     /**
-     *
      * @var Address $postalAddress
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\AddressBundle\Entity\Address", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="postal_address", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\AddressBundle\Entity\Address::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'postal_address', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -381,9 +343,7 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     )]
     protected $postalAddress;
 
-    /**
-     * @ORM\OneToOne(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberPrivacy", cascade={"all"}, mappedBy="member")
-     */
+    #[ORM\OneToOne(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\MemberPrivacy::class, cascade: ['all'], mappedBy: 'member')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -394,20 +354,17 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $privacy;
 
     /**
-     *
      * @var User
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\UserBundle\Entity\User::class)]
+    #[ORM\JoinColumn(name: 'user_owner_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected $owner;
 
     /**
-     *
      * @var \Oro\Bundle\AccountBundle\Entity\Account
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\AccountBundle\Entity\Account", cascade="PERSIST")
-     * @ORM\JoinColumn(name="account_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\AccountBundle\Entity\Account::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'account_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -419,12 +376,10 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
     protected $account;
 
     /**
-     *
      * @var Organization
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
-     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: \Oro\Bundle\OrganizationBundle\Entity\Organization::class)]
+    #[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -756,7 +711,7 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
      * @param Organization $organization
      * @return Member
      */
-    public function setOrganization(Organization $organization = null)
+    public function setOrganization(?Organization $organization = null)
     {
         $this->organization = $organization;
         return $this;
@@ -923,10 +878,9 @@ class Member extends ExtendMember implements ChannelAwareInterface, EmailHolderI
 
     /**
      * Pre persist event listener
-     *
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
      */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function ensureMemberCodeInt()
     {
         $this->memberCodeInt = (int) $this->memberCode;

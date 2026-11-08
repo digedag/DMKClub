@@ -8,18 +8,15 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
 use DMKClub\Bundle\MemberBundle\Model\ExtendMemberProposalAddress;
 
 /**
- * @ORM\Table("dmkclub_member_proposal_addr")
- * @ORM\HasLifecycleCallbacks()
  * With immutable=true the annotated features will be disabled even in GUI
- * @ORM\Entity
  */
+#[ORM\Table(name: 'dmkclub_member_proposal_addr')]
+#[ORM\HasLifecycleCallbacks]
+#[ORM\Entity]
 #[Config(
     defaultValues: [
         'entity' => [
             'icon' => 'fa-map-marker',
-        ],
-        'note' => [
-            'immutable' => true,
         ],
         'activity' => [
             'immutable' => true,

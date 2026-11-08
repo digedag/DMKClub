@@ -2,7 +2,13 @@
 
 namespace DMKClub\Bundle\SponsorBundle\Model;
 
-class ExtendCategory {
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
+
+class ExtendCategory implements ExtendEntityInterface 
+{
+    use ExtendEntityTrait;
+
     /**
      * Constructor
      *

@@ -13,12 +13,11 @@ use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * Class TwigTemplate
- *
  * @package DMKClub\Bundle\DMKClubBasicsBundle\Entity
- * @ORM\Entity(repositoryClass="DMKClub\Bundle\BasicsBundle\Entity\Repository\TwigTemplateRepository")
- * @ORM\Table(name="dmkclub_basics_twigtemplate")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: \DMKClub\Bundle\BasicsBundle\Entity\Repository\TwigTemplateRepository::class)]
+#[ORM\Table(name: 'dmkclub_basics_twigtemplate')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     routeName: 'dmkclub_basics_twigtemplate_index',
     routeView: 'dmkclub_basics_twigtemplate_view',
@@ -46,11 +45,10 @@ use Symfony\Component\Yaml\Exception\ParseException;
 class TwigTemplate {
 	/**
 	 * @var int
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer", name="id")
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
+	#[ORM\Id]
+	#[ORM\Column(type: 'integer', name: 'id')]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
 	#[ConfigField(
 	    defaultValues: [],
 	)]
@@ -58,9 +56,8 @@ class TwigTemplate {
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="name", type="string", length=255, nullable=true)
 	 */
+	#[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -72,9 +69,8 @@ class TwigTemplate {
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="template", type="text")
 	 */
+	#[ORM\Column(name: 'template', type: 'text')]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -87,9 +83,8 @@ class TwigTemplate {
 	/**
 	 * @var string
 	 * Generatorklasse für PDF-Dateien
-	 *
-	 * @ORM\Column(name="generator", type="string", length=255, nullable=true)
 	 */
+	#[ORM\Column(name: 'generator', type: 'string', length: 255, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -109,9 +104,8 @@ class TwigTemplate {
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="orientation", type="string", length=50, nullable=true)
 	 */
+	#[ORM\Column(name: 'orientation', type: 'string', length: 50, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -122,9 +116,8 @@ class TwigTemplate {
 	private $orientation = 'P';
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="page_format", type="text")
 	 */
+	#[ORM\Column(name: 'page_format', type: 'text')]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -134,12 +127,10 @@ class TwigTemplate {
 	)]
 	private $pageFormat;
 
-
 	/**
 	 * @var \DateTime $createdAt
-	 *
-	 * @ORM\Column(type="datetime", name="created_at")
 	 */
+	#[ORM\Column(type: 'datetime', name: 'created_at')]
 	#[ConfigField(
 	    defaultValues: [
 	        'entity' => [
@@ -151,9 +142,8 @@ class TwigTemplate {
 
 	/**
 	 * @var \DateTime $updatedAt
-	 *
-	 * @ORM\Column(type="datetime", name="updated_at")
 	 */
+	#[ORM\Column(type: 'datetime', name: 'updated_at')]
 	#[ConfigField(
 	    defaultValues: [
 	        'entity' => [
@@ -165,17 +155,16 @@ class TwigTemplate {
 
 	/**
 	 * @var User
-	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-	 * @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \Oro\Bundle\UserBundle\Entity\User::class)]
+	#[ORM\JoinColumn(name: 'user_owner_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	protected $owner;
 
 	/**
 	 * @var Organization
-	 *
-	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
-	 * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \Oro\Bundle\OrganizationBundle\Entity\Organization::class)]
+	#[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	protected $organization;
 
 	/**
@@ -320,7 +309,7 @@ class TwigTemplate {
 	 * @param Organization $organization
 	 * @return TwigTemplate
 	 */
-	public function setOrganization(Organization $organization = null)
+	public function setOrganization(?Organization $organization = null)
 	{
 	    $this->organization = $organization;
 
@@ -370,9 +359,8 @@ class TwigTemplate {
 	}
 	/**
 	 * Pre persist event listener
-	 *
-	 * @ORM\PrePersist
 	 */
+	#[ORM\PrePersist]
 	public function prePersist()
 	{
 	    $this->createdAt = $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -380,9 +368,8 @@ class TwigTemplate {
 
 	/**
 	 * Pre update event handler
-	 *
-	 * @ORM\PreUpdate
 	 */
+	#[ORM\PreUpdate]
 	public function preUpdate()
 	{
 	    $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));

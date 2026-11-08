@@ -21,11 +21,10 @@ use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
 
 /**
  * Class MemberProposal
- *
- * @ORM\Table(name="dmkclub_member_proposal")
- * @ORM\Entity(repositoryClass="DMKClub\Bundle\MemberBundle\Entity\Repository\MemberProposalRepository")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Table(name: 'dmkclub_member_proposal')]
+#[ORM\Entity(repositoryClass: \DMKClub\Bundle\MemberBundle\Entity\Repository\MemberProposalRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     routeName: 'dmkclub_member_proposal_index',
     routeView: 'dmkclub_member_proposal_view',
@@ -67,11 +66,10 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var int
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer", name="id")
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
+	#[ORM\Id]
+	#[ORM\Column(type: 'integer', name: 'id')]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
 	#[ConfigField(
 	    defaultValues: [
 	        'importexport' => [
@@ -83,9 +81,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="name_prefix", type="string", length=255, nullable=true)
 	 */
+	#[ORM\Column(name: 'name_prefix', type: 'string', length: 255, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -98,12 +95,10 @@ class MemberProposal extends ExtendMemberProposal implements
 	)]
 	protected $namePrefix;
 
-
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
 	 */
+	#[ORM\Column(name: 'first_name', type: 'string', length: 255, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -118,9 +113,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="middle_name", type="string", length=255, nullable=true)
 	 */
+	#[ORM\Column(name: 'middle_name', type: 'string', length: 255, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -135,9 +129,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
 	 */
+	#[ORM\Column(name: 'last_name', type: 'string', length: 255, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -152,9 +145,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="name_suffix", type="string", length=255, nullable=true)
 	 */
+	#[ORM\Column(name: 'name_suffix', type: 'string', length: 255, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -169,9 +161,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="email_address", type="string", length=100, nullable=true)
 	 */
+	#[ORM\Column(name: 'email_address', type: 'string', length: 100, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -183,10 +174,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="phone", type="string", length=100, nullable=true)
-
 	 */
+	#[ORM\Column(name: 'phone', type: 'string', length: 100, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -198,9 +187,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="birthday", type="date", nullable=true)
 	 */
+	#[ORM\Column(name: 'birthday', type: 'date', nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -218,16 +206,14 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="comment", type="text", nullable=true)
 	 */
+	#[ORM\Column(name: 'comment', type: 'text', nullable: true)]
 	protected $comment;
 
 	/**
 	 * @var boolean
-	 *
-	 * @ORM\Column(type="boolean", name="is_active", options={"default" : false})
 	 */
+	#[ORM\Column(type: 'boolean', name: 'is_active', options: ['default' => false])]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -242,9 +228,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="job_title", type="string", length=255, nullable=true)
 	 */
+	#[ORM\Column(name: 'job_title', type: 'string', length: 255, nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -257,12 +242,8 @@ class MemberProposal extends ExtendMemberProposal implements
 	)]
 	protected $jobTitle;
 
-
-	/**
-	 *
-	 * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\MemberBundle\Entity\MemberProposalBankAccount", cascade={"persist", "remove"})
-	 * @ORM\JoinColumn(name="bank_account", referencedColumnName="id", onDelete="SET NULL")
-	 */
+	#[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\MemberProposalBankAccount::class, cascade: ['persist', 'remove'])]
+	#[ORM\JoinColumn(name: 'bank_account', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -278,10 +259,9 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var Address $postalAddress
-	 *
-	 * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\MemberBundle\Entity\MemberProposalAddress", cascade={"persist", "remove"})
-	 * @ORM\JoinColumn(name="postal_address", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\MemberProposalAddress::class, cascade: ['persist', 'remove'])]
+	#[ORM\JoinColumn(name: 'postal_address', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -297,9 +277,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="discount_start_date", type="date", nullable=true)
 	 */
+	#[ORM\Column(name: 'discount_start_date', type: 'date', nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -310,9 +289,8 @@ class MemberProposal extends ExtendMemberProposal implements
 	protected $discountStartDate;
 	/**
 	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="discount_end_date", type="date", nullable=true)
 	 */
+	#[ORM\Column(name: 'discount_end_date', type: 'date', nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -324,17 +302,15 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="discount_reason", type="string", length=255, nullable=true)
 	 */
+	#[ORM\Column(name: 'discount_reason', type: 'string', length: 255, nullable: true)]
 	protected $discountReason;
 
 	/**
 	 * @var Member
-	 *
-	 * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\MemberBundle\Entity\Member", inversedBy="memberProposals")
-	 * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\Member::class, inversedBy: 'memberProposals')]
+	#[ORM\JoinColumn(name: 'member_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -350,9 +326,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var \DateTime
-	 *
-	 * @ORM\Column(type="datetime")
 	 */
+	#[ORM\Column(type: 'datetime')]
 	#[ConfigField(
 	    defaultValues: [
 	        'entity' => [
@@ -367,9 +342,8 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var \DateTime
-	 *
-	 * @ORM\Column(type="datetime", nullable=true)
 	 */
+	#[ORM\Column(type: 'datetime', nullable: true)]
 	#[ConfigField(
 	    defaultValues: [
 	        'entity' => [
@@ -382,29 +356,25 @@ class MemberProposal extends ExtendMemberProposal implements
 	)]
 	protected $updatedAt;
 
-
 	/**
 	 * @var WorkflowItem
-	 *
-	 * @ORM\OneToOne(targetEntity="Oro\Bundle\WorkflowBundle\Entity\WorkflowItem")
-	 * @ORM\JoinColumn(name="workflow_item_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\OneToOne(targetEntity: \Oro\Bundle\WorkflowBundle\Entity\WorkflowItem::class)]
+	#[ORM\JoinColumn(name: 'workflow_item_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	protected $workflowItem;
 
 	/**
 	 * @var WorkflowStep
-	 *
-	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\WorkflowBundle\Entity\WorkflowStep")
-	 * @ORM\JoinColumn(name="workflow_step_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \Oro\Bundle\WorkflowBundle\Entity\WorkflowStep::class)]
+	#[ORM\JoinColumn(name: 'workflow_step_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	protected $workflowStep;
 
 	/**
 	 * @var User
-	 *
-	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-	 * @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \Oro\Bundle\UserBundle\Entity\User::class)]
+	#[ORM\JoinColumn(name: 'user_owner_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -420,12 +390,10 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	/**
 	 * @var Organization
-	 *
-	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
-	 * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \Oro\Bundle\OrganizationBundle\Entity\Organization::class)]
+	#[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	protected $organization;
-
 
 	/**
 	 * {@inheritdoc}
@@ -518,7 +486,6 @@ class MemberProposal extends ExtendMemberProposal implements
 
 	    return $this;
 	}
-
 
 	/**
 	 * @param string $name
@@ -643,7 +610,6 @@ class MemberProposal extends ExtendMemberProposal implements
 	{
 	    return $this->birthday;
 	}
-
 
 	/**
 	 * @param string $comment
@@ -774,7 +740,7 @@ class MemberProposal extends ExtendMemberProposal implements
 	 * @param Organization $organization
 	 * @return MemberProposal
 	 */
-	public function setOrganization(Organization $organization = null)
+	public function setOrganization(?Organization $organization = null)
 	{
 	    $this->organization = $organization;
 

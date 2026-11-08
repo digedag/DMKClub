@@ -57,15 +57,18 @@ services:
             - ['setContainer', ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'dmkclub_member.member.manager.api' }
 
     DMKClub\Bundle\MemberBundle\Controller\Api\Rest\MemberFeeController:
         calls:
             - ['setContainer', ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'dmkclub_member.memberfee.manager.api' }
 
     DMKClub\Bundle\MemberBundle\Controller\Api\Rest\MemberFeeDiscountController:
         calls:
             - ['setContainer', ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'dmkclub_member.memberfeediscount.manager.api' }

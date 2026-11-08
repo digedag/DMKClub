@@ -4,7 +4,6 @@ namespace DMKClub\Bundle\MemberBundle\Controller\Api\Rest;
 
 use BadMethodCallException;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +13,6 @@ use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use DMKClub\Bundle\MemberBundle\Entity\MemberFee;
 
-/**
- */
 class MemberFeeController extends RestController
 {
 
@@ -31,10 +28,7 @@ class MemberFeeController extends RestController
     /**
      * @param int $id
      *
-     * @ApiDoc(
-     *      description="Delete member fees",
-     *      resource=true
-     * )
+     * 
      * @return Response
      */
     #[Acl(id: 'dmkclub_member_memberfee_delete', type: 'entity', permission: 'DELETE', class: \DMKClub\Bundle\MemberBundle\Entity\MemberFee::class)]

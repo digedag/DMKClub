@@ -1,7 +1,7 @@
 <?php
 namespace DMKClub\Bundle\MemberBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
 use Oro\Bundle\SecurityBundle\Attribute\Acl;
@@ -15,9 +15,7 @@ use DMKClub\Bundle\MemberBundle\Entity\MemberBilling;
 use DMKClub\Bundle\MemberBundle\Form\Handler\CreateBillsHandler;
 use DMKClub\Bundle\MemberBundle\Form\Handler\MemberBillingHandler;
 
-/**
- * @Route("/memberbilling")
- */
+#[Route('/memberbilling')]
 class MemberBillingController extends AbstractController
 {
     /**
@@ -36,11 +34,8 @@ class MemberBillingController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/", name="dmkclub_memberbilling_index")
-     * @Template
-     */
+    #[Route('/', name: 'dmkclub_memberbilling_index')]
+    #[Template]
     #[AclAncestor('dmkclub_memberbilling_view')]
     public function indexAction()
     {
@@ -51,9 +46,9 @@ class MemberBillingController extends AbstractController
 
     /**
      * Create member form
-     * @Route("/create", name="dmkclub_memberbilling_create")
-     * @Template("DMKClubMemberBundle:MemberBilling:update.html.twig")
      */
+    #[Route('/create', name: 'dmkclub_memberbilling_create')]
+    #[Template('DMKClubMemberBundle:MemberBilling:update.html.twig')]
     #[Acl(id: 'dmkclub_memberbilling_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\MemberBundle\Entity\MemberBilling::class)]
     public function createAction()
     {
@@ -64,10 +59,9 @@ class MemberBillingController extends AbstractController
 
     /**
      * Update memberbilling form
-     * @Route("/update/{id}", name="dmkclub_memberbilling_update", requirements={"id"="\d+"}, defaults={"id"=0})
-     *
-     * @Template
      */
+    #[Route('/update/{id}', name: 'dmkclub_memberbilling_update', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+    #[Template]
     #[Acl(id: 'dmkclub_memberbilling_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\MemberBundle\Entity\MemberBilling::class)]
     public function updateAction(MemberBilling $entity)
     {
@@ -93,10 +87,8 @@ class MemberBillingController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/view/{id}", name="dmkclub_memberbilling_view", requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/view/{id}', name: 'dmkclub_memberbilling_view', requirements: ['id' => '\d+'])]
+    #[Template]
     #[Acl(id: 'dmkclub_memberbilling_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\MemberBundle\Entity\MemberBilling::class)]
     public function viewAction(MemberBilling $entity)
     {
@@ -124,9 +116,9 @@ class MemberBillingController extends AbstractController
 
     /**
      * Wird zur Anzeige des Info-Widgets in der Detailansicht verwendet
-     * @Route("/widget/info/{id}", name="dmkclub_memberbilling_widget_info", requirements={"id"="\d+"}))
-     * @Template
      */
+    #[Route('/widget/info/{id}', name: 'dmkclub_memberbilling_widget_info', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_memberbilling_view')]
     public function infoAction(MemberBilling $entity)
     {
@@ -142,10 +134,8 @@ class MemberBillingController extends AbstractController
     {
         return $this->container->get('dmkclub_member.createbills.form');
     }
-    /**
-     * @Route("/{id}/createbills", name="dmkclub_memberbilling_createbills", requirements={"id"="\d+"})
-     * @Template
-     */
+    #[Route('/{id}/createbills', name: 'dmkclub_memberbilling_createbills', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_memberbilling_create')]
     public function createBillsAction(MemberBilling $entity)
     {
@@ -165,10 +155,8 @@ class MemberBillingController extends AbstractController
         return $response;
     }
 
-    /**
-     * @Route("/{id}/refreshsummary", name="dmkclub_memberbilling_refreshsummary", requirements={"id"="\d+"})
-     * @Template
-     */
+    #[Route('/{id}/refreshsummary', name: 'dmkclub_memberbilling_refreshsummary', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_memberbilling_create')]
     public function refreshSummaryAction(MemberBilling $entity)
     {
@@ -180,10 +168,8 @@ class MemberBillingController extends AbstractController
         ]));
     }
 
-    /**
-     * @Route("/recreatecorrections/{id}", name="dmkclub_memberbilling_createcorrections", requirements={"id"="\d+"})
-     * @Template
-     */
+    #[Route('/recreatecorrections/{id}', name: 'dmkclub_memberbilling_createcorrections', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_memberbilling_create')]
     public function createCorrectionsAction(MemberBilling $entity)
     {

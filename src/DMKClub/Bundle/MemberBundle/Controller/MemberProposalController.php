@@ -6,7 +6,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Oro\Bundle\SecurityBundle\Attribute\Acl;
@@ -20,9 +20,7 @@ use DMKClub\Bundle\MemberBundle\Entity\MemberProposalAddress;
 use DMKClub\Bundle\MemberBundle\Form\Handler\MemberProposalHandler;
 use DMKClub\Bundle\MemberBundle\Form\Handler\CreateMemberByProposalHandler;
 
-/**
- * @Route("/member/proposal")
- */
+#[Route('/member/proposal')]
 class MemberProposalController extends AbstractController
 {
     /**
@@ -41,10 +39,8 @@ class MemberProposalController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/", name="dmkclub_member_proposal_index")
-     * @Template
-     */
+    #[Route('/', name: 'dmkclub_member_proposal_index')]
+    #[Template]
     #[AclAncestor('dmkclub_member_proposal_view')]
     public function indexAction()
     {
@@ -52,10 +48,8 @@ class MemberProposalController extends AbstractController
             'entity_class' => MemberProposal::class,
         ];
     }
-    /**
-     * @Route("/create", name="dmkclub_member_proposal_create")
-     * @Template("DMKClubMemberBundle:MemberProposal:update.html.twig")
-     */
+    #[Route('/create', name: 'dmkclub_member_proposal_create')]
+    #[Template('DMKClubMemberBundle:MemberProposal:update.html.twig')]
     #[Acl(id: 'dmkclub_member_proposal_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\MemberBundle\Entity\MemberProposal::class)]
     public function createAction()
     {
@@ -74,11 +68,8 @@ class MemberProposalController extends AbstractController
     {
         return $this->container->get('doctrine')->getRepository(Region::class)->findOneBy(['combinedCode' => 'DE-SN']);
     }
-    /**
-     * @Route("/update/{id}", name="dmkclub_member_proposal_update", requirements={"id"="\d+"}, defaults={"id"=0})
-     *
-     * @Template
-     */
+    #[Route('/update/{id}', name: 'dmkclub_member_proposal_update', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+    #[Template]
     #[Acl(id: 'dmkclub_member_proposal_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\MemberBundle\Entity\MemberProposal::class)]
     public function updateAction(MemberProposal $entity)
     {
@@ -103,39 +94,31 @@ class MemberProposalController extends AbstractController
     	return $data;
     }
 
-    /**
-     * @Route("/view/{id}", name="dmkclub_member_proposal_view", requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/view/{id}', name: 'dmkclub_member_proposal_view', requirements: ['id' => '\d+'])]
+    #[Template]
     #[Acl(id: 'dmkclub_member_proposal_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\MemberBundle\Entity\MemberProposal::class)]
     public function viewAction(MemberProposal $member)
     {
         return ['entity' => $member];
     }
 
-    /**
-     * @Route("/widget/info/{id}", name="dmkclub_member_proposal_widget_info", requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/widget/info/{id}', name: 'dmkclub_member_proposal_widget_info', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_member_proposal_view')]
     public function infoAction(MemberProposal $member)
     {
         return ['entity' => $member];
     }
-    /**
-     * @Route("/widget/additionalinfo/{id}", name="dmkclub_member_proposal_widget_additionalinfo", requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/widget/additionalinfo/{id}', name: 'dmkclub_member_proposal_widget_additionalinfo', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_member_proposal_view')]
     public function additionalInfoAction(MemberProposal $member)
     {
         return ['entity' => $member];
     }
 
-    /**
-     * @Route("/widget/discountinfo/{id}", name="dmkclub_member_proposal_widget_discountinfo", requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/widget/discountinfo/{id}', name: 'dmkclub_member_proposal_widget_discountinfo', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_member_proposal_view')]
     public function discountInfoAction(MemberProposal $member)
     {
@@ -144,9 +127,9 @@ class MemberProposalController extends AbstractController
 
     /**
      * Create member by proposal
-     * @Route("/{id}/createmember", name="dmkclub_member_proposal_createmember", requirements={"id"="\d+"})
-     * @Template
      */
+    #[Route('/{id}/createmember', name: 'dmkclub_member_proposal_createmember', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_member_create')]
     public function createMemberAction(MemberProposal $entity)
     {

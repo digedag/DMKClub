@@ -2,8 +2,13 @@
 
 namespace DMKClub\Bundle\MemberBundle\Model;
 
-class ExtendMemberFeeDiscount
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
+
+class ExtendMemberFeeDiscount implements ExtendEntityInterface 
 {
+    use ExtendEntityTrait;
+
     /**
      * Constructor
      *

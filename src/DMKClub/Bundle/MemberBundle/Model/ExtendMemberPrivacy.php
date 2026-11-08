@@ -2,8 +2,13 @@
 
 namespace DMKClub\Bundle\MemberBundle\Model;
 
-class ExtendMemberPrivacy
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
+
+class ExtendMemberPrivacy implements ExtendEntityInterface 
 {
+    use ExtendEntityTrait;
+
     /**
      * Constructor
      *

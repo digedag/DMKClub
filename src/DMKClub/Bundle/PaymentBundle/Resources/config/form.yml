@@ -56,15 +56,6 @@ services:
 # FormHandler
 # ####
 
-    # BankAccount form handler
-    DMKClub\Bundle\PaymentBundle\Form\Handler\BankAccount:
-        public: true
-        arguments:
-            - "@dmkclub_payment.bank_account.form"
-            - "@request_stack"
-            - "@doctrine.orm.entity_manager"
-
-
     # SepaCreditor form handler
     DMKClub\Bundle\PaymentBundle\Form\Handler\SepaCreditorHandler:
         public: true

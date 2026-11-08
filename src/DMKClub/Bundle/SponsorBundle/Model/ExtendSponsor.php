@@ -2,8 +2,13 @@
 
 namespace DMKClub\Bundle\SponsorBundle\Model;
 
-class ExtendSponsor
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
+
+class ExtendSponsor implements ExtendEntityInterface 
 {
+    use ExtendEntityTrait;
+
     /**
      * Constructor
      *

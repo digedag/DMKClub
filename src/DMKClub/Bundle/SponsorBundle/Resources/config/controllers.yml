@@ -21,3 +21,4 @@ services:
             - ['setContainer', ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'dmkclub_sponsor.sponsor.manager.api' }

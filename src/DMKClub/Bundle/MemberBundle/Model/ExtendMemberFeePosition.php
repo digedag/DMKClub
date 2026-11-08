@@ -2,8 +2,13 @@
 
 namespace DMKClub\Bundle\MemberBundle\Model;
 
-class ExtendMemberFeePosition
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
+
+class ExtendMemberFeePosition implements ExtendEntityInterface 
 {
+    use ExtendEntityTrait;
+
     /**
      * Constructor
      *

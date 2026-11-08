@@ -2,7 +2,7 @@
 namespace DMKClub\Bundle\MemberBundle\Controller;
 
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -19,10 +19,7 @@ use Symfony\Component\Form\Form;
 use DMKClub\Bundle\MemberBundle\Entity\Member;
 use DMKClub\Bundle\MemberBundle\Form\Handler\MemberHandler;
 
-/**
- *
- * @Route("/member")
- */
+#[Route('/member')]
 class MemberController extends AbstractController
 {
     /**
@@ -39,12 +36,8 @@ class MemberController extends AbstractController
         ]);
     }
 
-
-    /**
-     *
-     * @Route("/", name="dmkclub_member_index")
-     * @Template
-     */
+    #[Route('/', name: 'dmkclub_member_index')]
+    #[Template]
     #[AclAncestor('dmkclub_member_view')]
     public function indexAction()
     {
@@ -55,10 +48,9 @@ class MemberController extends AbstractController
 
     /**
      * Create member form
-     *
-     * @Route("/create", name="dmkclub_member_create")
-     * @Template("DMKClubMemberBundle:Member:update.html.twig")
      */
+    #[Route('/create', name: 'dmkclub_member_create')]
+    #[Template('DMKClubMemberBundle:Member:update.html.twig')]
     #[Acl(id: 'dmkclub_member_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\MemberBundle\Entity\Member::class)]
     public function createAction()
     {
@@ -67,11 +59,9 @@ class MemberController extends AbstractController
 
     /**
      * Update member form
-     *
-     * @Route("/update/{id}", name="dmkclub_member_update", requirements={"id"="\d+"}, defaults={"id"=0})
-     *
-     * @Template
      */
+    #[Route('/update/{id}', name: 'dmkclub_member_update', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+    #[Template]
     #[Acl(id: 'dmkclub_member_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\MemberBundle\Entity\Member::class)]
     public function updateAction(Member $entity)
     {
@@ -99,11 +89,8 @@ class MemberController extends AbstractController
         return $data;
     }
 
-    /**
-     *
-     * @Route("/view/{id}", name="dmkclub_member_view", requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/view/{id}', name: 'dmkclub_member_view', requirements: ['id' => '\d+'])]
+    #[Template]
     #[Acl(id: 'dmkclub_member_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\MemberBundle\Entity\Member::class)]
     public function viewAction(Member $member)
     {
@@ -112,11 +99,8 @@ class MemberController extends AbstractController
         ];
     }
 
-    /**
-     *
-     * @Route("/widget/info/{id}", name="dmkclub_member_widget_info", requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/widget/info/{id}', name: 'dmkclub_member_widget_info', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_member_view')]
     public function infoAction(Member $member)
     {
@@ -125,11 +109,8 @@ class MemberController extends AbstractController
         ];
     }
 
-    /**
-     *
-     * @Route("/widget/additionalinfo/{id}", name="dmkclub_member_widget_additionalinfo", options={"expose"=true}, requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/widget/additionalinfo/{id}', name: 'dmkclub_member_widget_additionalinfo', options: ['expose' => true], requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_member_view')]
     public function additionalInfoAction(Member $member)
     {
@@ -146,16 +127,11 @@ class MemberController extends AbstractController
      * im entsprechenden Channel bereit.
      * Die eigentlichen Datensätze werden dann in der Route
      * dmkclub_member_widget_member_info gerendert.
-     *
-     * @Route(
-     *      "/widget/member-info/account/{accountId}/channel/{channelId}",
-     *      name="dmkclub_member_widget_account_member_info",
-     *      requirements={"accountId"="\d+", "channelId"="\d+"}
-     * )
-     * @ParamConverter("account", class="Oro\Bundle\AccountBundle\Entity\Account", options={"id" = "accountId"})
-     * @ParamConverter("channel", class="Oro\Bundle\ChannelBundle\Entity\Channel", options={"id" = "channelId"})
-     * @Template
      */
+    #[Route('/widget/member-info/account/{accountId}/channel/{channelId}', name: 'dmkclub_member_widget_account_member_info', requirements: ['accountId' => '\d+', 'channelId' => '\d+'])]
+    #[ParamConverter('account', class: \Oro\Bundle\AccountBundle\Entity\Account::class, options: ['id' => 'accountId'])]
+    #[ParamConverter('channel', class: \Oro\Bundle\ChannelBundle\Entity\Channel::class, options: ['id' => 'channelId'])]
+    #[Template]
     #[AclAncestor('dmkclub_member_view')]
     public function accountMemberInfoAction(Account $account, Channel $channel)
     {
@@ -172,16 +148,9 @@ class MemberController extends AbstractController
         ];
     }
 
-    /**
-     *
-     * @Route(
-     *        "/widget/member-info/{id}/channel/{channelId}",
-     *        name="dmkclub_member_widget_member_info",
-     *        requirements={"id"="\d+", "channelId"="\d+"}
-     * )
-     * @ParamConverter("channel", class="Oro\Bundle\ChannelBundle\Entity\Channel", options={"id" = "channelId"})
-     * @Template
-     */
+    #[Route('/widget/member-info/{id}/channel/{channelId}', name: 'dmkclub_member_widget_member_info', requirements: ['id' => '\d+', 'channelId' => '\d+'])]
+    #[ParamConverter('channel', class: \Oro\Bundle\ChannelBundle\Entity\Channel::class, options: ['id' => 'channelId'])]
+    #[Template]
     #[AclAncestor('dmkclub_member_view')]
     public function memberInfoAction(Member $entity, Channel $channel)
     {

@@ -9,11 +9,10 @@ use DMKClub\Bundle\MemberBundle\Model\ExtendMemberFeePosition;
 
 /**
  * Class MemberFeePosition
- *
- * @ORM\Entity
- * @ORM\Table(name="dmkclub_member_feeposition")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'dmkclub_member_feeposition')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     defaultValues: [
         'entity' => [
@@ -31,25 +30,21 @@ class MemberFeePosition extends ExtendMemberFeePosition
     const FLAG_CORRECTION = 'FEECORRECTION';
 
     /**
-     *
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', name: 'id')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
-     *
      * @var float
-     * @ORM\Column(name="quantity", type="float", nullable=true)
      */
+    #[ORM\Column(name: 'quantity', type: 'float', nullable: true)]
     private $quantity;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\MemberFee", inversedBy="positions")
-     * @ORM\JoinColumn(name="member_fee", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\MemberFee::class, inversedBy: 'positions')]
+    #[ORM\JoinColumn(name: 'member_fee', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -60,52 +55,45 @@ class MemberFeePosition extends ExtendMemberFeePosition
     private $memberFee;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="flag", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'flag', type: 'string', length: 255, nullable: true)]
     private $flag;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="unit", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'unit', type: 'string', length: 255, nullable: true)]
     private $unit;
 
     /**
-     *
      * @var string
-     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'description', type: 'string', length: 255, nullable: true)]
     private $description;
 
     /**
-     *
      * @var float
-     * @ORM\Column(name="price_single", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'price_single', type: 'integer', nullable: true)]
     private $priceSingle;
 
     /**
-     *
      * @var float
-     * @ORM\Column(name="price_total", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'price_total', type: 'integer', nullable: true)]
     private $priceTotal;
 
     /**
-     *
      * @var double
-     * @ORM\Column(name="tax_amount", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'tax_amount', type: 'integer', nullable: true)]
     private $taxAmount;
 
     /**
-     *
      * @var integer
-     * @ORM\Column(name="sort_order", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'sort_order', type: 'integer', nullable: true)]
     private $sortOrder;
 
     public function getTaxAmount()

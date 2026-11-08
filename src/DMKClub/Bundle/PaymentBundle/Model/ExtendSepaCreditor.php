@@ -2,8 +2,13 @@
 
 namespace DMKClub\Bundle\PaymentBundle\Model;
 
-class ExtendSepaCreditor
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
+
+class ExtendSepaCreditor implements ExtendEntityInterface 
 {
+    use ExtendEntityTrait;
+
     /**
      * Constructor
      *

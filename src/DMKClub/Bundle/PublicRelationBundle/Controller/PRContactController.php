@@ -3,7 +3,7 @@
 namespace DMKClub\Bundle\PublicRelationBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -17,9 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use DMKClub\Bundle\PublicRelationBundle\Entity\PRContact;
 use DMKClub\Bundle\PublicRelationBundle\Form\Handler\PRContactHandler;
 
-/**
- * @Route("/prcontact")
- */
+#[Route('/prcontact')]
 class PRContactController extends AbstractController
 {
     /**
@@ -35,10 +33,8 @@ class PRContactController extends AbstractController
         ]);
     }
 
-	/**
-	 * @Route("/", name="dmkclub_prcontact_index")
-	 * @Template
-	 */
+	#[Route('/', name: 'dmkclub_prcontact_index')]
+	#[Template]
 	#[AclAncestor('dmkclub_prcontact_view')]
 	public function indexAction() {
 		return [
@@ -46,10 +42,8 @@ class PRContactController extends AbstractController
 		];
 	}
 
-	/**
-	 * @Route("/view/{id}", name="dmkclub_prcontact_view", requirements={"id"="\d+"}))
-	 * @Template
-	 */
+	#[Route('/view/{id}', name: 'dmkclub_prcontact_view', requirements: ['id' => '\d+'])]
+	#[Template]
 	#[Acl(id: 'dmkclub_prcontact_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\PublicRelationBundle\Entity\PRContact::class)]
 	public function viewAction(PRContact $entity) {
 		return [
@@ -57,11 +51,8 @@ class PRContactController extends AbstractController
 		];
 	}
 
-	/**
-	 *
-	 * @Route("/widget/info/{id}", name="dmkclub_prcontact_widget_info", requirements={"id"="\d+"}))
-	 * @Template
-	 */
+	#[Route('/widget/info/{id}', name: 'dmkclub_prcontact_widget_info', requirements: ['id' => '\d+'])]
+	#[Template]
 	#[AclAncestor('dmkclub_prcontact_view')]
 	public function infoAction(PRContact $entity)
 	{
@@ -72,9 +63,9 @@ class PRContactController extends AbstractController
 
 	/**
 	 * Create form
-	 * @Route("/create", name="dmkclub_prcontact_create")
-	 * @Template("DMKClubPublicRelationBundle:PRContact:update.html.twig")
 	 */
+	#[Route('/create', name: 'dmkclub_prcontact_create')]
+	#[Template('DMKClubPublicRelationBundle:PRContact:update.html.twig')]
 	#[Acl(id: 'dmkclub_prcontact_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\PublicRelationBundle\Entity\PRContact::class)]
 	public function createAction(Request $request) {
 		return $this->update ( new PRContact(), $request );
@@ -82,10 +73,9 @@ class PRContactController extends AbstractController
 
     /**
      * Update p/r contact form
-     * @Route("/update/{id}", name="dmkclub_prcontact_update", requirements={"id"="\d+"}, defaults={"id"=0})
-     *
-     * @Template
      */
+    #[Route('/update/{id}', name: 'dmkclub_prcontact_update', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+    #[Template]
     #[Acl(id: 'dmkclub_prcontact_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\PublicRelationBundle\Entity\PRContact::class)]
     public function updateAction(PRContact $entity, Request $request)
     {

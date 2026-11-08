@@ -3,7 +3,7 @@ namespace DMKClub\Bundle\BasicsBundle\Async\Pdf;
 
 use Doctrine\ORM\EntityManager;
 use Gaufrette\Filesystem;
-use Knp\Bundle\GaufretteBundle\FilesystemMap;
+use Oro\Bundle\GaufretteBundle\FilesystemMap;
 use Psr\Log\LoggerInterface;
 
 use Oro\Component\MessageQueue\Consumption\MessageProcessorInterface;

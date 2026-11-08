@@ -2,10 +2,15 @@
 
 namespace DMKClub\Bundle\MemberBundle\Model;
 
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
+
 use DMKClub\Bundle\PaymentBundle\Entity\AbstractBankAccount;
 
-class ExtendMemberProposalBankAccount extends AbstractBankAccount
+class ExtendMemberProposalBankAccount extends AbstractBankAccount implements ExtendEntityInterface 
 {
+    use ExtendEntityTrait;
+
     /**
      * Constructor
      *

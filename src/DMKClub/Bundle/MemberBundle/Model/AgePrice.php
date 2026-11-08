@@ -10,7 +10,7 @@ class AgePrice
     private $to;
     private $value;
 
-    public function __construct(array $priceData = null)
+    public function __construct(?array $priceData = null)
     {
         if (!empty($priceData)) {
             $this->setFeeAgeFrom($priceData[DefaultProcessor::OPTION_FEE_AGE_FROM]);

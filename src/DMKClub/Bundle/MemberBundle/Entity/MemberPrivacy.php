@@ -10,11 +10,10 @@ use DMKClub\Bundle\MemberBundle\Model\ExtendMemberPrivacy;
 
 /**
  * Class MemberPrivacy
- *
- * @ORM\Entity
- * @ORM\Table(name="dmkclub_member_privacy")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'dmkclub_member_privacy')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     defaultValues: [
         'entity' => [
@@ -29,12 +28,11 @@ class MemberPrivacy extends ExtendMemberPrivacy
 {
 
     /**
-     *
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', name: 'id')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ConfigField(
         defaultValues: [
             'importexport' => [
@@ -45,10 +43,9 @@ class MemberPrivacy extends ExtendMemberPrivacy
     protected $id;
 
     /**
-     *
      * @var \DateTime
-     * @ORM\Column(name="sign_date", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'sign_date', type: 'date', nullable: true)]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -61,18 +58,14 @@ class MemberPrivacy extends ExtendMemberPrivacy
     )]
     protected $signDate;
 
-    /**
-     * @ORM\OneToOne(targetEntity="\DMKClub\Bundle\MemberBundle\Entity\Member", inversedBy="privacy")
-     * @ORM\JoinColumn(name="member", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\OneToOne(targetEntity: \DMKClub\Bundle\MemberBundle\Entity\Member::class, inversedBy: 'privacy')]
+    #[ORM\JoinColumn(name: 'member', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected $member;
 
     /**
-     *
      * @var boolean
-     *
-     * @ORM\Column(type="boolean", name="phone_allowed", options={"default" : false})
      */
+    #[ORM\Column(type: 'boolean', name: 'phone_allowed', options: ['default' => false])]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -86,11 +79,9 @@ class MemberPrivacy extends ExtendMemberPrivacy
     protected $phoneAllowed = false;
 
     /**
-     *
      * @var boolean
-     *
-     * @ORM\Column(type="boolean", name="email_allowed", options={"default" : false})
      */
+    #[ORM\Column(type: 'boolean', name: 'email_allowed', options: ['default' => false])]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -104,11 +95,9 @@ class MemberPrivacy extends ExtendMemberPrivacy
     protected $emailAllowed = false;
 
     /**
-     *
      * @var boolean
-     *
-     * @ORM\Column(type="boolean", name="postal_allowed", options={"default" : false})
      */
+    #[ORM\Column(type: 'boolean', name: 'postal_allowed', options: ['default' => false])]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -122,11 +111,9 @@ class MemberPrivacy extends ExtendMemberPrivacy
     protected $postalAllowed = false;
 
     /**
-     *
      * @var boolean
-     *
-     * @ORM\Column(type="boolean", name="merchandising_allowed", options={"default" : false})
      */
+    #[ORM\Column(type: 'boolean', name: 'merchandising_allowed', options: ['default' => false])]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -140,11 +127,9 @@ class MemberPrivacy extends ExtendMemberPrivacy
     protected $merchandisingAllowed = false;
 
     /**
-     *
      * @var boolean
-     *
-     * @ORM\Column(type="boolean", name="sharing_allowed", options={"default" : false})
      */
+    #[ORM\Column(type: 'boolean', name: 'sharing_allowed', options: ['default' => false])]
     #[ConfigField(
         defaultValues: [
             'dataaudit' => [
@@ -158,10 +143,9 @@ class MemberPrivacy extends ExtendMemberPrivacy
     protected $sharingAllowed = false;
 
     /**
-     *
      * @var \DateTime $createdAt
-     * @ORM\Column(type="datetime", name="created_at")
      */
+    #[ORM\Column(type: 'datetime', name: 'created_at')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -175,10 +159,9 @@ class MemberPrivacy extends ExtendMemberPrivacy
     protected $createdAt;
 
     /**
-     *
      * @var \DateTime $updatedAt
-     * @ORM\Column(type="datetime", name="updated_at")
      */
+    #[ORM\Column(type: 'datetime', name: 'updated_at')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -380,9 +363,8 @@ class MemberPrivacy extends ExtendMemberPrivacy
 
     /**
      * Pre persist event listener
-     *
-     * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         $this->createdAt = $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -390,9 +372,8 @@ class MemberPrivacy extends ExtendMemberPrivacy
 
     /**
      * Pre update event handler
-     *
-     * @ORM\PreUpdate
      */
+    #[ORM\PreUpdate]
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));

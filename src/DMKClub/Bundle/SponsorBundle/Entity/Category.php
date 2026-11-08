@@ -14,14 +14,12 @@ use DMKClub\Bundle\BasicsBundle\Model\LifecycleTrait;
 
 /**
  * Class Sponsor Category
- *
  * @package DMKClub\Bundle\DMKClubSponsorBundle\Entity
- *
- * @ORM\Entity(repositoryClass="DMKClub\Bundle\SponsorBundle\Entity\Repository\CategoryRepository")
- * @ORM\Table(name="dmkclub_sponsorcategory")
- * @ORM\HasLifecycleCallbacks()
  * Die Angaben in "form" dienen dem create_select_form_inline
  */
+#[ORM\Entity(repositoryClass: \DMKClub\Bundle\SponsorBundle\Entity\Repository\CategoryRepository::class)]
+#[ORM\Table(name: 'dmkclub_sponsorcategory')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     routeName: 'dmkclub_sponsorcategory_index',
     routeView: 'dmkclub_sponsorcategory_view',
@@ -59,11 +57,10 @@ class Category extends ExtendCategory
 	*/
 	/**
 	 * @var int
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer", name="id")
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
+	#[ORM\Id]
+	#[ORM\Column(type: 'integer', name: 'id')]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
 	#[ConfigField(
 	    defaultValues: [
 	        'importexport' => [
@@ -73,12 +70,10 @@ class Category extends ExtendCategory
 	)]
 	protected $id;
 
-
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="name", type="string", length=255)
 	 */
+	#[ORM\Column(name: 'name', type: 'string', length: 255)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -94,19 +89,17 @@ class Category extends ExtendCategory
 
 	/**
 	 * @var User
-	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-	 * @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \Oro\Bundle\UserBundle\Entity\User::class)]
+	#[ORM\JoinColumn(name: 'user_owner_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	protected $owner;
 
 	/**
 	 * @var Organization
-	 *
-	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
-	 * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \Oro\Bundle\OrganizationBundle\Entity\Organization::class)]
+	#[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	protected $organization;
-
 
 	/**
 	 * {@inheritdoc}
@@ -193,7 +186,7 @@ class Category extends ExtendCategory
 	 * @param Organization $organization
 	 * @return Category
 	 */
-	public function setOrganization(Organization $organization = null)
+	public function setOrganization(?Organization $organization = null)
 	{
 		$this->organization = $organization;
 

@@ -33,6 +33,8 @@ services:
 
     dmkclub_member.member.form.type.api:
         class: "%dmkclub_member.member.form.type.api.class%"
+        arguments:
+            - "@translator"
         tags:
             - { name: form.type, alias: dmkclub_member_member_api }
 
@@ -235,6 +237,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - '@DMKClub\Bundle\MemberBundle\Entity\Manager\MemberManager'
+            - '@oro_entity_extend.enum_options_provider'
 
     DMKClub\Bundle\MemberBundle\Form\Handler\MemberBillingHandler:
         public: true

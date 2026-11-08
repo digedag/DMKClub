@@ -18,14 +18,12 @@ use Oro\Bundle\AccountBundle\Entity\Account;
 
 /**
  * Class P/R Contact
- *
  * @package DMKClub\Bundle\DMKClubPublicRelationBundle\Entity
- *
- * @ORM\Entity(repositoryClass="DMKClub\Bundle\PublicRelationBundle\Entity\Repository\PRContactRepository")
- * @ORM\Table(name="dmkclub_prcontact")
- * @ORM\HasLifecycleCallbacks()
  * Die Angaben in "form" dienen dem create_select_form_inline
  */
+#[ORM\Entity(repositoryClass: \DMKClub\Bundle\PublicRelationBundle\Entity\Repository\PRContactRepository::class)]
+#[ORM\Table(name: 'dmkclub_prcontact')]
+#[ORM\HasLifecycleCallbacks]
 #[Config(
     routeName: 'dmkclub_prcontact_index',
     routeView: 'dmkclub_prcontact_view',
@@ -63,11 +61,10 @@ class PRContact extends ExtendPRContact implements ChannelAwareInterface
 	*/
 	/**
 	 * @var int
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer", name="id")
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
+	#[ORM\Id]
+	#[ORM\Column(type: 'integer', name: 'id')]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
 	#[ConfigField(
 	    defaultValues: [
 	        'importexport' => [
@@ -77,12 +74,10 @@ class PRContact extends ExtendPRContact implements ChannelAwareInterface
 	)]
 	protected $id;
 
-
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="name", type="string", length=255)
 	 */
+	#[ORM\Column(name: 'name', type: 'string', length: 255)]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -98,10 +93,9 @@ class PRContact extends ExtendPRContact implements ChannelAwareInterface
 
 	/**
 	 * @var Collection
-	 *
-	 * @ORM\ManyToOne(targetEntity="DMKClub\Bundle\PublicRelationBundle\Entity\PRCategory")
-	 * @ORM\JoinColumn(name="category", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \DMKClub\Bundle\PublicRelationBundle\Entity\PRCategory::class)]
+	#[ORM\JoinColumn(name: 'category', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	#[ConfigField(
 	    defaultValues: [
 	        'dataaudit' => [
@@ -117,27 +111,24 @@ class PRContact extends ExtendPRContact implements ChannelAwareInterface
 
 	/**
 	 * @var Account
-	 *
-	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\AccountBundle\Entity\Account", cascade="PERSIST")
-	 * @ORM\JoinColumn(name="account_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \Oro\Bundle\AccountBundle\Entity\Account::class, cascade: ['persist'])]
+	#[ORM\JoinColumn(name: 'account_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	protected $account;
 
 	/**
 	 * @var User
-	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-	 * @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \Oro\Bundle\UserBundle\Entity\User::class)]
+	#[ORM\JoinColumn(name: 'user_owner_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	protected $owner;
 
 	/**
 	 * @var Organization
-	 *
-	 * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
-	 * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
+	#[ORM\ManyToOne(targetEntity: \Oro\Bundle\OrganizationBundle\Entity\Organization::class)]
+	#[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
 	protected $organization;
-
 
 	/**
 	 * {@inheritdoc}
@@ -263,7 +254,7 @@ class PRContact extends ExtendPRContact implements ChannelAwareInterface
 	 * @param Organization $organization
 	 * @return PRContact
 	 */
-	public function setOrganization(Organization $organization = null)
+	public function setOrganization(?Organization $organization = null)
 	{
 		$this->organization = $organization;
 

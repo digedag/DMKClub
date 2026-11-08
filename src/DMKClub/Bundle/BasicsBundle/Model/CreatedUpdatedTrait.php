@@ -9,9 +9,8 @@ trait CreatedUpdatedTrait {
 
     /**
      * @var \DateTime $createdAt
-     *
-     * @ORM\Column(type="datetime", name="created_at")
      */
+    #[ORM\Column(type: 'datetime', name: 'created_at')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -26,9 +25,8 @@ trait CreatedUpdatedTrait {
 
     /**
      * @var \DateTime $updatedAt
-     *
-     * @ORM\Column(type="datetime", name="updated_at")
      */
+    #[ORM\Column(type: 'datetime', name: 'updated_at')]
     #[ConfigField(
         defaultValues: [
             'entity' => [
@@ -40,7 +38,6 @@ trait CreatedUpdatedTrait {
         ],
     )]
     protected $updatedAt;
-
 
     /**
      * @return \DateTime

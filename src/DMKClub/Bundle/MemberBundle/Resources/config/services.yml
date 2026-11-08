@@ -49,6 +49,14 @@ services:
             - "%dmkclub_member.memberfee.entity.class%"
             - "@doctrine.orm.entity_manager"
 
+    dmkclub_member.member.manager.api:
+        public: true
+        class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - "%dmkclub_member.member.entity.class%"
+            - "@doctrine.orm.entity_manager"
+
     DMKClub\Bundle\MemberBundle\Mailer\Processor:
         public: true
         arguments:
@@ -139,3 +147,16 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 
+
+### Message Queue Topics
+    DMKClub\Bundle\MemberBundle\Async\Topic\FeesCalculationTopic:
+        tags:
+            - { name: 'oro_message_queue.topic' }
+
+    DMKClub\Bundle\MemberBundle\Async\Topic\FeeCalculationTopic:
+        tags:
+            - { name: 'oro_message_queue.topic' }
+
+    DMKClub\Bundle\MemberBundle\Async\Topic\BillingSummaryTopic:
+        tags:
+            - { name: 'oro_message_queue.topic' }

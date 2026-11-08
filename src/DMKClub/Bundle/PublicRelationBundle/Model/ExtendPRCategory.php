@@ -2,7 +2,13 @@
 
 namespace DMKClub\Bundle\PublicRelationBundle\Model;
 
-class ExtendPRCategory {
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
+
+class ExtendPRCategory implements ExtendEntityInterface 
+{
+    use ExtendEntityTrait;
+
     /**
      * Constructor
      *

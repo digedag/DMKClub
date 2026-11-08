@@ -1,7 +1,7 @@
 <?php
 namespace DMKClub\Bundle\MemberBundle\Form\Type;
 
-use Knp\Bundle\GaufretteBundle\FilesystemMap;
+use Oro\Bundle\GaufretteBundle\FilesystemMap;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;

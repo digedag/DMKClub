@@ -4,7 +4,6 @@ namespace DMKClub\Bundle\MemberBundle\Controller\Api\Rest;
 
 use BadMethodCallException;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 
 use Symfony\Component\HttpFoundation\Response;
@@ -13,8 +12,6 @@ use Oro\Bundle\SecurityBundle\Attribute\Acl;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 
-/**
- */
 class MemberFeeDiscountController extends RestController
 {
 
@@ -30,10 +27,7 @@ class MemberFeeDiscountController extends RestController
     /**
      * @param int $id
      *
-     * @ApiDoc(
-     *      description="Delete fee discounts",
-     *      resource=true
-     * )
+     * 
      * Der Discount hat keine Entity-ACL. Wir nutzen die ACL des MemberFee
      * @return Response
      */

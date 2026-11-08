@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Form\Form;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
@@ -32,11 +32,8 @@ class MemberPrivacyController extends AbstractController
         ]);
     }
 
-    /**
-     *
-     * @Route("/widget/privacyinfo/{id}", name="dmkclub_member_memberprivacy_widget_infoblock", options={"expose"=true}, requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/widget/privacyinfo/{id}', name: 'dmkclub_member_memberprivacy_widget_infoblock', options: ['expose' => true], requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_member_view')]
     public function privacyInfoAction(Member $member)
     {
@@ -45,17 +42,9 @@ class MemberPrivacyController extends AbstractController
         ];
     }
 
-    /**
-     *
-     * @Route(
-     *      "/{memberId}/memberprivacy-update",
-     *      options={"expose"=true},
-     *      name="dmkclub_member_memberprivacy_update",
-     *      requirements={"memberId"="\d+","id"="\d+"}
-     * )
-     * @Template
-     * @ParamConverter("member", options={"id" = "memberId" })
-     */
+    #[Route('/{memberId}/memberprivacy-update', options: ['expose' => true], name: 'dmkclub_member_memberprivacy_update', requirements: ['memberId' => '\d+', 'id' => '\d+'])]
+    #[Template]
+    #[ParamConverter('member', options: ['id' => 'memberId'])]
     #[AclAncestor('dmkclub_member_update')]
     public function updateAction(Member $member, MemberPrivacy $privacy)
     {

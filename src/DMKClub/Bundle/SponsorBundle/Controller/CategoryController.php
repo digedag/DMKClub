@@ -3,7 +3,7 @@
 namespace DMKClub\Bundle\SponsorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Oro\Bundle\SecurityBundle\Attribute\Acl;
@@ -15,10 +15,7 @@ use DMKClub\Bundle\SponsorBundle\Form\Handler\CategoryHandler;
 use Symfony\Component\Form\Form;
 use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
 
-
-/**
- * @Route("/sponsorcategory")
- */
+#[Route('/sponsorcategory')]
 class CategoryController extends AbstractController
 {
     /**
@@ -34,10 +31,8 @@ class CategoryController extends AbstractController
         ]);
     }
 
-	/**
-	 * @Route("/", name="dmkclub_sponsorcategory_index")
-	 * @Template
-	 */
+	#[Route('/', name: 'dmkclub_sponsorcategory_index')]
+	#[Template]
 	#[AclAncestor('dmkclub_sponsorcategory_view')]
 	public function indexAction()
 	{
@@ -47,20 +42,19 @@ class CategoryController extends AbstractController
 	}
 
 	/**
-     * Create sponsorcategory form
-     * @Route("/create", name="dmkclub_sponsorcategory_create")
-     * @Template("DMKClubSponsorBundle:Category:update.html.twig")
-     */
+	 * Create sponsorcategory form
+	 */
+	#[Route('/create', name: 'dmkclub_sponsorcategory_create')]
+	#[Template('DMKClubSponsorBundle:Category:update.html.twig')]
     #[Acl(id: 'dmkclub_sponsorcategory_create', type: 'entity', permission: 'CREATE', class: \DMKClub\Bundle\SponsorBundle\Entity\Category::class)]
     public function createAction() {
     	return $this->update(new Category());
     }
     /**
      * Update sponsorcategory form
-     * @Route("/update/{id}", name="dmkclub_sponsorcategory_update", requirements={"id"="\d+"}, defaults={"id"=0})
-     *
-     * @Template
      */
+    #[Route('/update/{id}', name: 'dmkclub_sponsorcategory_update', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+    #[Template]
     #[Acl(id: 'dmkclub_sponsorcategory_update', type: 'entity', permission: 'EDIT', class: \DMKClub\Bundle\SponsorBundle\Entity\Category::class)]
     public function updateAction(Category $entity)
     {
@@ -81,18 +75,14 @@ class CategoryController extends AbstractController
             $this->container->get(CategoryHandler::class)
         );
     }
-    /**
-     * @Route("/view/{id}", name="dmkclub_sponsorcategory_view", requirements={"id"="\d+"}))
-     * @Template
-     */
+    #[Route('/view/{id}', name: 'dmkclub_sponsorcategory_view', requirements: ['id' => '\d+'])]
+    #[Template]
     #[Acl(id: 'dmkclub_sponsorcategory_view', type: 'entity', permission: 'VIEW', class: \DMKClub\Bundle\SponsorBundle\Entity\Category::class)]
     public function viewAction(Category $entity) {
         return ['entity' => $entity];
     }
-    /**
-     * @Route("/widget/info/{id}", name="dmkclub_sponsorcategory_widget_info", requirements={"id"="\d+"})
-     * @Template
-     */
+    #[Route('/widget/info/{id}', name: 'dmkclub_sponsorcategory_widget_info', requirements: ['id' => '\d+'])]
+    #[Template]
     #[AclAncestor('dmkclub_sponsorcategory_view')]
     public function infoAction(Category $entity)
     {

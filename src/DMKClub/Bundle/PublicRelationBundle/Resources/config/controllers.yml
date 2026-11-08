@@ -7,9 +7,14 @@ services:
             - ['setContainer', ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'oro_form.update_handler' }
+            - { name: container.service_subscriber, id: 'dmkclub.prcontact.form' }
+            - { name: container.service_subscriber, id: 'dmkclub.prcontact.form.handler' }
+            - { name: container.service_subscriber, id: 'translator' }
 
     DMKClub\Bundle\PublicRelationBundle\Controller\Api\Rest\PRContactController:
         calls:
             - ['setContainer', ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'dmkclub.prcontact.manager.api' }
