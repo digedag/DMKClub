@@ -822,6 +822,6 @@ class MemberFee extends ExtendMemberFee implements PdfAwareInterface, SepaDirect
         if (! $paymentOption) {
             return false;
         }
-        return PaymentOption::SEPA_DIRECT_DEBIT === $paymentOption->getId();
+        return PaymentOption::SEPA_DIRECT_DEBIT === $paymentOption->getInternalId();
     }
 }
